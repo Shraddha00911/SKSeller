@@ -62,7 +62,7 @@
                             </tr>
                         </ng-template>
                         <ng-template pTemplate="body" let-rowData let-columns="columns">
-                            <tr [pSelectableRow]="rowData">
+                            <tr>
                                 <td *ngIf="IsApproved==false">
                                     <p-tableCheckbox [value]="rowData">
                                     </p-tableCheckbox>
@@ -127,7 +127,7 @@
                             </tr>
                         </ng-template>
                         <ng-template pTemplate="body" let-rowData let-columns="columns">
-                            <tr [pSelectableRow]="rowData">
+                            <tr>
                                 <td *ngFor="let col of columns">
                                     {{rowData[col.field]}}
                                 </td>
@@ -155,7 +155,7 @@
                             </tr>
                         </ng-template>
                         <ng-template pTemplate="body" let-rowData let-columns="columns">
-                            <tr [pSelectableRow]="rowData">
+                            <tr>
                                 <td *ngFor="let col of columns">
                                     {{rowData[col.field]}}
                                 </td>

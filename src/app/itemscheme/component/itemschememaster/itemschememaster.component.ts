@@ -23,7 +23,7 @@ export class ItemschememasterComponent implements OnInit {
   Cityid: number = null;
   SubSubCategoryId: number = null;
   cities = [];
-  itemschememasterList = [];
+  itemschememasterList : any;
   blocked: boolean;
   TotalRecords: any;
   searchModel: any;
@@ -90,7 +90,7 @@ export class ItemschememasterComponent implements OnInit {
     //   this.messageService.add({ severity: 'error', summary: 'please select city!', detail: '' });
     // }
   }
-  navigateToDetail(item) {
+  navigateToDetail(item,event) {
 
     this.router.navigate(['Itemschememasterdetail', {
       Id: item.Id,

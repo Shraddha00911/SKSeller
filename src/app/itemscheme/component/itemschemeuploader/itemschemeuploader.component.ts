@@ -27,7 +27,7 @@ export class ItemschemeuploaderComponent implements OnInit {
   SubSubCategoryId: any;
   cities = [];
   isInvalid: boolean;
-  itemschemeuploadedList = [];
+  itemschemeuploadedList:any;
   blocked: boolean;
   TotalRecords: any;
   searchModel: any;

@@ -55,18 +55,18 @@ export class ItemschememasterdetailComponent implements OnInit {
 
   ];
   PostObj: Array<{ ItemSchemeDetailId: number, ItemSchemeMasterId: number, IsActive: boolean }> = [];
-  selectedRows: any[];
-  ItemschemMaster: {};
-  ItemschemMasterDetails: [];
-  ItemschemFreebies: [];
-  ItemschemSlab: [];
+  selectedRows: any;
+  ItemschemMaster: any;
+  ItemschemMasterDetails: any;
+  ItemschemFreebies: any;
+  ItemschemSlab: any;
   display: boolean;
   displayFreeBies: boolean;
   displaySlab: boolean;
   ItemschemDetail: any;
   MasterId: number;
   baseURL: any;
-  ItemSchemeMasterDc: ItemSchemeMasterDc[];
+  ItemSchemeMasterDc: any;
   constructor(private router: Router, private r: ActivatedRoute, private ItemschemeService: ItemschemeService, private confirmationService: ConfirmationService, private messageService: MessageService,) { this.baseURL = environment.apiBaseUrl; }
   ngOnInit() {
     this.r.params.subscribe(param => {

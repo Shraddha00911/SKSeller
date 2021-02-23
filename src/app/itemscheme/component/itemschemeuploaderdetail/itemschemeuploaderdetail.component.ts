@@ -20,8 +20,8 @@ export class ItemschemeuploaderdetailComponent implements OnInit {
 
   constructor(private router: Router, private r: ActivatedRoute, private ItemschemeService: ItemschemeService, private messageService: MessageService, private confirmationService: ConfirmationService) { }
   ItemschemuplaoderMaster: any;
-  ItemschemuplaoderDetails: [];
-  ItemschemuplaoderDetail: [];
+  ItemschemuplaoderDetails: any;
+  ItemschemuplaoderDetail: any;
   ErroItemschemuplaoderDetail: any;
   display: boolean;
   Errordisplay: boolean;
