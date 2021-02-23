@@ -1,0 +1,116 @@
+/* Miscellaneous Mixins */
+
+// general transform
+@mixin transform($transforms) {
+	-moz-transform: $transforms;
+	  -o-transform: $transforms;
+	 -ms-transform: $transforms;
+ -webkit-transform: $transforms;
+	   transform: $transforms;
+}
+
+// rotate
+@mixin rotate ($deg) {
+@include transform(rotate(#{$deg}deg));
+}
+
+// scale
+@mixin scale($scale) {
+  @include transform(scale($scale));
+}
+// translate
+@mixin translate ($x, $y) {
+@include transform(translate($x, $y));
+}
+// skew
+@mixin skew ($x, $y) {
+@include transform(skew(#{$x}deg, #{$y}deg));
+}
+//transform origin
+@mixin transform-origin ($origin) {
+ moz-transform-origin: $origin;
+	  -o-transform-origin: $origin;
+	 -ms-transform-origin: $origin;
+ -webkit-transform-origin: $origin;
+	   transform-origin: $origin;
+}
+//Ellipsis
+%ellipsor{
+ text-overflow: ellipsis;
+ overflow: hidden;
+ max-width:100%;
+ white-space: nowrap;
+}
+
+// Placeholder
+@mixin placeholder {
+ &::-webkit-input-placeholder {
+	 @content
+ }
+ &:-moz-placeholder {
+	 @content
+ }
+ &::-moz-placeholder {
+	 @content
+ }
+ &:-ms-input-placeholder {
+	 @content
+ }
+}
+
+
+@for $i from 10 through 200 {
+    .lineheight-#{$i} {
+      line-height: $i + px!important; 
+    }
+  }
+  @for $i from 0 through 100 {
+    .borderradius-#{$i} {
+      border-radius: $i + px!important; 
+    }}
+    @for $i from 0 through 100 {
+        .fontsize-#{$i} {
+          font-size: $i + px!important; 
+        }}
+    @for $i from 0 through 100 {
+      .height-#{$i} {
+        height: $i + px!important; 
+      }}
+    @for $value from 1 through 10 {
+        $width: percentage($value/10);
+        .w-#{$value} {
+          width: $width!important;
+          margin: 0px auto;
+        }
+      }
+  
+  $sizes: 200;
+@mixin margin-classes {
+  @for $i from 1 through $sizes {
+     $margin: $i * 0.25rem;
+    /* margin #{$margin} */
+    .m#{$i}  {margin: $margin!important;}
+    .ml#{$i} {margin-left: $margin!important;}
+    .mr#{$i} {margin-right: $margin!important;}
+    .mt#{$i} {margin-top: $margin!important;}
+    .mb#{$i} {margin-bottom: $margin!important;}
+    .mx#{$i} {margin-left: $margin!important; margin-right: $margin!important;}
+    .my#{$i} {margin-top: $margin!important; margin-bottom: $margin!important;}
+  }
+}
+@include margin-classes;
+
+@mixin padding-classes {
+  @for $i from 1 through $sizes {
+    $padding: $i * 0.25rem;
+    /* padding #{$padding} */
+    .p#{$i} {padding: $padding!important;}
+    .pl#{$i} {padding-left: $padding!important;}
+    .pr#{$i} {padding-right: $padding!important;}
+    .pt#{$i} {padding-top: $padding!important;}
+    .pb#{$i} {padding-bottom: $padding!important;}
+    .px#{$i} {padding-left: $padding!important; padding-right: $padding!important;}
+    .py#{$i} {padding-top: $padding!important; padding-bottom: $padding!important;}
+  }
+}
+@include padding-classes;

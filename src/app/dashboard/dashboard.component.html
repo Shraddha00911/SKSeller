@@ -1,0 +1,503 @@
+<div class="container">
+  <div class="row mt6 fontsize-12">
+    <div class="col-sm-3">
+      <label for="City">City</label>
+      <select id="City" name="City" class="form-control" [(ngModel)]="cityid" placeholder="Select City"
+        (change)="GetCityWarehouse()" #City="ngModel">
+        <option *ngFor="let city of CityList" [ngValue]="city.Cityid">
+          {{city.CityName}}
+        </option>
+      </select>
+    </div>
+    <div class="col-sm-3">
+      <label for="FromDate">StartDate</label>
+      <input type="datetime-local" id="FromDate" name="FromDate" class="form-control"
+        [ngModel]="SearchData.FromDate | date:'yyyy-MM-ddTHH:mm'" (ngModelChange)="SearchData.FromDate = $event" />
+    </div>
+    <div class="col-sm-3">
+      <label for="FromDate">ToDate</label>
+      <input type="datetime-local" id="ToDate" name="ToDate" class="form-control"
+        [ngModel]="SearchData.ToDate | date:'yyyy-MM-ddTHH:mm'" (ngModelChange)="SearchData.ToDate = $event" />
+    </div>
+    <div class="col-sm-2">
+      <br>
+      <button type="button" class="btn btn-raised btn-success mr-1 btn-lg" (click)="Search()" [disabled]="!cityid">
+        Search
+      </button>
+    </div>
+  </div>
+  <hr />
+  <div class="page-header">
+    <h3 class="page-title">
+      Catalogue : {{subcateName}}
+    </h3>
+    <div class="form-group my-2">
+      <label for="ware" class="col-md-6">Warehouse:</label>
+      <select id="ware" name="ware" class="form-control col-md-6" [(ngModel)]="Warehouseid" (change)="getCatlogData()">
+        <option value="">--Select--</option>
+        <option *ngFor="let w of WarehouseData" [ngValue]="w.WarehouseId">
+          {{ w.WarehouseName }} {{w.CityName}}
+        </option>
+      </select>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-6 grid-margin stretch-card">
+      <div class="card">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-sm-6">Total Item / Active Item</div>
+            <div class="col-sm-6 text-right">
+              <div ngbDropdown>
+                <!-- <button class="btn btn-secondary" type="button" id="dropdownMenuButton2" ngbDropdownToggle>
+                  Today
+                </button> -->
+                <!-- <div ngbDropdownMenu aria-labelledby="dropdownMenuButton2">
+                  <h6 class="dropdown-header">Monday</h6>
+                  <a class="dropdown-item">Tuesday</a>
+                  <a class="dropdown-item">Wednesday</a>
+                </div> -->
+              </div>
+            </div>
+          </div>
+          <div *ngIf="CatelogueItemTotalActiveChartData">
+            <app-donut-chart [doughnutPieChartDetails]="CatelogueItemTotalActiveChartData"
+              [doughnutPieChartLabelsDetails]="CatelogueItemTotalActiveChartLabels"></app-donut-chart>
+          </div>
+          <!-- <canvas baseChart [chartType]="'doughnut'" [datasets]="doughnutPieChartData" [labels]="doughnutPieChartLabels" [options]="doughnutPieChartOptions" [colors]="doughnutPieChartColors"></canvas> -->
+          <!-- <canvas baseChart [chartType]="'line'" [datasets]="lineChartData" [labels]="lineChartLabels" [options]="lineChartOptions" [colors]="lineChartColors"></canvas> -->
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-6 grid-margin stretch-card">
+      <div class="card">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-sm-6">Catelogue Fill Rate</div>
+            <div class="col-sm-6 text-right">
+              <div ngbDropdown>
+                <!-- <button class="btn btn-secondary" type="button" id="dropdownMenuButton2" ngbDropdownToggle>
+                  Today
+                </button> -->
+                <!-- <div ngbDropdownMenu aria-labelledby="dropdownMenuButton2">
+                  <h6 class="dropdown-header">Monday</h6>
+                  <a class="dropdown-item">Tuesday</a>
+                  <a class="dropdown-item">Wednesday</a>
+                </div> -->
+              </div>
+            </div>
+          </div>
+          <div *ngIf="CatelogueItemWithCFRChartData">
+            <app-donut-chart [doughnutPieChartDetails]="CatelogueItemWithCFRChartData"
+              [doughnutPieChartLabelsDetails]="CatelogueItemWithCFRChartLabels"></app-donut-chart>
+          </div>
+          <!-- <canvas baseChart [chartType]="'doughnut'" [datasets]="doughnutPieChartData" [labels]="doughnutPieChartLabels"
+            [options]="doughnutPieChartOptions" [colors]="doughnutPieChartColors"></canvas> -->
+          <!-- <canvas baseChart [chartType]="'bar'" [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions" [colors]="barChartColors"></canvas> -->
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="page-header">
+    <h3 class="page-title">
+      Sales
+    </h3>
+  </div>
+  <div class="row">
+    <div class="col-lg-12 grid-margin stretch-card">
+      <div class="card">
+        <div class="card-body">
+          <table class="table">
+            <thead>
+              <tr>
+                <th></th>
+                <th></th>
+                <th>Today</th>
+                <th>Yesterday</th>
+                <th>MTD</th>
+              </tr>
+            </thead>
+            <tbody *ngIf="SellerSales">
+              <tr>
+                <td><img src="assets/images/sale.svg" /></td>
+                <td>Total Sale</td>
+                <td><i class="fa fa-inr"></i> {{SellerSales.todaytotalsale | number : '1.2-2'}}</td>
+                <td><i class="fa fa-inr"></i> {{SellerSales.Yesterdaytotalsale | number : '1.2-2'}}</td>
+                <td><i class="fa fa-inr"></i> {{SellerSales.monthtotalsale | number : '1.2-2'}}</td>
+              </tr>
+              <tr>
+                <td><img src="assets/images/clerk.svg" /></td>
+                <td>Active Retailer</td>
+                <td> {{SellerSales.TodayactiveRetailer}}</td>
+                <td> {{SellerSales.YesterdayactiveRetailer}}</td>
+                <td> {{SellerSales.monthactiveRetailer}}</td>
+              </tr>
+              <tr>
+                <td><img src="assets/images/trolley.svg" /></td>
+                <td>Total Line Item</td>
+                <td> {{SellerSales.todaytotalLineitem}}</td>
+                <td>{{SellerSales.YesterdaytotalLineitem}}</td>
+                <td> {{SellerSales.monthtotalLineitem}}</td>
+              </tr>
+              <tr>
+                <td><img src="assets/images/order.svg" /></td>
+                <td>Total no. Orders</td>
+                <td> {{SellerSales.todaytotalOrder}}</td>
+                <td> {{SellerSales.YesterdaytotalOrder}}</td>
+                <td> {{SellerSales.monthtotalOrder}}</td>
+              </tr>
+              <tr>
+                <td><img src="assets/images/delivery_3.svg" /></td>
+                <td>Average Line Item</td>
+                <td> {{SellerSales.todayAvgLineItem}}</td>
+                <td> {{SellerSales.YesterdayAvgLineItem}}</td>
+                <td> {{SellerSales.monthAvgLineItem}}</td>
+              </tr>
+              <tr>
+                <td><img src="assets/images/order_1.svg" /></td>
+                <td>Average Orders Value</td>
+                <td><i class="fa fa-inr"></i> {{SellerSales.todayAvgOrderValue | number : '1.2-2'}}</td>
+                <td><i class="fa fa-inr"></i> {{SellerSales.YesterdayAvgOrderValue | number : '1.2-2'}}</td>
+                <td><i class="fa fa-inr"></i> {{SellerSales.monthAvgOrderValue | number : '1.2-2'}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-6 grid-margin stretch-card">
+      <div class="card">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-sm-6">Purchase Details</div>
+            <div class="col-sm-3 text-right">
+              <!-- <div ngbDropdown>
+                <button class="btn btn-secondary" type="button" id="dropdownMenuButton2" ngbDropdownToggle>
+                  Count
+                </button>
+                <div ngbDropdownMenu aria-labelledby="dropdownMenuButton2">
+                  <h6 class="dropdown-header">1</h6>
+                  <a class="dropdown-item">2</a>
+                  <a class="dropdown-item">3</a>
+                </div>
+              </div> -->
+            </div>
+            <div class="col-sm-3 text-right">
+              <div ngbDropdown>
+                <select name="showPOCountValues" id="showPOCountValues" class="form-control"
+                  [(ngModel)]="showPOCountValue" (change)="showPOtypeChange(showPOCountValue)">
+                  <option [value]="false">Count</option>
+                  <option [value]="true">Amount</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <!-- <canvas baseChart [chartType]="'line'" [datasets]="areaChartData" [labels]="areaChartLabels" [options]="areaChartOptions" [colors]="areaChartColors"></canvas> -->
+          <!-- <canvas baseChart [chartType]="'doughnut'" [datasets]="doughnutPieChartData" [labels]="doughnutPieChartLabels"
+            [options]="doughnutPieChartOptions" [colors]="doughnutPieChartColors"></canvas> -->
+
+          <div *ngIf="DashboardPoStatusCountChartData">
+            <app-donut-chart [doughnutPieChartDetails]="DashboardPoStatusCountChartData"
+              [doughnutPieChartLabelsDetails]="DashboardPoStatusCountDataLabels"></app-donut-chart>
+          </div>
+          <div *ngIf="DashboardPoStatusAmountChartData">
+            <app-donut-chart [doughnutPieChartDetails]="DashboardPoStatusAmountChartData"
+              [doughnutPieChartLabelsDetails]="DashboardPoStatusAmountDataLabels"></app-donut-chart>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-6 grid-margin stretch-card">
+      <div class="card">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-sm-6">Purchase PO GR IR</div>
+            <div class="col-sm-6 text-right">
+
+              <div ngbDropdown>
+                <select name="showPOGRIR" id="showPOGRIRids" class="form-control" [(ngModel)]="showPOGRIRAmountValue"
+                  (change)="showPOGRIRChange(showPOGRIRAmountValue)">
+                  <option [value]="false">Count</option>
+                  <option [value]="true">Amount</option>
+                </select>
+
+              </div>
+            </div>
+          </div>
+
+          <div *ngIf="POGRIRCountChartData">
+            <app-donut-chart [doughnutPieChartDetails]="POGRIRCountChartData"
+              [doughnutPieChartLabelsDetails]="POGRIRCountChartDataLabels"></app-donut-chart>
+          </div>
+          <div *ngIf="POGRIRAmountChartData">
+            <app-donut-chart [doughnutPieChartDetails]="POGRIRAmountChartData"
+              [doughnutPieChartLabelsDetails]="POGRIRAmountChartDataLabels"></app-donut-chart>
+          </div>
+
+          <!-- <canvas baseChart [chartType]="'doughnut'" [datasets]="doughnutPieChartData" [labels]="doughnutPieChartLabels"
+            [options]="doughnutPieChartOptions" [colors]="doughnutPieChartColors"></canvas> -->
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-6 grid-margin stretch-card">
+      <div class="card">
+        <div class="card-body pt2 pb2">
+          <div class="row">
+            <div class="col-sm-2 pt2"><img src="assets/images/money_1.svg" /></div>
+            <div class="col-sm-6">
+              <h3>{{POFillRate.fillrate}} % </h3><small>Fill Rate</small>
+            </div>
+            <div class="col-sm-3 text-right pt4" *ngIf="POFillRate">
+              <span *ngIf="POFillRate.Signfillrate > 0">
+                <i class="fa fa-long-arrow-up text-success"></i>{{POFillRate.Signfillrate}} %
+              </span>
+              <span *ngIf="POFillRate.Signfillrate < 0">
+                <i class="fa fa-long-arrow-down text-danger"></i>{{POFillRate.Signfillrate}} %
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-6 grid-margin stretch-card">
+      <div class="card">
+        <div class="card-body pt2 pb2">
+          <div class="row">
+            <div class="col-sm-2 pt2"><img src="assets/images/timer.svg" /></div>
+            <div class="col-sm-6">
+              <h3 *ngIf="POAvgTAT">{{POAvgTAT.POAvgTAT}} <sup>Hrs</sup></h3><small>Tat
+                (Purchase)</small>
+            </div>
+            <div class="col-sm-3 text-right pt4"><i class="fa fa-long-arrow-up text-success"></i> 2.3%</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="page-header">
+    <h3 class="page-title">
+      Operations
+    </h3>
+  </div>
+  <div class="row">
+    <div class="col-lg-12 grid-margin stretch-card">
+      <div class="card">
+        <div class="card-body">
+          Order
+          <div class="row">
+            <div class="col-sm-6">
+              <div *ngIf="DashboardOrderStatusDataChartData">
+                <app-donut-chart [doughnutPieChartDetails]="DashboardOrderStatusDataChartData"
+                  [doughnutPieChartLabelsDetails]="DashboardOrderStatusDataLabels"></app-donut-chart>
+              </div>
+            </div>
+            <div class="col-sm-6 text-right" *ngIf="DashboardOrderStatusData">
+              <div ngbDropdown>
+                <table class="no-border custom-table">
+                  <tr>
+                    <td colspan="2"></td>
+                    <td><small>Count</small></td>
+                    <td><small>Amount</small></td>
+                  </tr>
+                  <tr>
+                    <td><button class="btn btn-warning btn-xs"><i class="fa fa-share-square-o"></i> Export</button></td>
+                    <td class="text-left">Pending</td>
+                    <td>{{DashboardOrderStatusData.PendingOrdercount}}</td>
+                    <td>{{DashboardOrderStatusData.PendingOrderAmount}}</td>
+                  </tr>
+                  <tr>
+                    <td><button class="btn btn-primary btn-xs"><i class="fa fa-share-square-o"></i> Export</button></td>
+                    <td class="text-left">Ready to dispatched</td>
+                    <td>{{DashboardOrderStatusData.ReadytoDispatchOrdercount}}</td>
+                    <td>{{DashboardOrderStatusData.ReadytoDispatchOrderAmount}}</td>
+                  </tr>
+                  <tr>
+                    <td><button class="btn btn-info btn-xs"><i class="fa fa-share-square-o"></i> Export</button></td>
+                    <td class="text-left">Issued</td>
+                    <td>{{DashboardOrderStatusData.IssuedOrdercount}}</td>
+                    <td>{{DashboardOrderStatusData.IssuedOrderAmount}}</td>
+                  </tr>
+                  <tr>
+                    <td><button class="btn btn-danger btn-xs"><i class="fa fa-share-square-o"></i> Export</button></td>
+                    <td class="text-left">Shipped</td>
+                    <td>{{DashboardOrderStatusData.ShippedOrdercount}}</td>
+                    <td>{{DashboardOrderStatusData.ShippedOrderAmount}}</td>
+                  </tr>
+
+
+                  <tr>
+                    <td><button class="btn btn-primary btn-xs"><i class="fa fa-share-square-o"></i> Export</button></td>
+                    <td class="text-left">Delivered</td>
+                    <td>{{DashboardOrderStatusData.DeliveredOrdercount}}</td>
+                    <td>{{DashboardOrderStatusData.DeliveredOrderAmount}}</td>
+                  </tr>
+                  <tr>
+                    <td><button class="btn btn-gray btn-xs"><i class="fa fa-share-square-o"></i> Export</button></td>
+                    <td class="text-left">Delivered Re-Dispatched</td>
+                    <td>{{DashboardOrderStatusData.DeliveryRedispatchOrdercount}}</td>
+                    <td>{{DashboardOrderStatusData.DeliveryRedispatchOrderAmount}}</td>
+                  </tr>
+                  <tr>
+                    <td><button class="btn btn-success btn-xs"><i class="fa fa-share-square-o"></i> Export</button></td>
+                    <td class="text-left">Delivery Canceled/Poc</td>
+                    <td>{{DashboardOrderStatusData.DeliveryCanceledOrdercount}}</td>
+                    <td>{{DashboardOrderStatusData.DeliveryCanceledOrderAmount}}</td>
+                  </tr>
+                  <tr>
+                    <td><button class="btn btn-danger btn-xs"><i class="fa fa-share-square-o"></i> Export</button></td>
+                    <td class="text-left">Pre Canceled</td>
+                    <td>{{DashboardOrderStatusData.PreCanceledOrdercount}}</td>
+                    <td>{{DashboardOrderStatusData.PreCanceledOrderAmount}}</td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- <canvas baseChart [chartType]="'doughnut'" [datasets]="doughnutPieChartData" [labels]="doughnutPieChartLabels"
+            [options]="doughnutPieChartOptions" [colors]="doughnutPieChartColors"></canvas> -->
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-6 grid-margin stretch-card">
+      <div class="card">
+        <div class="card-body pt2 pb2">
+          <div class="row" *ngIf="DashboardOrderFillRate">
+            <div class="col-sm-2 pt2"><img src="assets/images/money_1.svg" /></div>
+
+            <div class="col-sm-6">
+              <h3>{{DashboardOrderFillRate.fillrate}} % </h3><small>Fill Rate</small>
+            </div>
+            <div class="col-sm-3 text-right pt4">
+              <span *ngIf="DashboardOrderFillRate.Signfillrate > 0">
+                <i class="fa fa-long-arrow-up text-success"></i>{{DashboardOrderFillRate.Signfillrate}} %
+              </span>
+              <span *ngIf="DashboardOrderFillRate.Signfillrate < 0">
+                <i class="fa fa-long-arrow-down text-danger"></i>{{DashboardOrderFillRate.Signfillrate}} %
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-6 grid-margin stretch-card">
+      <div class="card">
+        <div class="card-body pt2 pb2">
+          <div class="row">
+            <div class="col-sm-2 pt2"><img src="assets/images/timer.svg" /></div>
+            <div class="col-sm-6">
+              <h3 *ngIf="DashboardOrderAvgTAT">{{DashboardOrderAvgTAT.OrderAvgTAT}} <sup>Hrs</sup></h3><small>Tat
+                (Operation)</small>
+            </div>
+            <div class="col-sm-3 text-right pt2"><i class="fa fa-long-arrow-up text-success"></i> 2.3%</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-12 grid-margin stretch-card">
+      <div class="card">
+        <div class="card-body">
+          <div class="row">Stock Details
+            <!-- <div class="col-sm-6"></div> -->
+            <div class="col-sm-6 text-right">
+              <div ngbDropdown>
+                <!-- <button class="btn btn-secondary" type="button" id="dropdownMenuButton2" ngbDropdownToggle>
+                  Today
+                </button> -->
+                <!-- <div ngbDropdownMenu aria-labelledby="dropdownMenuButton2">
+                  <h6 class="dropdown-header">Monday</h6>
+                  <a class="dropdown-item">Tuesday</a>
+                  <a class="dropdown-item">Wednesday</a>
+                </div> -->
+              </div>
+            </div>
+          </div>
+          <div *ngIf="DashboardCurrentVsNetCurrentChartData">
+            <app-donut-chart [doughnutPieChartDetails]="DashboardCurrentVsNetCurrentChartData"
+              [doughnutPieChartLabelsDetails]="DashboardCurrentVsNetCurrentLabels"></app-donut-chart>
+          </div>
+          <!-- <canvas baseChart [chartType]="'doughnut'" [datasets]="doughnutPieChartData" [labels]="doughnutPieChartLabels"
+            [options]="doughnutPieChartOptions" [colors]="doughnutPieChartColors"></canvas> -->
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-4 grid-margin stretch-card pr-0">
+      <div class="card">
+        <div class="card-body pt2 pb2">
+          <div class="row">
+            <div class="col-sm-3 pt2"><img src="assets/images/flat.svg" /></div>
+            <div class="col-sm-9">
+              <h3 *ngIf="DashboardCurrentVsNetCurrent"><i class="fa fa-inr"></i>
+                {{DashboardCurrentVsNetCurrent.CurrentStockAmount | number : '1.2-2'}}</h3><small>Inventory</small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4 grid-margin stretch-card pl-0 pr-0">
+      <div class="card">
+        <div class="card-body pt2 pb2">
+          <div class="row">
+            <div class="col-sm-3 pt2"><img src="assets/images/damaged_package.svg" /></div>
+            <div class="col-sm-9">
+              <h3 *ngIf="DashboardCurrentVsNetCurrent"><i class="fa fa-inr"></i>
+                {{DashboardCurrentVsNetCurrent.DamageStockAmount | number : '1.2-2'}}</h3><small>Damage</small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4 grid-margin stretch-card pl-0">
+      <div class="card">
+        <div class="card-body pt2 pb2">
+          <div class="row">
+            <div class="col-sm-3 pt2"><img src="assets/images/page_1.svg" /> </div>
+            <div class="col-sm-9">
+              <h3 *ngIf="DashboardCurrentVsNetCurrent"><i class="fa fa-inr"></i>
+                {{DashboardCurrentVsNetCurrent.ExpireStockAmount | number : '1.2-2'}}</h3><small>Non Saleable</small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="page-header">
+    <h3 class="page-title">
+      Pareto Index
+    </h3>
+  </div>
+  <div class="row">
+    <div class="col-lg-12 grid-margin grid-margin-lg-0 stretch-card">
+      <div class="card">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-sm-6 text-right">
+              <div ngbDropdown>
+
+                <select name="showPOCountValues" id="showPOCountValues" class="form-control"
+                [(ngModel)]="showPOCountValue" (change)="showPOtypeChange(showPOCountValue)">
+                <option [value]="false">Count</option>
+                <option [value]="true">Amount</option>
+              </select>
+              </div>
+            </div>
+          </div>
+          <canvas baseChart [chartType]="'scatter'" [datasets]="scatterChartData" [options]="scatterChartOptions"
+            [colors]="scatterChartColors"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

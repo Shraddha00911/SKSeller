@@ -1,0 +1,47 @@
+<div class="container">
+    <div class="row mt6 fontsize-12">
+        <div class="col-sm-3">
+            <label>Sub Category</label>
+            <select id="subcategory" name="subcategory" class="form-control col-md-6 mg-b-10" [(ngModel)]="subcatid"
+                placeholder="Select subcategory" #subcategory="ngModel">
+                <option *ngFor="let subcategory of MappingsubcatList" [ngValue]="subcategory.SubCategoryId">
+                    {{subcategory.SubcategoryName}}
+                </option>
+            </select>
+        </div>
+        <div class="col-sm-3">
+            <label for="file" class="col-md-6"> file (.xlsx)</label>
+            <input type="file" (change)="onFileChange($event)" />
+        </div>
+        <div class="col-sm-2">
+            <br>
+            <button type="button" class="btn btn-raised btn-success mr-1 btn-lg" (click)="UploadCfr()"
+                [disabled]="!CfrPostList">
+                Upload
+            </button>
+        </div>
+        <div class="col-sm-2">
+            <br>
+            <button type="button" class="btn btn-raised btn-danger mr-1 btn-lg" (click)="reset()">
+                Reset
+            </button>
+        </div>
+    </div>
+    <br>
+    <div class="row mt6 fontsize-12">
+        <p-table [value]="CfrPostList">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>S No.</th>
+                    <th>ItemNumber</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-item  let-rowIndex="rowIndex">
+                <tr>
+                    <td>{{rowIndex+1}}</td>
+                    <td>{{item.ItemNumber}}</td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+</div>

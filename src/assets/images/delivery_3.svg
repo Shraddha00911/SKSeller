@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="34.159" height="28.709" viewBox="0 0 34.159 28.709">
+    <defs>
+        <style>
+            .cls-1{fill:#07485e}.cls-2{fill:#c48958}.cls-3{fill:#e3a76f}.cls-7{fill:#b4d2d7}
+        </style>
+    </defs>
+    <g id="delivery_3_" transform="translate(.001)">
+        <path id="Path_344" d="M433.329 30L432 31.908h5.338V30z" class="cls-1" transform="translate(-403.175 -30.002)"/>
+        <path id="Path_345" d="M192.331 91.276L191 94.452l12.409-1.27v-3.176h-8.739z" class="cls-2" transform="translate(-178.255 -86.195)"/>
+        <path id="Path_346" d="M56.078 91.276l-2.335-1.27H45v3.176l11.075 1.27z" class="cls-3" transform="translate(-42.002 -86.195)"/>
+        <path id="Path_347" d="M191 155.379h12.409v-15.37h-11.078z" class="cls-3" transform="translate(-178.255 -133.022)"/>
+        <path id="Path_348" fill="#f2d1a5" d="M45 140.009h11.078v15.37H45z" transform="translate(-42.002 -133.022)"/>
+        <path id="Path_349" fill="#9e6f46" d="M194.667 90.006h-2.335L191 92.864l1.334 2.858h2.335z" transform="translate(-178.255 -86.195)"/>
+        <path id="Path_350" d="M176 90.006h2.335v5.717H176z" class="cls-2" transform="translate(-164.255 -86.195)"/>
+        <path id="Path_351" fill="#87a0af" d="M215.741 30v21.4h-14.077l-.667.953.667.953h16.078V30z" transform="translate(-187.588 -30.002)"/>
+        <path id="Path_352" d="M0 366.993h14.077v1.907H0z" class="cls-7" transform="translate(-.001 -345.588)"/>
+        <ellipse id="Ellipse_29" cx="3.336" cy="3.176" class="cls-1" rx="3.336" ry="3.176" transform="translate(2.001 22.358)"/>
+        <path id="Path_353" fill="#e1ebf0" d="M61.338 411.994a1.272 1.272 0 1 0 1.334 1.271 1.305 1.305 0 0 0-1.334-1.271z" transform="translate(-56.002 -387.731)"/>
+        <ellipse id="Ellipse_30" cx="3.336" cy="3.176" fill="#03232e" rx="3.336" ry="3.176" transform="translate(19.479 22.358)"/>
+        <path id="Path_354" d="M323.322 411.994a1.272 1.272 0 1 0 1.335 1.271 1.305 1.305 0 0 0-1.335-1.271z" class="cls-7" transform="translate(-300.507 -387.731)"/>
+    </g>
+</svg>

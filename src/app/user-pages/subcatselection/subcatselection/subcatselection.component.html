@@ -1,0 +1,35 @@
+<div class="d-flex align-items-center auth px-0">
+    <div class="w-10">
+        <div class="row w-100 mx-0">
+            <div class="col-lg-5 offset-sm-3">
+                <!-- Set Subcategory  -->
+                <div class="login-form">
+                    <div class="auth-form-dark text-left py-3 px-4 px-sm-5">
+                        <form class="pt-3" name="sileInputForm" #subcatform="ngForm"
+                            (ngSubmit)="SetSubcateId(subcatform)">
+                                <div class="form-group">
+                                    <fieldset>
+                                        <legend>Select SubCategory</legend>
+                                        <select id="subcategoryid" name="subcategoryname" class="form-control col-md-6 mg-b-10"
+                                            [(ngModel)]="subcategoryobj" placeholder="Select subcategory"
+                                            #subcategory="ngModel">
+                                            <option *ngFor="let subcategory of MappingsubcatList"
+                                                [ngValue]="subcategory" >
+                                                {{subcategory.SubcategoryName}}
+                                            </option>
+                                        </select>
+                                    </fieldset>
+                                </div>
+                           
+                            <div class="mt-3">
+                                <button type="submit" class="btn btn-block btn-black btn-lg">
+                                    Set
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
