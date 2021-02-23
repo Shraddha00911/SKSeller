@@ -11,6 +11,8 @@ import { SubcatmappingService } from '../../../user-pages/services/subcatmapping
 //import * as FileSaver from 'file-saver';
 import {Table, TableModule} from 'primeng/table';
 
+import {DialogModule} from 'primeng/dialog';
+import {ConfirmDialogModule} from 'primeng/confirmdialog';
 @Component({
   selector: 'app-itemschemeuploader',
   templateUrl: './itemschemeuploader.component.html',
@@ -72,7 +74,7 @@ export class ItemschemeuploaderComponent implements OnInit {
   }
   navigateToDetail(item,event) {
 
-    this.router.navigate(['itemschemeuploadeddetails', {
+    this.router.navigate(['Itemschemeuploaderdetail', {
       Id: item.Id,
     }], { relativeTo: this.r.parent });
 

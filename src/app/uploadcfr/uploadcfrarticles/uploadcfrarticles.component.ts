@@ -21,6 +21,7 @@ export class UploadcfrarticlesComponent implements OnInit {
     })
   }
   onFileChange(ev) {
+
     let workBook = null;
     let jsonData = null;
     this.CfrPostList = null;
@@ -35,8 +36,17 @@ export class UploadcfrarticlesComponent implements OnInit {
         initial[name] = XLSX.utils.sheet_to_json(sheet);
         return initial;
       }, {});
-      const dataString = JSON.stringify(jsonData);
-      this.CfrPostList = jsonData.Sheet1;
+      //const dataString = JSON.stringify(jsonData);
+      if (jsonData.Sheet1 && jsonData.Sheet1[0].ItemNumber) {
+        this.CfrPostList = jsonData.Sheet1;
+      }
+      else {
+        this.CfrPostList = null;
+        workBook = null;
+        jsonData = null;
+        this.cfruploadfile = null;
+        alert("Sheet is not in correct format");
+      }
     };
     reader.readAsBinaryString(file);
   }
@@ -51,12 +61,11 @@ export class UploadcfrarticlesComponent implements OnInit {
       this.SubCatMappingService.UploadExcel(formData).subscribe(result => {
         // this.blocked = false;
         if (result) {
-          alert("Your Excel data is uploaded succesfully.")
-          
-        }
-        else {
-          alert("Your Excel data is Not uploaded.")
-          window.location.reload();
+          alert(result);
+          // window.location.reload();
+          this.CfrPostList = null;
+          this.subcatid = null;
+          this.cfruploadfile = null;
         }
       });
     }
@@ -66,6 +75,8 @@ export class UploadcfrarticlesComponent implements OnInit {
   }
 
   reset() {
-    window.location.reload();
+    this.CfrPostList = null;
+    this.subcatid = null;
+    this.cfruploadfile = null;
   }
 }

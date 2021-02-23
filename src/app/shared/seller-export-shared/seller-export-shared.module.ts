@@ -6,10 +6,15 @@ import { TableModule } from 'primeng/table';
 import { AccordionModule } from 'primeng/accordion';
 import { CalendarModule } from 'primeng/calendar';
 import { ConfirmationService, MessageService } from 'primeng/api';
+import { BlockUIModule } from 'primeng/blockui';
+import { ToastModule } from 'primeng/toast';
+import { DialogModule } from 'primeng/dialog';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { Checkbox, CheckboxModule } from 'primeng/checkbox';
 
 @NgModule({
   declarations: [
-    SpinnerComponent
+    SpinnerComponent,
   ],
   imports: [
     CommonModule,
@@ -17,13 +22,20 @@ import { ConfirmationService, MessageService } from 'primeng/api';
     TableModule,
     AccordionModule,
     CalendarModule,
-  ], 
+    BlockUIModule,
+    ToastModule,
+  ],
   exports: [
     FormsModule,
     SpinnerComponent,
     AccordionModule,
     CalendarModule,
     TableModule,
+    BlockUIModule,
+    ToastModule,
+    DialogModule,
+    ConfirmDialogModule,
+    CheckboxModule,
   ],
   providers: [
     ConfirmationService,

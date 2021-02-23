@@ -29,6 +29,12 @@ import { DonutChartComponent } from './shared/components/donut-chart/donut-chart
 import { UploadcfrarticlesComponent } from './uploadcfr/uploadcfrarticles/uploadcfrarticles.component';
 import { TableModule } from 'primeng/table';
 import { AccordionModule } from 'primeng/accordion';
+import { DialogModule } from 'primeng/dialog';
+import { BlockUIModule } from 'primeng/blockui';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { SpinnerComponent } from './shared/spinner/spinner.component';
+
+
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {

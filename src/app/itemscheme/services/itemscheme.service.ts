@@ -61,4 +61,5 @@ DeActivateFreebiesByDetailId(MasterId,data): Observable<any> {
 
   return this.http.get<any>(this.apiURL + '/api/ItemSchemeMaster/DeActivateFreebiesDetailId?MasterId=' + MasterId + '&DetailId=' + data.ItemSchemeDetailId);
 }
+
 }

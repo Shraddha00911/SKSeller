@@ -4,7 +4,6 @@
     <a class="sidebar-brand brand-logo-mini" routerLink="/dashboard">SK</a>
   </div>
   <ul class="nav">
-    
     <li class="nav-item menu-items" [ngClass]="{ 'active': dashboard.isActive }">
       <a class="nav-link" routerLink="/dashboard" routerLinkActive #dashboard="routerLinkActive">
         <span class="menu-icon">
@@ -34,7 +33,15 @@
         <span class="menu-icon">
           <i class="mdi mdi-speedometer"></i> 
         </span>
-        <span class="menu-title" translate> Upload Itemscheme</span>
+        <span class="menu-title" translate> Scheme Uploader</span>
+      </a>
+    </li>
+    <li class="nav-item menu-items" [ngClass]="{ 'active': Itemschememaster.isActive }">
+      <a class="nav-link" routerLink="/itemscheme/Itemschememaster" routerLinkActive #Itemschememaster="routerLinkActive">
+        <span class="menu-icon">
+          <i class="mdi mdi-speedometer"></i> 
+        </span>
+        <span class="menu-title" translate> Scheme Master </span>
       </a>
     </li>
      <!-- <li class="nav-item menu-items" [ngClass]="{'active' : buttons.isActive || dropdowns.isActive || typography.isActive }">
