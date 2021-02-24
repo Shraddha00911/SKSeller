@@ -57,7 +57,10 @@ export class DashboardService {
   
     return this.http.post<any>(this.apiURL + '/api/Seller/Pareto/'+type+'/'+itemnumber, object);
   }
-
+ GetOrderDetailExport(object,type){
+   debugger;
+  return this.http.post<any>(this.apiURL + '/api/Seller/OrderDetailExport/' + type,  object);
+ }
 
 }
 

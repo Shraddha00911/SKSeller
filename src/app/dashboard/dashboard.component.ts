@@ -5,6 +5,12 @@ import { MultiDataSet, Label, Colors } from 'ng2-charts';
 import { CityService } from '../shared/services/dashboard/city.service';
 import { DashboardService } from '../shared/services/dashboard/dashboard.service';
 import { SellerSalesDc } from './seller-sales-dc';
+import * as XLSX from 'xlsx';
+import * as FileSaver from 'file-saver';
+import { MessageService } from 'primeng/api';
+import { ExportServiceService } from '../shared/services/export-service.service';
+
+
 
 @Component({
   selector: 'app-dashboard',
@@ -273,7 +279,7 @@ export class DashboardComponent implements OnInit {
   Paretotype: any;
   itemnumber: any;
 
-  constructor(private router: Router, private cityservice: CityService, private dashboardservice: DashboardService) {
+  constructor(private router: Router, private cityservice: CityService, private dashboardservice: DashboardService, private exportService: ExportServiceService) {
     this.SearchData = {};
   }
   ngOnInit() {
@@ -570,6 +576,15 @@ export class DashboardComponent implements OnInit {
       this.POGRIRAmountChartDataLabels = ['PO', 'GR', "IR"];
     }
   }
+
+ExportOrderDetail(type){
+  this.dashboardservice.GetOrderDetailExport(this.SearchData,type).subscribe(res=>{
+    debugger;
+    this.exportService.exportAsExcelFile(res, 'result');
+  })
+}
+
+
 }
 
 

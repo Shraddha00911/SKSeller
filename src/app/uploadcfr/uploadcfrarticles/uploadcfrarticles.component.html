@@ -1,13 +1,14 @@
 <div class="container">
     <div class="row mt6 fontsize-12">
         <div class="col-sm-3">
-            <label>Sub Category</label>
-            <select id="subcategory" name="subcategory" class="form-control col-md-6 mg-b-10" [(ngModel)]="subcatid"
+            <br>
+            <h3>{{subcateName}}</h3>
+            <!-- <select id="subcategory" name="subcategory" class="form-control col-md-6 mg-b-10" [(ngModel)]="subcatid"
                 placeholder="Select subcategory" #subcategory="ngModel">
                 <option *ngFor="let subcategory of MappingsubcatList" [ngValue]="subcategory.SubCategoryId">
                     {{subcategory.SubcategoryName}}
                 </option>
-            </select>
+            </select> -->
         </div>
         <div class="col-sm-3">
             <label for="file" class="col-md-6"> file (.xlsx)</label>

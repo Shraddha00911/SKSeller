@@ -27,13 +27,14 @@
     </div>
   </div>
   <hr />
-  <div class="page-header">
-    <h3 class="page-title">
+  <div class="row w-100">
+    <div class="col-sm-9">
+      <h3 class="page-title">
       Catalogue : {{subcateName}}
-    </h3>
-    <div class="form-group my-2">
-      <label for="ware" class="col-md-6">Warehouse:</label>
-      <select id="ware" name="ware" class="form-control col-md-6" [(ngModel)]="Warehouseid" (change)="getCatlogData()">
+    </h3></div>
+    <div class="col-sm-1">Warehouse:</div>
+    <div class="col-sm-2 pr-0">
+      <select id="ware" name="ware" class="form-control" [(ngModel)]="Warehouseid" (change)="getCatlogData()">
         <option value="">--Select--</option>
         <option *ngFor="let w of WarehouseData" [ngValue]="w.WarehouseId">
           {{ w.WarehouseName }} {{w.CityName}}
@@ -305,25 +306,25 @@
                     <td><small>Amount</small></td>
                   </tr>
                   <tr>
-                    <td><button class="btn btn-warning btn-xs"><i class="fa fa-share-square-o"></i> Export</button></td>
+                    <td><button class="btn btn-warning btn-xs" (click)="ExportOrderDetail(1)"><i class="fa fa-share-square-o"></i> Export</button></td>
                     <td class="text-left">Pending</td>
                     <td>{{DashboardOrderStatusData.PendingOrdercount}}</td>
                     <td>{{DashboardOrderStatusData.PendingOrderAmount}}</td>
                   </tr>
                   <tr>
-                    <td><button class="btn btn-primary btn-xs"><i class="fa fa-share-square-o"></i> Export</button></td>
+                    <td><button class="btn btn-primary btn-xs" (click)="ExportOrderDetail(2)"><i class="fa fa-share-square-o"></i> Export</button></td>
                     <td class="text-left">Ready to dispatched</td>
                     <td>{{DashboardOrderStatusData.ReadytoDispatchOrdercount}}</td>
                     <td>{{DashboardOrderStatusData.ReadytoDispatchOrderAmount}}</td>
                   </tr>
                   <tr>
-                    <td><button class="btn btn-info btn-xs"><i class="fa fa-share-square-o"></i> Export</button></td>
+                    <td><button class="btn btn-info btn-xs" (click)="ExportOrderDetail(3)"><i class="fa fa-share-square-o"></i> Export</button></td>
                     <td class="text-left">Issued</td>
                     <td>{{DashboardOrderStatusData.IssuedOrdercount}}</td>
                     <td>{{DashboardOrderStatusData.IssuedOrderAmount}}</td>
                   </tr>
                   <tr>
-                    <td><button class="btn btn-danger btn-xs"><i class="fa fa-share-square-o"></i> Export</button></td>
+                    <td><button class="btn btn-danger btn-xs" (click)="ExportOrderDetail(4)"><i class="fa fa-share-square-o"></i> Export</button></td>
                     <td class="text-left">Shipped</td>
                     <td>{{DashboardOrderStatusData.ShippedOrdercount}}</td>
                     <td>{{DashboardOrderStatusData.ShippedOrderAmount}}</td>
@@ -331,25 +332,25 @@
 
 
                   <tr>
-                    <td><button class="btn btn-primary btn-xs"><i class="fa fa-share-square-o"></i> Export</button></td>
+                    <td><button class="btn btn-primary btn-xs" (click)="ExportOrderDetail(5)"><i class="fa fa-share-square-o"></i> Export</button></td>
                     <td class="text-left">Delivered</td>
                     <td>{{DashboardOrderStatusData.DeliveredOrdercount}}</td>
                     <td>{{DashboardOrderStatusData.DeliveredOrderAmount}}</td>
                   </tr>
                   <tr>
-                    <td><button class="btn btn-gray btn-xs"><i class="fa fa-share-square-o"></i> Export</button></td>
+                    <td><button class="btn btn-gray btn-xs" (click)="ExportOrderDetail(6)"><i class="fa fa-share-square-o"></i> Export</button></td>
                     <td class="text-left">Delivered Re-Dispatched</td>
                     <td>{{DashboardOrderStatusData.DeliveryRedispatchOrdercount}}</td>
                     <td>{{DashboardOrderStatusData.DeliveryRedispatchOrderAmount}}</td>
                   </tr>
                   <tr>
-                    <td><button class="btn btn-success btn-xs"><i class="fa fa-share-square-o"></i> Export</button></td>
+                    <td><button class="btn btn-success btn-xs" (click)="ExportOrderDetail(7)"><i class="fa fa-share-square-o"></i> Export</button></td>
                     <td class="text-left">Delivery Canceled/Poc</td>
                     <td>{{DashboardOrderStatusData.DeliveryCanceledOrdercount}}</td>
                     <td>{{DashboardOrderStatusData.DeliveryCanceledOrderAmount}}</td>
                   </tr>
                   <tr>
-                    <td><button class="btn btn-danger btn-xs"><i class="fa fa-share-square-o"></i> Export</button></td>
+                    <td><button class="btn btn-danger btn-xs" (click)="ExportOrderDetail(8)"><i class="fa fa-share-square-o"></i> Export</button></td>
                     <td class="text-left">Pre Canceled</td>
                     <td>{{DashboardOrderStatusData.PreCanceledOrdercount}}</td>
                     <td>{{DashboardOrderStatusData.PreCanceledOrderAmount}}</td>
@@ -473,12 +474,12 @@
       </div>
     </div>
   </div>
-  <div class="page-header">
+  <!-- <div class="page-header">
     <h3 class="page-title">
       Pareto Index
     </h3>
-  </div>
-  <div class="row">
+  </div> -->
+  <!-- <div class="row">
     <div class="col-lg-12 grid-margin grid-margin-lg-0 stretch-card">
       <div class="card">
         <div class="card-body">
@@ -499,5 +500,5 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
 </div>

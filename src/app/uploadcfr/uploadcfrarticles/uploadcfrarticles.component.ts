@@ -12,13 +12,16 @@ export class UploadcfrarticlesComponent implements OnInit {
   CfrPostList: any;
   cfruploadfile: any;
   subcatid: any;
+  subcateName: any;
   constructor(private SubCatMappingService: SubcatmappingService) { }
 
   ngOnInit(): void {
 
-    this.SubCatMappingService.GetAllSubCatMapping().subscribe(result => {
-      this.MappingsubcatList = result;
-    })
+    // this.SubCatMappingService.GetAllSubCatMapping().subscribe(result => {
+    //   this.MappingsubcatList = result;
+    // })
+    this.subcatid = parseInt(localStorage.getItem('SubCatId'));
+    this.subcateName = localStorage.getItem('subcateName');
   }
   onFileChange(ev) {
 
