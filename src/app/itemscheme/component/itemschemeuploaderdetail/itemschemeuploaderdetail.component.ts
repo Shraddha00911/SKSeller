@@ -40,7 +40,16 @@ export class ItemschemeuploaderdetailComponent implements OnInit {
     { field: 'FreeChildItemCompanyStockcode', header: 'Stockcode' },
     { field: 'ErrorMessage', header: 'Error' },
   ];
+  subcateid:number;
+  subcateName:string;
   ngOnInit() {
+    this.subcateid = parseInt(localStorage.getItem('SubCatId'));
+    this.subcateName = localStorage.getItem('subcateName');
+
+    if (!this.subcateid) {
+      this.router.navigateByUrl('/user-pages/subcatselection');
+    }
+
     this.r.params.subscribe(param => {
       if (param && param.Id > 0) {
         this.blocked = true;

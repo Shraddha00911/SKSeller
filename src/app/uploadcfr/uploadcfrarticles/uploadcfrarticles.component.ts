@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SubcatmappingService } from 'src/app/user-pages/services/subcatmapping.service';
 import * as XLSX from "xlsx";
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-uploadcfrarticles',
@@ -13,7 +14,8 @@ export class UploadcfrarticlesComponent implements OnInit {
   cfruploadfile: any;
   subcatid: any;
   subcateName: any;
-  constructor(private SubCatMappingService: SubcatmappingService) { }
+
+  constructor(private router: Router, private r: ActivatedRoute,private SubCatMappingService: SubcatmappingService) { }
 
   ngOnInit(): void {
 
@@ -22,6 +24,10 @@ export class UploadcfrarticlesComponent implements OnInit {
     // })
     this.subcatid = parseInt(localStorage.getItem('SubCatId'));
     this.subcateName = localStorage.getItem('subcateName');
+
+    if (!this.subcatid) {
+      this.router.navigateByUrl('/user-pages/subcatselection');
+    }
   }
   onFileChange(ev) {
 

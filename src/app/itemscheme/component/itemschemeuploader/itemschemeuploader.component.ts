@@ -43,16 +43,24 @@ export class ItemschemeuploaderComponent implements OnInit {
     { field: 'CreatedDate', header: 'CreatedDate' },
     { field: 'CreatedBy', header: 'CreatedBy' },
     { field: 'ApprovedBy', header: 'ApprovedBy' },
-    { field: 'ApprovedDate', header: 'Approved' },
-    { field: 'IsApproved', header: 'IsApproved' },
+    // { field: 'ApprovedDate', header: 'Approved' },
+    // { field: 'IsApproved', header: 'IsApproved' },
     { field: 'UploadedSheetUrl', header: 'Sheet' },
     { field: 'ItemSchemeMasterId', header: 'GeneratedId' }
 
   ];
+  subcateid:number;
+  subcateName:string;
   constructor(private router: Router, private r: ActivatedRoute, private cityService: CityService, private ItemSchemeService: ItemschemeService,  private messageService: MessageService, public SubcatmappingService: SubcatmappingService) { this.searchModel = {};this.baseURL = environment.apiBaseUrl; }
 
   ngOnInit() {
-    
+    this.subcateid = parseInt(localStorage.getItem('SubCatId'));
+    this.subcateName = localStorage.getItem('subcateName');
+
+    if (!this.subcateid) {
+      this.router.navigateByUrl('/user-pages/subcatselection');
+    }
+    //this.SubSubCategoryId=this.subcateid;
     this.FromDate = new Date();
     this.ToDate = new Date(this.FromDate.setHours(0, 0, 0, 0));
     this.ToDate = new Date();

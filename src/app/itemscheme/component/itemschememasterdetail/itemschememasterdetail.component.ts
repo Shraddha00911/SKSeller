@@ -67,8 +67,20 @@ export class ItemschememasterdetailComponent implements OnInit {
   MasterId: number;
   baseURL: any;
   ItemSchemeMasterDc: any;
+  subcateid:number;
+  subcateName:string;
   constructor(private router: Router, private r: ActivatedRoute, private ItemschemeService: ItemschemeService, private confirmationService: ConfirmationService, private messageService: MessageService,) { this.baseURL = environment.apiBaseUrl; }
   ngOnInit() {
+
+    this.subcateid = parseInt(localStorage.getItem('SubCatId'));
+    this.subcateName = localStorage.getItem('subcateName');
+
+    if (!this.subcateid) {
+      this.router.navigateByUrl('/user-pages/subcatselection');
+    }
+
+
+
     this.r.params.subscribe(param => {
       if (param && param.Id > 0) {
         this.ItemschemMaster = param;

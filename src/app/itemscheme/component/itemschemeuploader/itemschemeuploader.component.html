@@ -18,7 +18,7 @@
                                     <div>
                                         <label for="SelectCity"><b>Select City: </b><b
                                                 style="color: red;">*</b></label><br>
-                                        <select id="city" name="city" class="form-control" [(ngModel)]="Cityid">
+                                        <select id="city" name="city" class="form-control" [(ngModel)]="Cityid" >
                                             <option [value]="">--Select City--</option>
                                             <option *ngFor="let city of cities" [ngValue]="city.Cityid">
                                                 {{city.CityName}}

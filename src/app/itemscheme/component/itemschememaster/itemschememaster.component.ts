@@ -38,13 +38,25 @@ export class ItemschememasterComponent implements OnInit {
     { field: 'CreatedDate', header: 'CreatedDate' },
     { field: 'CreatedBy', header: 'CreatedBy' },
     { field: 'IsActive', header: 'IsActive' },
-    { field: 'ApprovedBy', header: 'ApprovedBy' },
-    { field: 'ApprovedDate', header: 'ApprovedDate' },
-    { field: 'IsApproved', header: 'IsApproved' },
-    { field: 'UploadedSheetUrl', header: 'UploadedSheetUrl' }
+    // { field: 'ApprovedBy', header: 'ApprovedBy' },
+    // { field: 'ApprovedDate', header: 'ApprovedDate' },
+    // { field: 'IsApproved', header: 'IsApproved' },
+    { field: 'UploadedSheetUrl', header: 'Sheet' }
   ];
+  subcateid:number;
+  subcateName:string;
   constructor(private router: Router, private r: ActivatedRoute, private cityService: CityService, private ItemschemeService: ItemschemeService,  private messageService: MessageService, public SubcatmappingService: SubcatmappingService) { this.searchModel = {};this.baseURL = environment.apiBaseUrl; }
-  ngOnInit() {
+  ngOnInit() 
+  {
+    this.subcateid = parseInt(localStorage.getItem('SubCatId'));
+    this.subcateName = localStorage.getItem('subcateName');
+
+    if (!this.subcateid) {
+      this.router.navigateByUrl('/user-pages/subcatselection');
+    }
+
+
+
     this.cityService.GetAllCity().subscribe(results => {
       this.cities = results;
     });

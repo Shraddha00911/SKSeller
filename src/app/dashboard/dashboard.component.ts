@@ -10,14 +10,16 @@ import * as FileSaver from 'file-saver';
 import { MessageService } from 'primeng/api';
 import { ExportServiceService } from '../shared/services/export-service.service';
 
-
-
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
 })
 export class DashboardComponent implements OnInit {
+
+  maxDate="2022-01-01";
+  minDate:'2021-01-01';
+
   subcateid: any;
   CityList: any;
   cityid: any;
@@ -136,20 +138,7 @@ export class DashboardComponent implements OnInit {
     }
   };
 
-  // doughnutPieChartColors = [
-  //   {
-  //     backgroundColor: [
-  //       'rgba(255, 99, 132, 0.2)',
-  //       'rgba(54, 162, 235, 0.2)',
-  //       'rgba(255, 206, 86, 0.2)'
-  //     ],
-  //     borderColor: [
-  //       'rgba(255,99,132,1)',
-  //       'rgba(54, 162, 235, 1)',
-  //       'rgba(255, 206, 86, 1)'
-  //     ]
-  //   }
-  // ];
+  
 
   doughnutPieChartColors = [
     {
@@ -278,7 +267,6 @@ export class DashboardComponent implements OnInit {
   POAvgTAT: any;
   Paretotype: any;
   itemnumber: any;
-
   constructor(private router: Router, private cityservice: CityService, private dashboardservice: DashboardService, private exportService: ExportServiceService) {
     this.SearchData = {};
   }
@@ -290,21 +278,24 @@ export class DashboardComponent implements OnInit {
     if (!this.subcateid) {
       this.router.navigateByUrl('/user-pages/subcatselection');
     }
+
     this.SearchData.FromDate = new Date();
     this.SearchData.FromDate = new Date(this.SearchData.FromDate.setHours(0, 0, 0, 0));
     this.SearchData.ToDate = new Date();
+    
     this.cityservice.GetAllCity().subscribe(x => {
       this.CityList = x;
     });
   }
 
   GetCityWarehouse() {
+    if (this.cityid > 0) {
+      this.cityservice.getWareHouseByCity(this.cityid).subscribe(x => {
 
-    this.cityservice.getWareHouseByCity(this.cityid).subscribe(x => {
-
-      this.WarehouseData = x;
-      this.Warehouseid = this.WarehouseData[0].WarehouseId;
-    });
+        this.WarehouseData = x;
+        this.Warehouseid = this.WarehouseData[0].WarehouseId;
+      });
+    } else { alert("Please city ") }
   }
 
 
@@ -338,23 +329,25 @@ export class DashboardComponent implements OnInit {
       this.POGRIRAmountChartDataLabels = null;
       this.isLoading = true;
       //CatelogueItemTotalActive
-      this.dashboardservice.GetCatelogueItemWithCFR(this.cityid, this.Warehouseid).subscribe((x: any) => {
-        this.isLoading = false;
-        this.CatelogueItemTotalActiveChartData = [
-          {
-            data: [x.TotalItem, x.Activeitem]
-          }
-        ];
-        this.CatelogueItemTotalActiveChartLabels = ['Total Item', "Active Item"];
-        this.CatelogueItemWithCFRChartData = [
-          {
-            data: [x.TotalItem, x.CFRItem]
-          }
-        ];
-        this.CatelogueItemWithCFRChartLabels = ['Total Item', "CFR Active Item"];
-      }, error => {
-        alert('Something went wrong in Get Catelogue Item With CFR');
-      });
+      if (this.Warehouseid > 0) {
+        this.dashboardservice.GetCatelogueItemWithCFR(this.cityid, this.Warehouseid).subscribe((x: any) => {
+          this.isLoading = false;
+          this.CatelogueItemTotalActiveChartData = [
+            {
+              data: [x.TotalItem, x.Activeitem]
+            }
+          ];
+          this.CatelogueItemTotalActiveChartLabels = ['Total Item', "Active Item"];
+          this.CatelogueItemWithCFRChartData = [
+            {
+              data: [x.TotalItem, x.CFRItem]
+            }
+          ];
+          this.CatelogueItemWithCFRChartLabels = ['Total Item', "CFR Active Item"];
+        }, error => {
+          alert('Something went wrong in Get Catelogue Item With CFR');
+        });
+      }
       //GetSellerSales
       this.isLoading = true;
       this.dashboardservice.GetSellerSales(this.cityid).subscribe((x: any) => {
@@ -482,7 +475,8 @@ export class DashboardComponent implements OnInit {
 
   getCatlogData() {
 
-    if (this.Warehouseid) {
+    if (this.Warehouseid) 
+    {
       this.CatelogueItemWithCFRChartData = null;
       this.CatelogueItemWithCFRChartData = null;
       this.CatelogueItemTotalActiveChartData = null;
@@ -577,12 +571,13 @@ export class DashboardComponent implements OnInit {
     }
   }
 
-ExportOrderDetail(type){
-  this.dashboardservice.GetOrderDetailExport(this.SearchData,type).subscribe(res=>{
-    debugger;
-    this.exportService.exportAsExcelFile(res, 'result');
-  })
-}
+  ExportOrderDetail(type) {
+    this.dashboardservice.GetOrderDetailExport(this.SearchData, type).subscribe(res => {
+    
+      this.exportService.exportAsExcelFile(res, 'result');
+    })
+  }
+  
 
 
 }
