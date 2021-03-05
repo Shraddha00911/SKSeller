@@ -31,8 +31,7 @@
                                 <div class="form-group">
                                     <label for="projectinput7">Brands<span style="color:red"> *</span></label>
                                     <br>
-                                    <select id="brand" name="brand" class="form-control" [(ngModel)]="SubSubCategoryId"
-                                        (change)="onBrandChange()">
+                                    <select id="brand" name="brand" class="form-control" [(ngModel)]="SubSubCategoryId">
                                         <option value="0" disabled>--select--</option>
                                         <option *ngFor="let brand of BrandList" [ngValue]="brand.SubSubCategoryId">
                                             {{ brand.SubSubCategoryName }}
@@ -45,6 +44,9 @@
                                 <div class="form-group" style="margin-left: 20px;">
                                     <label> </label>
                                     <div>
+                                        <button type="button" class="btn btn-raised btn-raised btn-primary" pButton
+                                        (click)="onBrandChange();" label="Search"></button>
+
                                         <button type="button" class="btn btn-raised btn-raised btn-warning" pButton
                                             (click)="Reset();" label="Reset" [disabled]="!Cityid"></button>
                                     </div>

@@ -139,17 +139,21 @@ export class ItemschemeuploaderComponent implements OnInit {
       this.ItemSchemeService.UploadExcel(formData).subscribe(result => {
         alert(result);
         this.blocked = false;
-        if (result && result != "Your Excel data is uploaded succesfully.") {
-          this.messageService.add({ severity: 'success', summary: 'File  uploaded successfully!', detail: '' });
+        if (result && result == "Your Excel data is uploaded succesfully.") 
+        {
+          this.messageService.add({ severity: 'success', summary: result.toString(), detail: '' });
           window.location.reload();
         }
-        else {
+        else 
+        {
           this.messageService.add({ severity: 'error', summary: 'problem in upload file!', detail: '' });
           window.location.reload();
         }
       });
     }
-    else if(this.file.nativeElement.files.length == 0){      this.messageService.add({ severity: 'error', summary: 'Select file mandatory field!', detail: '' });
+    else if(this.file.nativeElement.files.length == 0)
+    {    
+        this.messageService.add({ severity: 'error', summary: 'Select file mandatory field!', detail: '' });
   }
     else {
       this.messageService.add({ severity: 'error', summary: 'Select all mandatory field!', detail: '' });
