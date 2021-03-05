@@ -16,13 +16,11 @@ import { ExportServiceService } from '../shared/services/export-service.service'
   styleUrls: ['./dashboard.component.scss'],
 })
 export class DashboardComponent implements OnInit {
-
-  maxDate="2022-01-01";
-  minDate:'2021-01-01';
-
   subcateid: any;
   CityList: any;
   cityid: any;
+  blocked: boolean;
+
   lineChartData = [{
     label: '# of Votes',
     data: [10, 19, 3, 5, 2, 3],
@@ -282,15 +280,22 @@ export class DashboardComponent implements OnInit {
     this.SearchData.FromDate = new Date();
     this.SearchData.FromDate = new Date(this.SearchData.FromDate.setHours(0, 0, 0, 0));
     this.SearchData.ToDate = new Date();
-    
+    this.blocked=true;
+
     this.cityservice.GetAllCity().subscribe(x => {
+
       this.CityList = x;
+      this.blocked=false;
+
     });
   }
 
   GetCityWarehouse() {
     if (this.cityid > 0) {
+      this.blocked=true;
+
       this.cityservice.getWareHouseByCity(this.cityid).subscribe(x => {
+        this.blocked=false;
 
         this.WarehouseData = x;
         this.Warehouseid = this.WarehouseData[0].WarehouseId;
@@ -303,6 +308,8 @@ export class DashboardComponent implements OnInit {
     this.SearchData.CityId = this.cityid;
     if (this.cityid > 0 && this.Search) {
       //Catelog
+      this.blocked=true;
+
       this.CatelogueItemTotalActiveChartData = null;
       this.CatelogueItemTotalActiveChartLabels = null;
       this.SellerSales = null;
@@ -332,6 +339,8 @@ export class DashboardComponent implements OnInit {
       if (this.Warehouseid > 0) {
         this.dashboardservice.GetCatelogueItemWithCFR(this.cityid, this.Warehouseid).subscribe((x: any) => {
           this.isLoading = false;
+          this.blocked = false;
+
           this.CatelogueItemTotalActiveChartData = [
             {
               data: [x.TotalItem, x.Activeitem]
@@ -350,7 +359,9 @@ export class DashboardComponent implements OnInit {
       }
       //GetSellerSales
       this.isLoading = true;
+
       this.dashboardservice.GetSellerSales(this.cityid).subscribe((x: any) => {
+
         this.isLoading = false;
         this.SellerSales = x
       }, error => {
@@ -358,10 +369,11 @@ export class DashboardComponent implements OnInit {
       });
       //DashboardPoStatusCountDc
       this.isLoading = true;
+      this.showPOCountValue = false;
+
       this.dashboardservice.GetDashboardPoStatusCount(this.SearchData).subscribe((x: any) => {
         this.isLoading = false;
         this.DashboardPoStatusCount = x;
-        this.showPOCountValue = false;
 
         this.DashboardPoStatusCountChartData = [
           {
@@ -444,6 +456,7 @@ export class DashboardComponent implements OnInit {
 
       //POGRIRCount
       this.isLoading = true;
+      this.showPOGRIRAmountValue=false;
       this.dashboardservice.GetPOGRIRCount(this.SearchData).subscribe((x: any) => {
         this.isLoading = false;
 
@@ -455,9 +468,10 @@ export class DashboardComponent implements OnInit {
           }
         ];
         this.POGRIRCountChartDataLabels = ['PO', 'GR', "IR"];
+        this.blocked=false;
 
       }, error => {
-        alert('Something went wrong in Get Seller Sales');
+        alert('Something went wrong in  PO GR IR Count');
       });
 
       //Pareto
@@ -470,19 +484,23 @@ export class DashboardComponent implements OnInit {
       // });
 
 
-    } else { alert("select city"); }
+    } else { alert("select city");      this.blocked=false;
+  }
   }
 
   getCatlogData() {
 
     if (this.Warehouseid) 
-    {
+    {      this.blocked=true;
+
       this.CatelogueItemWithCFRChartData = null;
       this.CatelogueItemWithCFRChartData = null;
       this.CatelogueItemTotalActiveChartData = null;
       this.CatelogueItemTotalActiveChartLabels = null;
       this.dashboardservice.GetCatelogueItemWithCFR(this.cityid, this.Warehouseid).subscribe((x: any) => {
         this.isLoading = false;
+        this.blocked=false;
+
         //CatelogueItemTotalActive
         this.CatelogueItemTotalActiveChartData = [
           {
@@ -507,7 +525,7 @@ export class DashboardComponent implements OnInit {
   }
 
   showPOtypeChange(valuetype) {
-
+debugger;
     this.DashboardPoStatusCountChartData = null;
     this.DashboardPoStatusCountDataLabels = null;
     this.DashboardPoStatusAmountChartData = null;
@@ -519,8 +537,8 @@ export class DashboardComponent implements OnInit {
       this.showPOCountValue = false;
     }
 
-    if (this.showPOCountValue == false) {
-
+    if (this.showPOCountValue == false) 
+    {
       this.DashboardPoStatusCountChartData = [
         {
           data: [this.DashboardPoStatusCount.PendingPOCount, this.DashboardPoStatusCount.PartialPOCount, this.DashboardPoStatusCount.ClosedPOCount, this.DashboardPoStatusCount.CancelPOCount]
@@ -572,8 +590,11 @@ export class DashboardComponent implements OnInit {
   }
 
   ExportOrderDetail(type) {
+    this.blocked=true;
+
     this.dashboardservice.GetOrderDetailExport(this.SearchData, type).subscribe(res => {
-    
+      this.blocked=false;
+
       this.exportService.exportAsExcelFile(res, 'result');
     })
   }

@@ -14,6 +14,8 @@ export class LoginComponent implements OnInit {
   password: string;
   isFormSubmitted: boolean;
   isLoading: boolean;
+  blocked: boolean;
+
   constructor(private loginService: LoginService
     , private localStorageService: LocalStogareService
     , private router: Router) { }
@@ -32,21 +34,29 @@ export class LoginComponent implements OnInit {
     }
   }
   onSubmit(mobileForm: NgForm) {
-    
+ 
     this.isLoading = true;
+    this.blocked=true;
+
     this.loginService.userAuthentication(this.Username, this.password, '1').subscribe((x: any) => {
-      alert('login successful');
+      // alert('login successful');
+    
+
       this.isLoading = false;
+      this.blocked=false;
+
       this.localStorageService.set(this.localStorageService.tokenKey, x);
       localStorage.setItem('sellertokenData', JSON.stringify(x));
       localStorage.setItem('selleruserToken', x.access_token);
       localStorage.setItem('userid', x.userid);
       localStorage.setItem('userName', x.userName);
       localStorage.setItem('SubCatId', "0");
-      //this.router.navigateByUrl('/dashboard');
       this.router.navigateByUrl('/user-pages/subcatselection');
     }, error => {
-      alert('login error');
+  
+      alert(error.error.error_description);
+      this.blocked=false;
+
     });
   }
 }

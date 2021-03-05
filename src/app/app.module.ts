@@ -33,6 +33,7 @@ import { DialogModule } from 'primeng/dialog';
 import { BlockUIModule } from 'primeng/blockui';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { SpinnerComponent } from './shared/spinner/spinner.component';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 
 
@@ -70,6 +71,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     CarouselModule,
     NgxMapboxGLModule,
     TableModule,
+    BlockUIModule,
+    ProgressSpinnerModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

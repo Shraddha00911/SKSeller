@@ -11,6 +11,8 @@ import { ToastModule } from 'primeng/toast';
 import { DialogModule } from 'primeng/dialog';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { Checkbox, CheckboxModule } from 'primeng/checkbox';
+import {ProgressSpinnerModule} from 'primeng/progressspinner';
+
 
 @NgModule({
   declarations: [
@@ -36,6 +38,7 @@ import { Checkbox, CheckboxModule } from 'primeng/checkbox';
     DialogModule,
     ConfirmDialogModule,
     CheckboxModule,
+    ProgressSpinnerModule
   ],
   providers: [
     ConfirmationService,

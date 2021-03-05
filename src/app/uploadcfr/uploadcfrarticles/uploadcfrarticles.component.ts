@@ -14,8 +14,9 @@ export class UploadcfrarticlesComponent implements OnInit {
   cfruploadfile: any;
   subcatid: any;
   subcateName: any;
+  blocked: boolean;
 
-  constructor(private router: Router, private r: ActivatedRoute,private SubCatMappingService: SubcatmappingService) { }
+  constructor(private router: Router, private r: ActivatedRoute, private SubCatMappingService: SubcatmappingService) { }
 
   ngOnInit(): void {
 
@@ -30,6 +31,7 @@ export class UploadcfrarticlesComponent implements OnInit {
     }
   }
   onFileChange(ev) {
+    this.blocked = true;
 
     let workBook = null;
     let jsonData = null;
@@ -45,7 +47,6 @@ export class UploadcfrarticlesComponent implements OnInit {
         initial[name] = XLSX.utils.sheet_to_json(sheet);
         return initial;
       }, {});
-      //const dataString = JSON.stringify(jsonData);
       if (jsonData.Sheet1 && jsonData.Sheet1[0].ItemNumber) {
         this.CfrPostList = jsonData.Sheet1;
       }
@@ -53,25 +54,29 @@ export class UploadcfrarticlesComponent implements OnInit {
         this.CfrPostList = null;
         workBook = null;
         jsonData = null;
-        this.cfruploadfile = null;
+        this.cfruploadfile = null; this.blocked = false;
+
         alert("Sheet is not in correct format");
       }
     };
+    this.blocked = false;
+
     reader.readAsBinaryString(file);
   }
 
   UploadCfr() {
-
+    debugger;
     if (this.subcatid > 0 && this.cfruploadfile) {
+
       let formData = new FormData();
       formData.append('xlsfile', this.cfruploadfile);
       formData.append('SubCatId', this.subcatid);
-      // this.blocked = true;
+      this.blocked = true;
       this.SubCatMappingService.UploadExcel(formData).subscribe(result => {
-        // this.blocked = false;
+        this.blocked = false;
         if (result) {
           alert(result);
-          // window.location.reload();
+          window.location.reload();
           this.CfrPostList = null;
           this.subcatid = null;
           this.cfruploadfile = null;

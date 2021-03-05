@@ -252,7 +252,7 @@
           <div class="row">
             <div class="col-sm-2 pt2"><img src="assets/images/money_1.svg" /></div>
             <div class="col-sm-6">
-              <h3>{{POFillRate.fillrate}} % </h3><small>Fill Rate</small>
+              <h3 *ngIf="POFillRate">{{POFillRate.fillrate}} % </h3><small>Fill Rate</small>
             </div>
             <div class="col-sm-3 text-right pt4" *ngIf="POFillRate">
               <span *ngIf="POFillRate.Signfillrate > 0">
@@ -275,7 +275,7 @@
               <h3 *ngIf="POAvgTAT">{{POAvgTAT.POAvgTAT}} <sup>Hrs</sup></h3><small>Tat
                 (Purchase)</small>
             </div>
-            <div class="col-sm-3 text-right pt4"><i class="fa fa-long-arrow-up text-success"></i> 2.3%</div>
+            <!-- <div class="col-sm-3 text-right pt4"><i class="fa fa-long-arrow-up text-success"></i> 2.3%</div> -->
           </div>
         </div>
       </div>
@@ -399,7 +399,7 @@
               <h3 *ngIf="DashboardOrderAvgTAT">{{DashboardOrderAvgTAT.OrderAvgTAT}} <sup>Hrs</sup></h3><small>Tat
                 (Operation)</small>
             </div>
-            <div class="col-sm-3 text-right pt2"><i class="fa fa-long-arrow-up text-success"></i> 2.3%</div>
+            <!-- <div class="col-sm-3 text-right pt2"><i class="fa fa-long-arrow-up text-success"></i> 2.3%</div> -->
           </div>
         </div>
       </div>
@@ -503,3 +503,8 @@
     </div>
   </div> -->
 </div>
+<p-blockUI [blocked]="blocked"></p-blockUI>
+
+<p-progressSpinner *ngIf="blocked"
+    [style]="{width: '60px', height: '60px', position: 'absolute', left: '48%', top: '48%'}" strokeWidth="8"
+    fill="#EEEEEE" animationDuration=".5s"></p-progressSpinner>

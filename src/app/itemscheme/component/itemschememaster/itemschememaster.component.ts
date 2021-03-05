@@ -68,7 +68,7 @@ export class ItemschememasterComponent implements OnInit {
     })
   }
   onBrandChange() {
-    debugger;
+   
     if (this.Cityid > 0 && this.SubSubCategoryId > 0) 
     {
       this.searchModel.SubsubCategoryid = this.SubSubCategoryId;

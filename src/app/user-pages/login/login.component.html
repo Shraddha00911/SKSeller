@@ -55,4 +55,10 @@
     </div>
   </div>
 </div>
-<app-spinner *ngIf="isLoading"></app-spinner> 
+
+<!-- <app-spinner *ngIf="isLoading"></app-spinner>  -->
+<p-blockUI [blocked]="blocked"></p-blockUI>
+
+<p-progressSpinner *ngIf="blocked"
+    [style]="{width: '60px', height: '60px', position: 'absolute', left: '48%', top: '48%'}" strokeWidth="8"
+    fill="#EEEEEE" animationDuration=".5s"></p-progressSpinner>

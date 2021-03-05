@@ -1,6 +1,6 @@
 <div class="container">
     <div class="row mt6 fontsize-12">
-        <!-- <p-toast [style]="{marginTop: '10px'}"></p-toast> -->
+        <p-toast [style]="{marginTop: '10px'}"></p-toast>
         <p-confirmDialog #cd appendTo="body" header="Confirmation">
             <p-footer class="ovelFieldForm">
                 <button type="button" class="btn btn-raised btn-primary mr-1" (click)="cd.reject()">No</button>
@@ -69,8 +69,8 @@
                                 </td>
                                 <td *ngFor="let col of columns">
                                     <span *ngIf="(col.field=='IsActive')">
-                                        <button type="button" class="btn btn-raised btn-raised btn-danger" pButton
-                                            (click)="DeactiveItemSchem(rowData);" label="{{rowData[col.field]}}"
+                                        <button type="button" id="as" class="btn btn-raised btn-raised btn-danger"
+                                            pButton (click)="DeactiveItemSchem(rowData);" label="{{rowData[col.field]}}"
                                             [disabled]="rowData[col.field]==false"></button>
                                     </span>
 
@@ -80,14 +80,14 @@
                                 </td>
                                 <td>
                                     <span>
-                                        <button type="button" class="btn btn-raised btn-raised btn-sucess" pButton
-                                            (click)="opendisplayFreeBies(rowData);" label="FreeBies"></button>
+                                        <button type="button" id="ass" class="btn btn-raised btn-raised btn-success"
+                                            pButton (click)="opendisplayFreeBies(rowData);" label="FreeBies"></button>
                                     </span>
                                 </td>
                                 <td>
                                     <span>
-                                        <button type="button" class="btn btn-raised btn-raised btn-default" pButton
-                                            (click)="opendisplaySlab(rowData);" label="Slab"></button>
+                                        <button type="button" id="aes" class="btn btn-raised btn-raised btn-info"
+                                            pButton (click)="opendisplaySlab(rowData);" label="Slab"></button>
                                     </span>
                                 </td>
 
@@ -179,8 +179,9 @@
         </p-dialog>
         <br />
         <p-blockUI [blocked]="blocked"></p-blockUI>
-        <!-- <p-progressSpinner *ngIf="blocked"
-    [style]="{width: '50px', height: '50px', position: 'absolute', left: '48%', top: '48%'}" strokeWidth="8"
-    fill="#EEEEEE" animationDuration=".5s"></p-progressSpinner> -->
+
+        <p-progressSpinner *ngIf="blocked"
+            [style]="{width: '60px', height: '60px', position: 'absolute', left: '48%', top: '48%'}" strokeWidth="8"
+            fill="#EEEEEE" animationDuration=".5s"></p-progressSpinner>
     </div>
 </div>

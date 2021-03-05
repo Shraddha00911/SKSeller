@@ -8,11 +8,11 @@ const EXCEL_EXTENSION = '.xlsx';
 import { CityService } from '../../../shared/services/dashboard/city.service';
 import { ItemschemeService } from '../../services/itemscheme.service';
 import { SubcatmappingService } from '../../../user-pages/services/subcatmapping.service';
-//import * as FileSaver from 'file-saver';
-import {Table, TableModule} from 'primeng/table';
+import { Table, TableModule } from 'primeng/table';
+import * as FileSaver from 'file-saver';
 
-import {DialogModule} from 'primeng/dialog';
-import {ConfirmDialogModule} from 'primeng/confirmdialog';
+import { DialogModule } from 'primeng/dialog';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 @Component({
   selector: 'app-itemschemeuploader',
   templateUrl: './itemschemeuploader.component.html',
@@ -27,7 +27,7 @@ export class ItemschemeuploaderComponent implements OnInit {
   SubSubCategoryId: any;
   cities = [];
   isInvalid: boolean;
-  itemschemeuploadedList:any;
+  itemschemeuploadedList: any;
   blocked: boolean;
   TotalRecords: any;
   searchModel: any;
@@ -49,9 +49,9 @@ export class ItemschemeuploaderComponent implements OnInit {
     { field: 'ItemSchemeMasterId', header: 'GeneratedId' }
 
   ];
-  subcateid:number;
-  subcateName:string;
-  constructor(private router: Router, private r: ActivatedRoute, private cityService: CityService, private ItemSchemeService: ItemschemeService,  private messageService: MessageService, public SubcatmappingService: SubcatmappingService) { this.searchModel = {};this.baseURL = environment.apiBaseUrl; }
+  subcateid: number;
+  subcateName: string;
+  constructor(private router: Router, private r: ActivatedRoute, private cityService: CityService, private ItemSchemeService: ItemschemeService, private messageService: MessageService, public SubcatmappingService: SubcatmappingService) { this.searchModel = {}; this.baseURL = environment.apiBaseUrl; }
 
   ngOnInit() {
     this.subcateid = parseInt(localStorage.getItem('SubCatId'));
@@ -70,7 +70,7 @@ export class ItemschemeuploaderComponent implements OnInit {
     });
 
     this.SubcatmappingService.GetAllBrand().subscribe(result => {
-    
+
       this.BrandList = result;
 
     })
@@ -81,7 +81,7 @@ export class ItemschemeuploaderComponent implements OnInit {
     this.Cityid = null;
     this.itemschemeuploadedList = [];
   }
-  navigateToDetail(item,event) {
+  navigateToDetail(item, event) {
 
     this.router.navigate(['Itemschemeuploaderdetail', {
       Id: item.Id,
@@ -126,6 +126,7 @@ export class ItemschemeuploaderComponent implements OnInit {
   }
   uploadFile(Cityid, SubSubCategoryId) {
 
+    
     if (Cityid > 0 && SubSubCategoryId > 0 && this.file.nativeElement.files.length > 0) {
       var currentTimeInSeconds = Math.floor(Date.now() / 1000);
       let formData = new FormData();
@@ -139,8 +140,8 @@ export class ItemschemeuploaderComponent implements OnInit {
         alert(result);
         this.blocked = false;
         if (result && result != "Your Excel data is uploaded succesfully.") {
-          //this.messageService.add({ severity: 'success', summary: 'File  uploaded successfully!', detail: '' });
-          //window.location.reload();
+          this.messageService.add({ severity: 'success', summary: 'File  uploaded successfully!', detail: '' });
+          window.location.reload();
         }
         else {
           this.messageService.add({ severity: 'error', summary: 'problem in upload file!', detail: '' });
@@ -148,6 +149,8 @@ export class ItemschemeuploaderComponent implements OnInit {
         }
       });
     }
+    else if(this.file.nativeElement.files.length == 0){      this.messageService.add({ severity: 'error', summary: 'Select file mandatory field!', detail: '' });
+  }
     else {
       this.messageService.add({ severity: 'error', summary: 'Select all mandatory field!', detail: '' });
     }
@@ -221,8 +224,8 @@ export class ItemschemeuploaderComponent implements OnInit {
     const data: Blob = new Blob([buffer], {
       type: EXCEL_TYPE
     });
-   // FileSaver.saveAs(data, fileName + '_export_' + new Date().getTime() + EXCEL_EXTENSION);
+    FileSaver.saveAs(data, fileName + '_export_' + new Date().getTime() + EXCEL_EXTENSION);
 
   }
- 
+
 }
