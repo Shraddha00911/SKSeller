@@ -29,15 +29,15 @@ export class ItemschememasterdetailComponent implements OnInit {
   OfferIds: string;
 
   ItemschemMasterDetailscols = [
-    { field: "ItemNumber", header: "Number" },
+    { field: "ItemNumber", header: "Number"  },
     { field: "CompanyCode", header: "Code" },
     { field: "CompanyStockCode", header: "StockCode" },
     { field: "ItemName", header: "Name" },
     { field: "MRP", header: "MRP" },
-    { field: "PTR", header: "PTR %" },
-    { field: "BaseScheme", header: "BaseScheme %" },
-    { field: "onvoiceMargin", header: "onvoiceMargin" },
-    { field: "offinvoicemargin", header: "offinvoicemargin" },
+    { field: "PTR", header: "PTR" },
+    { field: "BaseScheme", header: "BaseScheme" },
+    { field: "onvoiceMargin", header: "onvoice" },
+    { field: "offinvoicemargin", header: "offinvoice" },
     { field: "IsActive", header: "IsActive" }
   ];
   ItemschemFreebiescols = [
@@ -78,13 +78,14 @@ export class ItemschememasterdetailComponent implements OnInit {
     if (!this.subcateid) {
       this.router.navigateByUrl('/user-pages/subcatselection');
     }
-
-
-
     this.r.params.subscribe(param => {
       if (param && param.Id > 0) {
         this.ItemschemMaster = param;
+        this.blocked = true;
+
         this.ItemschemeService.getItemSchemeMasterById(param.Id).subscribe(x => {
+          this.blocked = false;
+
           if (x && x.Id > 0) {
             this.BrandName = x.BrandName;
             this.MasterId = x.Id;

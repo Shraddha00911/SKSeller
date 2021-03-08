@@ -31,12 +31,12 @@ export class ItemschemeuploaderdetailComponent implements OnInit {
   baseURL: any;
   Detailscolumns = [
     { field: 'ItemName', header: 'Item' },
-    { field: 'CompanyCode', header: 'CompanyCode' },
+    { field: 'CompanyCode', header: 'Code' },
     { field: 'MRP', header: 'MRP' },
-    { field: 'CompanyStockCode', header: 'CompanyStockCode' },
+    { field: 'CompanyStockCode', header: 'StockCode' },
     { field: 'BaseScheme', header: 'BaseScheme' },
     { field: 'PTR', header: 'PTR' },
-    { field: 'FreeChildItem', header: 'FreeChildItem' },
+    { field: 'FreeChildItem', header: 'Child' },
     { field: 'FreeChildItemCompanyStockcode', header: 'Stockcode' },
     { field: 'ErrorMessage', header: 'Error' },
   ];

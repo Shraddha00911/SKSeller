@@ -1,3 +1,6 @@
 tr:hover{background-color:white !important}
 
 
+:host ::ng-deep td, td{
+    word-break: break-all !important;
+}
