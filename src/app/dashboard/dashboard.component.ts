@@ -20,7 +20,7 @@ export class DashboardComponent implements OnInit {
   CityList: any;
   cityid: any;
   blocked: boolean;
-
+  totalMarginPercent: any;
   lineChartData = [{
     label: '# of Votes',
     data: [10, 19, 3, 5, 2, 3],
@@ -136,7 +136,7 @@ export class DashboardComponent implements OnInit {
     }
   };
 
-  
+
 
   doughnutPieChartColors = [
     {
@@ -258,57 +258,116 @@ export class DashboardComponent implements OnInit {
   showPOCountValue: boolean = false;
   showPOGRIRAmountValue: boolean = false;
   SearchData: any;
+  BrandEarnData: any;
+
   WarehouseData: any;
-  Warehouseid: any;
+  // Warehouseid: any;
   subcateName: string;
   POFillRate: any;
   POAvgTAT: any;
   Paretotype: any;
   itemnumber: any;
+  selectedCities: any;
+  cityids: any;
+  Searchcityids: any;
+  warehouse: any;
+  export: any;
+  IsExportable: boolean;
+  LedgerList: any;
+  SelectedMarginCities: any;
   constructor(private router: Router, private cityservice: CityService, private dashboardservice: DashboardService, private exportService: ExportServiceService) {
     this.SearchData = {};
+    this.BrandEarnData = {};
+
+    this.Searchcityids = {};
   }
   ngOnInit() {
 
     this.subcateid = parseInt(localStorage.getItem('SubCatId'));
     this.subcateName = localStorage.getItem('subcateName');
 
+
     if (!this.subcateid) {
       this.router.navigateByUrl('/user-pages/subcatselection');
     }
 
+    this.IsExportable = JSON.parse(localStorage.getItem('IsExportable'));
+
+
     this.SearchData.FromDate = new Date();
     this.SearchData.FromDate = new Date(this.SearchData.FromDate.setHours(0, 0, 0, 0));
     this.SearchData.ToDate = new Date();
-    this.blocked=true;
+
+    // this.SearchData.StartDate = new Date();
+    // this.SearchData.StartDate = new Date(this.SearchData.StartDate.setHours(0, 0, 0, 0));
+    // this.SearchData.EndDate = new Date();
+    this.SearchData.SubCatId = this.subcateid;
+    this.blocked = true;
 
     this.cityservice.GetAllCity().subscribe(x => {
 
       this.CityList = x;
-      this.blocked=false;
+      this.blocked = false;
 
     });
   }
 
   GetCityWarehouse() {
-    if (this.cityid > 0) {
-      this.blocked=true;
 
-      this.cityservice.getWareHouseByCity(this.cityid).subscribe(x => {
-        this.blocked=false;
-
+    this.DashboardCurrentVsNetCurrent = null;
+    this.CatelogueItemTotalActiveChartData = null;
+    this.CatelogueItemTotalActiveChartLabels = null;
+    this.SellerSales = null;
+    this.DashboardPoStatusCount = null;
+    this.DashboardOrderStatusDataChartData = null;
+    this.DashboardOrderStatusDataLabels = null;
+    this.DashboardOrderStatusData = null;
+    this.DashboardOrderFillRate = null;
+    this.POFillRate = null;
+    this.POAvgTAT = null;
+    this.DashboardOrderAvgTAT = null;
+    this.DashboardCurrentVsNetCurrentChartData = null;
+    this.DashboardCurrentVsNetCurrentLabels = null;
+    this.CatelogueItemWithCFRChartData = null;
+    this.CatelogueItemWithCFRChartData = null;
+    this.DashboardPoStatusCountChartData = null;
+    this.DashboardPoStatusCountDataLabels = null;
+    this.DashboardPoStatusAmountChartData = null;
+    this.DashboardPoStatusAmountDataLabels = null;
+    this.POGRIRData = null;
+    this.POGRIRCountChartData = null;
+    this.POGRIRCountChartDataLabels = null;
+    this.POGRIRAmountChartData = null;
+    this.POGRIRAmountChartDataLabels = null;
+    this.CatelogueItemTotalActiveChartData = null;
+    this.CatelogueItemTotalActiveChartLabels = null;
+    let cityids = [];
+    for (var i in this.selectedCities) {
+      cityids.push(this.selectedCities[i].Cityid)
+    }
+    if (cityids) {
+      this.SearchData.CityIds = cityids;
+      this.cityids = cityids;
+      this.Searchcityids.cityids = cityids;
+      this.blocked = true;
+      this.dashboardservice.GetWarehouseByCityids(this.Searchcityids).subscribe(x => {
+        this.blocked = false;
         this.WarehouseData = x;
-        this.Warehouseid = this.WarehouseData[0].WarehouseId;
+        // this.Warehouseid = this.WarehouseData[0].WareHouseId;
+        this.cityid = this.WarehouseData[0].Cityid;
+
       });
     } else { alert("Please city ") }
   }
 
 
   Search() {
-    this.SearchData.CityId = this.cityid;
-    if (this.cityid > 0 && this.Search) {
+
+    if (this.cityid > 0 && this.Search && this.SearchData.CityIds.length > 0) {
       //Catelog
-      this.blocked=true;
+      this.blocked = true;
+      this.DashboardCurrentVsNetCurrent = null;
+      this.DashboardOrderStatusData = null;
 
       this.CatelogueItemTotalActiveChartData = null;
       this.CatelogueItemTotalActiveChartLabels = null;
@@ -318,7 +377,6 @@ export class DashboardComponent implements OnInit {
       this.DashboardOrderStatusDataLabels = null;
       this.DashboardOrderFillRate = null;
       this.POFillRate = null;
-
       this.POAvgTAT = null;
       this.DashboardOrderAvgTAT = null;
       this.DashboardCurrentVsNetCurrentChartData = null;
@@ -335,33 +393,10 @@ export class DashboardComponent implements OnInit {
       this.POGRIRAmountChartData = null;
       this.POGRIRAmountChartDataLabels = null;
       this.isLoading = true;
-      //CatelogueItemTotalActive
-      if (this.Warehouseid > 0) {
-        this.dashboardservice.GetCatelogueItemWithCFR(this.cityid, this.Warehouseid).subscribe((x: any) => {
-          this.isLoading = false;
-          this.blocked = false;
 
-          this.CatelogueItemTotalActiveChartData = [
-            {
-              data: [x.TotalItem, x.Activeitem]
-            }
-          ];
-          this.CatelogueItemTotalActiveChartLabels = ['Total Item', "Active Item"];
-          this.CatelogueItemWithCFRChartData = [
-            {
-              data: [x.TotalItem, x.CFRItem]
-            }
-          ];
-          this.CatelogueItemWithCFRChartLabels = ['Total Item', "CFR Active Item"];
-        }, error => {
-          alert('Something went wrong in Get Catelogue Item With CFR');
-        });
-      }
       //GetSellerSales
       this.isLoading = true;
-
-      this.dashboardservice.GetSellerSales(this.cityid).subscribe((x: any) => {
-
+      this.dashboardservice.GetSellerSales(this.SearchData).subscribe((x: any) => {
         this.isLoading = false;
         this.SellerSales = x
       }, error => {
@@ -382,7 +417,7 @@ export class DashboardComponent implements OnInit {
         ];
         this.DashboardPoStatusCountDataLabels = ["PendingPO", 'PartialPO', "ClosedPO", 'CancelPO'];
       }, error => {
-        alert('Something went wrong in Get Seller Sales');
+        alert('Something went wrong in PoStatusCount');
       });
       //DashboardOrderStatusData
       this.isLoading = true;
@@ -391,10 +426,10 @@ export class DashboardComponent implements OnInit {
         this.DashboardOrderStatusData = x;
         this.DashboardOrderStatusDataChartData = [
           {
-            data: [x.PendingOrdercount, x.ReadytoDispatchOrdercount, x.IssuedOrdercount, x.ShippedOrdercount, x.DeliveredOrdercount, x.DeliveryRedispatchOrdercount, x.DeliveryCanceledOrdercount, x.PreCanceledOrdercount]
+            data: [x.PendingOrdercount, x.ReadytoDispatchOrdercount, x.IssuedOrdercount, x.ShippedOrdercount, x.DeliveryRedispatchOrdercount, x.DeliveryCanceledOrdercount, x.PreCanceledOrdercount]
           }
         ];
-        this.DashboardOrderStatusDataLabels = ['Pending', "RTD", 'Issued', "Shipped", 'Delivered', "DRedispatch", "DCanceled", "Pre Canceled"];
+        this.DashboardOrderStatusDataLabels = ['Pending', "RTD", 'Issued', "Shipped", "DelRedispatch", "DelCanceled", "Pre Canceled"];
       }, error => {
         alert('Something went wrong in Get Dashboard Order Status Data');
       });
@@ -456,7 +491,7 @@ export class DashboardComponent implements OnInit {
 
       //POGRIRCount
       this.isLoading = true;
-      this.showPOGRIRAmountValue=false;
+      this.showPOGRIRAmountValue = false;
       this.dashboardservice.GetPOGRIRCount(this.SearchData).subscribe((x: any) => {
         this.isLoading = false;
 
@@ -468,11 +503,12 @@ export class DashboardComponent implements OnInit {
           }
         ];
         this.POGRIRCountChartDataLabels = ['PO', 'GR', "IR"];
-        this.blocked=false;
+        this.blocked = false;
 
       }, error => {
         alert('Something went wrong in  PO GR IR Count');
       });
+      this.GetMargin();
 
       //Pareto
       // this.isLoading = true;
@@ -484,23 +520,22 @@ export class DashboardComponent implements OnInit {
       // });
 
 
-    } else { alert("select city");      this.blocked=false;
+    } else {
+      alert("select city"); this.blocked = false;
+    }
   }
-  }
 
-  getCatlogData() {
+  getCatlogData(warehouse) {
 
-    if (this.Warehouseid) 
-    {      this.blocked=true;
-
+    if (warehouse.WareHouseId) {
+      this.blocked = true;
       this.CatelogueItemWithCFRChartData = null;
       this.CatelogueItemWithCFRChartData = null;
       this.CatelogueItemTotalActiveChartData = null;
       this.CatelogueItemTotalActiveChartLabels = null;
-      this.dashboardservice.GetCatelogueItemWithCFR(this.cityid, this.Warehouseid).subscribe((x: any) => {
+      this.dashboardservice.GetCatelogueItemWithCFR(warehouse.Cityid, warehouse.WareHouseId).subscribe((x: any) => {
         this.isLoading = false;
-        this.blocked=false;
-
+        this.blocked = false;
         //CatelogueItemTotalActive
         this.CatelogueItemTotalActiveChartData = [
           {
@@ -511,10 +546,10 @@ export class DashboardComponent implements OnInit {
         //Fill rate
         this.CatelogueItemWithCFRChartData = [
           {
-            data: [x.TotalItem, x.CFRItem]
+            data: [x.TotalCFRItem, x.CFRItem]
           }
         ];
-        this.CatelogueItemWithCFRChartLabels = ['Total Item', "Active Item"];
+        this.CatelogueItemWithCFRChartLabels = ['Total CFR Item', "Active Item"];
       }, error => {
         alert('Something went wrong in Get Catelogue Item With CFR');
       });
@@ -525,7 +560,7 @@ export class DashboardComponent implements OnInit {
   }
 
   showPOtypeChange(valuetype) {
-debugger;
+
     this.DashboardPoStatusCountChartData = null;
     this.DashboardPoStatusCountDataLabels = null;
     this.DashboardPoStatusAmountChartData = null;
@@ -537,8 +572,7 @@ debugger;
       this.showPOCountValue = false;
     }
 
-    if (this.showPOCountValue == false) 
-    {
+    if (this.showPOCountValue == false) {
       this.DashboardPoStatusCountChartData = [
         {
           data: [this.DashboardPoStatusCount.PendingPOCount, this.DashboardPoStatusCount.PartialPOCount, this.DashboardPoStatusCount.ClosedPOCount, this.DashboardPoStatusCount.CancelPOCount]
@@ -559,7 +593,7 @@ debugger;
 
 
   showPOGRIRChange(valuetype) {
-    debugger;
+
     this.POGRIRCountChartData = null;
     this.POGRIRCountChartDataLabels = null;
     this.POGRIRAmountChartData = null;
@@ -590,18 +624,107 @@ debugger;
   }
 
   ExportOrderDetail(type) {
-    this.blocked=true;
+    this.blocked = true;
 
     this.dashboardservice.GetOrderDetailExport(this.SearchData, type).subscribe(res => {
-      this.blocked=false;
+      this.blocked = false;
 
       this.exportService.exportAsExcelFile(res, 'result');
     })
   }
-  
+
+  SalesExport() {
+    this.blocked = true;
+
+    this.dashboardservice.GetSalesExport(this.SearchData).subscribe(res => {
+      this.blocked = false;
+
+      this.exportService.exportAsExcelFile(res, 'result');
+    })
+  }
+  CatelogueItemExport() {
+
+    if (this.warehouse.Cityid > 0 && this.warehouse.WareHouseId > 0) {
+      this.blocked = true;
+      this.dashboardservice.CatelogueItemExport(this.warehouse.Cityid, this.warehouse.WareHouseId).subscribe(res => {
+        this.blocked = false;
+        this.exportService.exportAsExcelFile(res, 'ItemExport');
+      })
+    }
 
 
+  }
+  CatalogCFRExport() {
+    if (this.warehouse.Cityid > 0 && this.warehouse.WareHouseId > 0) {
+      this.dashboardservice.CatalogCFRExport(this.warehouse.Cityid, this.warehouse.WareHouseId).subscribe(res => {
+        this.blocked = false;
+        this.exportService.exportAsExcelFile(res, 'CFRExport');
+      })
+    }
+
+  }
+
+
+  POFillRateExport() {
+    this.blocked = true;
+
+    this.dashboardservice.GetPOFillRateExport(this.SearchData).subscribe(res => {
+      this.blocked = false;
+
+      this.exportService.exportAsExcelFile(res, 'result');
+    })
+  }
+  OrderFillRateExport() {
+    this.blocked = true;
+
+    this.dashboardservice.GetOrderFillRateExport(this.SearchData).subscribe(res => {
+      this.blocked = false;
+
+      this.exportService.exportAsExcelFile(res, 'result');
+    })
+  }
+  // StockDetailExport(warehouse){
+  //   if(warehouse==undefined||warehouse==""){
+  //     alert("Select Warehouse")
+  //     return;
+  //   }
+  //   this.dashboardservice.StockDetailExport(warehouse.WareHouseId).subscribe(result=>{
+  //     this.exportService.exportAsExcelFile(result, 'StockDetail');
+  //   })
+  // }
+  GetMargin() {
+    let cityids = [];
+    for (var i in this.selectedCities) {
+      cityids.push(this.selectedCities[i].Cityid)
+    }
+    
+    if (cityids.length > 0 && this.subcateid > 0) {
+      this.SearchData.CityIds = cityids;
+
+      this.BrandEarnData.StartDate = this.SearchData.FromDate;
+      this.BrandEarnData.EndDate = this.SearchData.ToDate;
+      this.BrandEarnData.SubCatId=this.SearchData.SubCatId;
+      this.BrandEarnData.CityIds=this.SearchData.CityIds;
+      this.blocked = true;
+      this.dashboardservice.GetBrandLedger(this.BrandEarnData).subscribe((x: any) => {
+        console.log(x)
+        this.blocked = false;
+        this.LedgerList = x;
+      }, error => {
+        this.blocked = false;
+
+        alert('Something went wrong ');
+      });
+    }
+
+  }
+  // getTotal(arr) {
+  //   let total = 0;
+  //   for (let data of arr) {
+  //     total += data.MarginPercent;
+  //   }
+  //   return total
+  // }
 }
-
 
 

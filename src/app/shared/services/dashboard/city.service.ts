@@ -15,10 +15,14 @@ export class CityService {
     return this.http.get<any[]>(this.apiURL + '/api/Warehouse/GetActiveWarehouseCity');
   }
 
-  getWareHouseByCity(cityId): Observable<any> {
+  // getWareHouseByCity(cityId): Observable<any> {
    
-    return this.http.get<any>(this.apiURL + '/api/Warehouse/GetWarehouseCity?cityid=' + cityId);
-  }
+  //   return this.http.get<any>(this.apiURL + '/api/Warehouse/GetWarehouseCity?cityid=' + cityId);
+  // }
+
+  getAllPagePermission(): Observable<any[]>{
+    return  this.http.get<any[]>(this.apiURL+'/api/usersroles/GetAllPagePermission');
+   }
 }
 
 

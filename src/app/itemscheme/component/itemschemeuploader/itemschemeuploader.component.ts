@@ -36,13 +36,13 @@ export class ItemschemeuploaderComponent implements OnInit {
   ToDate: any;
   minimumDate: any;
   columns = [
-    { field: 'BrandName', header: 'BrandName' },
-    { field: 'StartDate', header: 'StartDate' },
-    { field: 'EndDate', header: 'EndDate' },
+    { field: 'BrandName', header: 'Brand' },
+    { field: 'StartDate', header: 'Start' },
+    { field: 'EndDate', header: 'End' },
     { field: 'StatusType', header: 'Status' },
-    { field: 'CreatedDate', header: 'CreatedDate' },
-    { field: 'CreatedBy', header: 'CreatedBy' },
-    { field: 'ApprovedBy', header: 'ApprovedBy' },
+    { field: 'CreatedDate', header: 'Created' },
+    // { field: 'CreatedBy', header: 'CreatedBy' },
+    // { field: 'ApprovedBy', header: 'ApprovedBy' },
     // { field: 'ApprovedDate', header: 'Approved' },
     // { field: 'IsApproved', header: 'IsApproved' },
     { field: 'UploadedSheetUrl', header: 'Sheet' },
@@ -137,7 +137,7 @@ export class ItemschemeuploaderComponent implements OnInit {
       formData.append('EndDate', this.ToDate);
       this.blocked = true;
       this.ItemSchemeService.UploadExcel(formData).subscribe(result => {
-        alert(result);
+       // alert(result);
         this.blocked = false;
         if (result && result == "Your Excel data is uploaded succesfully.") 
         {

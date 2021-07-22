@@ -7,6 +7,7 @@ import { ItemschememasterdetailComponent } from './component/itemschememasterdet
 import { RouterModule, Routes } from '@angular/router';
 import { SellerExportSharedModule } from '../shared/seller-export-shared/seller-export-shared.module';
 
+
 const routes: Routes = [
   { path: 'Itemschemeuploader', component: ItemschemeuploaderComponent },
   { path: 'Itemschemeuploaderdetail', component: ItemschemeuploaderdetailComponent },
@@ -18,7 +19,7 @@ const routes: Routes = [
     ItemschemeuploaderComponent,
     ItemschemeuploaderdetailComponent,
     ItemschememasterComponent,
-    ItemschememasterdetailComponent
+    ItemschememasterdetailComponent,
   ],
   imports: [
     CommonModule,     

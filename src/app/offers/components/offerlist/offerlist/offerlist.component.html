@@ -1,0 +1,640 @@
+<div class="page-header">
+
+</div>
+<div class="col-12 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <p-toast [style]="{marginTop: '10px'}"></p-toast>
+            <h4 class="card-title" >Offer : {{subcateName}}</h4>
+            <div class="row">
+                <div class="col-lg-2">
+                    <div class="form-group">
+                        <div>
+                            <label for="SelectCity"><b>Select City: </b><b style="color: red;">*</b></label><br>
+                            <select id="city" name="city" class="form-control sel dr br" [(ngModel)]="Cityid">
+                                <option [value]="">--Select City--</option>
+                                <option *ngFor="let city of cities" [ngValue]="city.Cityid">
+                                    {{city.CityName}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <!-- <div class="form-group">
+                        <label for="projectinput7">Brands<span style="color:red"> *</span></label>
+                        <br>
+                        <select id="brand" name="brand" class="form-control" [(ngModel)]="SubSubCategoryId">
+                            <option value="0" disabled>--select--</option>
+                            <option *ngFor="let brand of BrandList" [ngValue]="brand.SubSubCategoryId">
+                                {{ brand.SubSubCategoryName }}
+                            </option>
+                        </select>
+                    </div> -->
+                </div>
+                <div class="col-lg-2">
+                    <div class="form-group" style="margin-left: 20px;">
+                        <label> </label>
+                        <div>
+                            <button type="button" class="btn btn-raised btn-raised btn-primary" pButton
+                                (click)="onCityChange();" [disabled]="!Cityid" label="Search"></button>
+
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <label> </label>
+                    <div>
+                        <button type="button" class="btn btn-raised btn-raised btn-success" pButton
+                            (click)="addoffer();" label="addoffer"></button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="col-12 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <p-table #table1 [paginator]="true" [rows]="20" [value]="offerLists" [lazy]="true" [columns]="columns"
+                [totalRecords]="TotalRecords" (onLazyLoad)="load($event);" [scrollable]="false" scrollHeight="70vh"
+                text-align: center>
+               
+                <ng-container>
+                    <ng-template pTemplate="header" let-columns>
+                        <tr>
+                            <th style="text-align: center">
+                                Sno.
+                            </th>
+                            <th *ngFor="let col of columns">
+                                {{col.header}}
+                            </th>
+                            <th style="text-align: center">
+                                Action
+                            </th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-rowData let-columns="columns" let-i="rowIndex">
+                        <tr style="text-align: center">
+                            <td>
+                                {{i+1}}
+                            </td>
+                            <td *ngFor="let col of columns">
+                                <span *ngIf="(col.field=='start') || (col.field=='CreatedDate')|| (col.field=='end')">
+                                    {{rowData[col.field] | date : "dd/MM/yyyy h:mm a"}}
+                                </span>
+                                <span *ngIf="(col.field!='start') && (col.field!='CreatedDate')&& (col.field!='end')">
+                                    {{rowData[col.field]}}
+                                </span>
+                            </td>
+                            <td>
+                                <span>
+                                    <button type="button" id="ass" class="btn btn-raised btn-raised btn-success" pButton
+                                        (click)="ShowDetails(rowData);" label="Details"></button>
+                                </span>
+                            </td>
+                        </tr>
+                    </ng-template>
+                </ng-container>
+            </p-table>
+            <br />
+        </div>
+    </div>
+</div>
+<!-- 
+<p-dialog header="Detail" [(visible)]="displayOfferDetail" appendTo="body" [style]="{width: '1040px', height: '450px'}">
+    <div class="panel panel-info" *ngIf="ShowDetail">
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">Offer Name</label>
+                    <div class="col-sm-6" style="padding-top: 10px;">
+                        {{ShowDetail.OfferName}}
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">
+                        Active/Deactive<b style="color: red; margin-left: 10px">*</b>
+                    </label>
+                    <div class="col-sm-6" style="padding-top: 10px;">
+                        {{ShowDetail.IsActive}}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">Offer On </label>
+                    <div class="col-sm-6" style="padding-top: 10px;">
+                        {{ShowDetail.OfferOn}}
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">User Type<b
+                            style="color: red; margin-left: 10px">*</b></label>
+                    <div class="col-sm-6" style="padding-top: 10px;">
+
+
+                        All Customer
+                            
+                      
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">Discount on:</label>
+                    <div class="col-sm-6" style="padding-top: 10px;">
+                        {{ShowDetail.BillDiscountOfferOn}}
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6" *ngIf="ShowDetail.BillDiscountOfferOn=='WalletPoint'">
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">WalletType:</label>
+                    <div class="col-sm-6" style="padding-top: 10px;">
+                        {{ShowDetail.WalletType}}
+
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div *ngIf="ShowDetail.OfferOn == 'BillDiscount'">
+
+            <div class="row">
+                <div class="col-md-6" *ngIf="ShowDetail.BillDiscountOfferOn=='WalletPoint'">
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label">WalletPoint:</label>
+                        <div class="col-sm-6" style="padding-top: 10px;">
+                            {{ShowDetail.BillDiscountWallet}}
+
+                            
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col-md-6" *ngIf="ShowDetail.BillDiscountOfferOn=='Percentage'">
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label">Percentage:</label>
+                        <div class="col-sm-6" style="padding-top: 10px;">
+
+                            {{ShowDetail.DiscountPercentage}}
+
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label">Min Bill Amount Limit :</label>
+                        <div class="col-sm-6" style="padding-top: 10px;">
+                            {{ShowDetail.BillAmount}}
+                           
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label">Max Bill Amount Limit :</label>
+                        <div class="col-sm-6" style="padding-top: 10px;">
+                            {{ShowDetail.MaxBillAmount}}
+
+                                                    </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label">Maximum Discount</label>
+                        <div class="col-sm-6" style="padding-top: 10px;">
+                            {{ShowDetail.MaxDiscount}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">Use Other Offer</label>
+                    <div class="col-sm-6" style="padding-top: 10px;">
+
+                        {{ShowDetail.IsUseOtherOffer}}
+
+                        
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">Multi Time Use</label>
+                    <div class="col-sm-6" style="padding-top: 10px;">
+
+                        {{ShowDetail.IsMultiTimeUse}}
+
+                        
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4" *ngIf="ShowDetail.IsMultiTimeUse">
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">Offer Use Count</label>
+                    <div class="col-sm-6" style="padding-top: 10px;">
+                        {{ShowDetail.OfferUseCount}}
+
+                        
+                       
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">LineItem:</label>
+                    <div class="col-sm-6" style="padding-top: 10px;">
+                        {{ShowDetail.LineItem}}
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">Description:</label>
+                    <div class="col-sm-6" style="padding-top: 10px;">
+                        {{ShowDetail.Description}}
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</p-dialog> -->
+
+<p-dialog header="Detail" [(visible)]="displayOfferDetail" appendTo="body" [style]="{width: '1040px', height: '450px'}">
+    <div class="panel panel-info" *ngIf="AddOffer">
+        <div class="col-12 grid-margin">
+
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">Offer Name</label>
+                            <div class="col-sm-6">
+                                <input id="offername" type="text" class="form-control" [(ngModel)]="AddOffer.OfferName"
+                                    placeholder="Enter Offer Name" [disabled]="true" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">WarehouseName</label>
+                            <div class="col-sm-6">
+                                <input id="offername" type="text" class="form-control" [(ngModel)]="AddOffer.WarehouseName"
+                                    [disabled]="true" />
+                            </div>
+                        </div>
+                    </div>
+
+                    
+
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">
+                                Active/Deactive<b style="color: red; margin-left: 10px">*</b>
+                            </label>
+                            <div class="col-sm-6">
+                                <select class="form-control dr br" id="act" [(ngModel)]="AddOffer.IsActive">
+                                    <option value="">Select Status</option>
+                                    <option value="true">Active</option>
+                                    <option value="false">Deactive</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">Offer On </label>
+                            <div class="col-sm-6">
+                                <select class="form-control" id="site-namf" [(ngModel)]="AddOffer.OfferOn"
+                                    [disabled]="true">
+                                    <option value="">Select Offer On</option>
+                                    <option value="Item">Item</option>
+                                    <option value="BillDiscount">Bill Discount</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">Select App Type<b
+                                    style="color: red; margin-left: 10px">*</b></label>
+                            <div class="col-sm-6">
+                                <select class="selectSection form-control" id="OfferAppType"
+                                    [(ngModel)]="AddOffer.OfferAppType" [disabled]="true">
+                                    <option value="">--Select App Type--</option>
+                                    <option value="Both">Both</option>
+                                    <option value="Retailer App">Retailer App</option>
+                                    <option value="Sales App">Sales App</option>
+                                    <option value="Distributor App">Distributor App</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Freebies -->
+                <div *ngIf="AddOffer.OfferOn == 'Item'">
+                    <div class="row">
+
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label">
+                                    Main Item:<b style="color: red; margin-left: 10px">*</b></label>
+                                <div class="col-sm-6">
+                                    <input id="itemname" type="text" class="form-control"
+                                        [(ngModel)]="AddOffer.itemname" [disabled]="true" />
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label">Free Item:<b
+                                        style="color: red; margin-left: 10px">*</b></label>
+                                <div class="col-sm-6">
+                                    <input id="FreeItemNames" type="text" class="form-control"
+                                        [(ngModel)]="AddOffer.FreeItemName" [disabled]="true" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+
+
+
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label">Stock Hit:<b
+                                        style="color: red; margin-left: 10px">*</b></label>
+                                <div class="col-sm-6">
+                                    <label for="site-dame">From FreeStock:</label><br />
+                                    <input class="form-control"
+                                        type="radio" [value]="true"  [(ngModel)]="AddOffer.IsDispatchedFreeStock" [disabled]="true">
+                                    <label style="margin-top: 25px;" for="site-nadme" >From CurrentStock:</label>
+                                    <input 
+                                        class="form-control" type="radio" [value]="false"
+                                        [(ngModel)]="AddOffer.IsDispatchedFreeStock" [disabled]="true"/>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label">
+                                    On MinOrderQuantity:<b style="color: red; margin-left: 10px">*</b></label>
+                                <div class="col-sm-6">
+                                    <input id="MinOrderQuantity" type="number" min="1" class="form-control"
+                                        [(ngModel)]="AddOffer.MinOrderQuantity" placeholder="Enter MinOrderQuantity"
+                                        [disabled]="true" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label">
+                                    Item Limit:<b style="color: red; margin-left: 10px">*</b></label>
+                                <div class="col-sm-6">
+                                    <input id="FreeItemLimit" type="number" min="1" class="form-control"
+                                        [(ngModel)]="AddOffer.FreeItemLimit" placeholder="Enter FreeItemLimit"
+                                        [disabled]="true" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label">No. Of free Quantity:<b
+                                        style="color: red; margin-left: 10px">*</b></label>
+
+                                <div class="col-sm-6">
+                                    <input id="site-name" type="number" class="form-control"
+                                        [(ngModel)]="AddOffer.NoOffreeQuantity"
+                                        placeholder="Enter No. Of free Item Quantity:" typeof="number"
+                                        [disabled]="true" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /BillDiscount/ -->
+                <div *ngIf="AddOffer.OfferOn == 'BillDiscount'">
+                    <div class="row">
+                        <div class="col-md-6">
+
+                        </div>
+                        <div class="col-md-6">
+
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label">Discount on:</label>
+                                <div class="col-sm-6">
+                                    <select class="form-control" id="offerType"
+                                        [(ngModel)]="AddOffer.BillDiscountOfferOn" [disabled]="true">
+                                        <option value="">----Choose Discount Type---</option>
+                                        <option value="Percentage">Percentage</option>
+                                        <option value="WalletPoint">WalletPoint</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- <div class="col-md-6" *ngIf="AddOffer.BillDiscountOfferOn=='WalletPoint'">
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label">WalletType:</label>
+                                <div class="col-sm-6">
+                                    <select class="selectSection form-control" id="site-name"
+                                        [(ngModel)]="AddOffer.WalletType">
+                                        <option value="">--Select--</option>
+                                        <option value="WalletPercentage">WalletPercentage</option>
+                                        <option value="Amount">Amount</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div> -->
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6" *ngIf="AddOffer.BillDiscountOfferOn=='WalletPoint'">
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label"
+                                    *ngIf="AddOffer.WalletType=='WalletPercentage'">WalletPercentage:</label>
+                                <label class="col-sm-3 col-form-label"
+                                    *ngIf="AddOffer.WalletType!='WalletPercentage'">WalletPoint:</label>
+
+                                <div class="col-sm-6">
+                                    <input id="WallentPoint" type="Number" maxlength="60" class="form-control"
+                                        [(ngModel)]="AddOffer.BillDiscountWallet"
+                                        placeholder="Enter Bill Discount Amount " [disabled]="true" />
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-6" *ngIf="AddOffer.BillDiscountOfferOn=='Percentage'">
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label">Percentage:</label>
+                                <div class="col-sm-6">
+                                    <input id="WallentPoint" type="Number" maxlength="60" class="form-control"
+                                        [(ngModel)]="AddOffer.DiscountPercentage"
+                                        placeholder="Enter Bill Discount Percentage" [disabled]="true" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label">Min Bill Amount Limit :</label>
+                                <div class="col-sm-6">
+                                    <input id="BillAmountA" type="Number" maxlength="60" class="form-control"
+                                        [(ngModel)]="AddOffer.BillAmount" [disabled]="true"
+                                        placeholder="Enter Bill Amount Limit" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label">Max Bill Amount Limit :</label>
+                                <div class="col-sm-6">
+                                    <input id="BillAmount" type="Number" class="form-control"
+                                        [(ngModel)]="AddOffer.MaxBillAmount" [disabled]="true"
+                                        placeholder="Enter Bill Amount Limit" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label">Maximum Discount</label>
+                                <div class="col-sm-6">
+                                    <input id="MaxDiscount" type="Number" class="form-control"
+                                        [(ngModel)]="AddOffer.MaxDiscount" [disabled]="true"
+                                        placeholder="Enter Maximum Bill Discount" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label">Use Other Offer</label>
+                                <div class="col-sm-6">
+                                    <input id="offername" type="checkbox" class="form-check primary"
+                                        [(ngModel)]="AddOffer.IsUseOtherOffer" [disabled]="true" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label">Multi Time Use</label>
+                                <div class="col-sm-6">
+                                    <input id="IsMultiTimeUse" type="checkbox" class="form-check primary"
+                                        [(ngModel)]="AddOffer.IsMultiTimeUse" [disabled]="true" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4" *ngIf="AddOffer.IsMultiTimeUse">
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label">Offer Use Count</label>
+                                <div class="col-sm-6">
+                                    <input placeholder="Offer Use Count" id="OfferUseCount" type="number"
+                                        class="form-control" [(ngModel)]="AddOffer.OfferUseCount" [disabled]="true" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label">LineItem:</label>
+                                <div class="col-sm-6">
+                                    <input id="LineItem" type="Number" maxlength="60" class="form-control"
+                                        [(ngModel)]="AddOffer.LineItem" [disabled]="true"
+                                        placeholder="Enter No. of Line Item" />
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">Description:</label>
+                            <div class="col-sm-6">
+                                <textarea type="text" maxlength="500" id="Description" class="form-control"
+                                    [(ngModel)]="AddOffer.Description" [disabled]="true" placeholder="Enter Description"
+                                    rows="5">
+                            </textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-2">
+                    <div class="form-group">
+                        <div>
+                            <button type="button" class="btn btn-raised btn-raised btn-primary" pButton
+                                (click)="updateOffer(AddOffer.OfferId,AddOffer.IsActive);" label="update"></button>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</p-dialog>
+
+
+
+
+
+
+<p-blockUI [blocked]="blocked"></p-blockUI>
+
+<p-progressSpinner *ngIf="blocked"
+    [style]="{width: '60px', height: '60px', position: 'absolute', left: '48%', top: '48%'}" strokeWidth="8"
+    fill="#EEEEEE" animationDuration=".5s"></p-progressSpinner>

@@ -1,28 +1,25 @@
+<br>
+<div class="page-header">
+    <h3 class="page-title">Brand Name : {{BrandName}}</h3>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#/itemscheme/Itemschemeuploader">
+                    Back</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Scheme Uploader Details</li>
+        </ol>
+    </nav>
+</div>
+
 <p-toast [style]="{marginTop: '10px'}"></p-toast>
-<div class="container">
-    <div class="row mt6 fontsize-12">
-        <p-confirmDialog #cd appendTo="body" header="Confirmation">
-            <p-footer class="ovelFieldForm">
-                <button type="button" class="btn btn-raised btn-primary mr-1" (click)="cd.reject()">No</button>
-                <button type="button" class="btn btn-raised btn-danger mr-1" (click)="cd.accept()">Yes</button>
-            </p-footer>
-        </p-confirmDialog>
-        <section id="i-master">
-            <div class="my-2 d-flex justify-content-between align-items-center">
-                <div class="header">
-                    <h3 class="m-2">Scheme Uploader Details</h3>
-                </div>
-                <div>
-                    <button type="button" class="btn btn-raised btn-primary float-left align-self-end back"
-                        (click)="back()">
-                        Back </button>
-                </div>
-            </div>
+
+<div class="col-12 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
             <div class="ui-fluid shadow p-3 m-2 bg-white rounded table table-hover">
                 <div class="position-relative">
                     <div class="row" *ngIf="ItemschemuplaoderMaster.ItemSchemeMasterId>0">
                         <div class="col-md-10">
-                            <span class="card-title"> Brand Name : {{BrandName}}</span>
+                            <span class="card-title"> </span>
                             <div *ngIf="ItemschemuplaoderMaster.ItemSchemeMasterId>0">
                                 <span>
                                     Start Date : {{ItemschemuplaoderMaster.StartDate | date : "dd/MM/yyyy h:mm a"}}
@@ -79,48 +76,51 @@
                     </p-table>
                 </div>
             </div>
-        </section>
-        <p-dialog header="Detail" [(visible)]="display" appendTo="body" [style]="{width: '1040px', height: '300px'}">
-            <div class="panel panel-info" *ngIf="ItemschemuplaoderDetails">
-                <div class="row">
-                    <div class="col-md-6">ItemName: {{ItemschemuplaoderDetails.ItemName}}</div>
-                    <div class="col-md-6">MRP: {{ItemschemuplaoderDetails.MRP}}</div>
-                    <div class="col-md-6">CompanyCode: {{ItemschemuplaoderDetails.CompanyCode}}</div>
-                    <div class="col-md-6">CompanyStockCode: {{ItemschemuplaoderDetails.CompanyStockCode}}</div>
-                    <div class="col-md-6">FreeBaseItemQty: {{ItemschemuplaoderDetails.FreeBaseItemQty}}</div>
-                    <div class="col-md-6">FreeChildItem: {{ItemschemuplaoderDetails.FreeChildItem}}</div>
-                    <div class="col-md-6">FreeChildItemCompanyStockcode :
-                        {{ItemschemuplaoderDetails.FreeChildItemCompanyStockcode}}</div>
-                    <div class="col-md-6">FreeChildItemCompanycode:
-                        {{ItemschemuplaoderDetails.FreeChildItemCompanycode}}</div>
-                    <div class="col-md-6">FreeItemMRP: {{ItemschemuplaoderDetails.FreeItemMRP}}</div>
-                    <div class="col-md-6">FreeItemQty: {{ItemschemuplaoderDetails.FreeItemQty}}</div>
-                    <div class="col-md-6">FreeItemStockQty: {{ItemschemuplaoderDetails.FreeItemStockQty}}</div>
-                    <div class="col-md-6">offinvoicemargin: {{ItemschemuplaoderDetails.offinvoicemargin}}</div>
-                    <div class="col-md-6">onvoiceMargin: {{ItemschemuplaoderDetails.onvoiceMargin}}</div>
 
-                </div>
-
-            </div>
-        </p-dialog>
-
-        <p-dialog header="Detail" [(visible)]="Errordisplay" appendTo="body"
-            [style]="{width: '1040px', height: '300px'}">
-            <div class="panel panel-info" *ngIf="ErroItemschemuplaoderDetail">
-                <div class="row">
-                    <div class="col-md-6" style="color: red;font-size: 14pt;"
-                        *ngIf="ErroItemschemuplaoderDetail.ErrorMessage">
-                        ErrorMessage: {{ErroItemschemuplaoderDetail.ErrorMessage}}</div>
-                </div>
-            </div>
-        </p-dialog>
-        <br />
+        </div>
     </div>
 </div>
+
+
+
+
+
+<p-dialog header="Detail" [(visible)]="display" appendTo="body" [style]="{width: '1040px', height: 'auto'}">
+    <div class="panel panel-info" *ngIf="ItemschemuplaoderDetails">
+        <div class="row">
+            <div class="col-md-6"><strong> ItemName:</strong> {{ItemschemuplaoderDetails.ItemName}}</div>
+            <div class="col-md-6"><strong>MRP: </strong>{{ItemschemuplaoderDetails.MRP}}</div>
+            <div class="col-md-6"><strong>CompanyCode:</strong> {{ItemschemuplaoderDetails.CompanyCode}}</div>
+            <div class="col-md-6"><strong>StockCode:</strong> {{ItemschemuplaoderDetails.CompanyStockCode}}</div>
+            <div class="col-md-6"><strong>BaseQty:</strong> {{ItemschemuplaoderDetails.FreeBaseItemQty}}</div>
+            <div class="col-md-6"><strong>FreeChildItem:</strong> {{ItemschemuplaoderDetails.FreeChildItem}}</div>
+            <div class="col-md-6"><strong>FreeStockcode :</strong>
+                {{ItemschemuplaoderDetails.FreeChildItemCompanyStockcode}}</div>
+            <div class="col-md-6"><strong>Freecode:</strong>
+                {{ItemschemuplaoderDetails.FreeChildItemCompanycode}}</div>
+            <div class="col-md-6"><strong>FreeMRP:</strong> {{ItemschemuplaoderDetails.FreeItemMRP}}</div>
+            <div class="col-md-6"><strong>FreeQty:</strong> {{ItemschemuplaoderDetails.FreeItemQty}}</div>
+            <div class="col-md-6"><strong>FreeStockQty:</strong> {{ItemschemuplaoderDetails.FreeItemStockQty}}</div>
+            <div class="col-md-6"><strong>offinvoicemargin:</strong> {{ItemschemuplaoderDetails.offinvoicemargin}}</div>
+            <div class="col-md-6"><strong>onvoiceMargin:</strong> {{ItemschemuplaoderDetails.onvoiceMargin}}</div>
+
+        </div>
+
+    </div>
+</p-dialog>
+
+<p-dialog header="Detail" [(visible)]="Errordisplay" appendTo="body" [style]="{width: '1040px', height: 'auto'}">
+    <div class="panel panel-info" *ngIf="ErroItemschemuplaoderDetail">
+        <div class="row">
+            <div class="col-md-6" style="color: red;font-size: 14pt;" *ngIf="ErroItemschemuplaoderDetail.ErrorMessage">
+                ErrorMessage: {{ErroItemschemuplaoderDetail.ErrorMessage}}</div>
+        </div>
+    </div>
+</p-dialog>
+
+
 <p-blockUI [blocked]="blocked"></p-blockUI>
 
 <p-progressSpinner *ngIf="blocked"
     [style]="{width: '60px', height: '60px', position: 'absolute', left: '48%', top: '48%'}" strokeWidth="8"
     fill="#EEEEEE" animationDuration=".5s"></p-progressSpinner>
-
-

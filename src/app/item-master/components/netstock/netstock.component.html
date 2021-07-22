@@ -1,0 +1,135 @@
+<!-- <div style="width: 82%;"> -->
+<div class="page-header">
+</div>
+<div class="col-12 grid-margin stretch-card">
+    <div class="card">
+        <p-toast [style]="{marginTop: '10px'}"></p-toast>
+        <div class="card-body">
+            <h4 class="card-title">NetStock :  {{subcateName}}</h4>
+            <div class="row">
+                <div class="col-sm-3">                    
+                    <label>City </label><br />
+                    <p-multiSelect [style]="{minWidth:''}" id="Cityid" name="CityName" [options]="CityList"
+                        [(ngModel)]="dataset.cityid" (onChange)="GetCityWarehouse(dataset.cityid)"
+                        [panelStyle]="{minWidth:'25em'}" optionLabel="CityName" appendTo="body">
+                    </p-multiSelect>
+                </div>
+                <div class="col-sm-3">
+                    <label>Warehouse </label>
+                    <select class="form-control dr" name="warehouse" id="warehouse" [(ngModel)]="WareHouseId">
+                        <option>--Select--</option>
+                        <option *ngFor="let data of wareHouseList" [ngValue]="data.WareHouseId">{{data.WareHouseName}}
+                        </option>
+                    </select>
+
+                </div>
+                <div class="col-md-3">
+                    <br>
+                    <button type="submit" class="btn btn-raised btn-success mr-1 btn-lg" 
+                        (click)="search()" [disabled]="!WareHouseId">Search</button>
+                </div>
+                <div class="col-md-3">
+                    <br>
+                    <button type="submit" class="btn btn-primary" (click)="Export()" [disabled]="!WareHouseId">Export</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="col-12 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-sm-3">
+                    <input type="text"  placeholder="Search" class="form-control inputEdit" [(ngModel)]="searchTerm"
+                        (ngModelChange)="searchkeyword()" />
+
+                </div>
+                <div class="col-sm-6">
+                   
+
+                </div>
+                <div class="col-sm-3">
+                    <label for="site-name">Net Stock Amount </label>
+                    <span class="badge badge-danger ml-2">
+                        {{NetTotalamount |number:'1.2-2'}}
+                    </span>
+                </div>
+            </div>
+            <div class="row" style="overflow-x:auto;">
+                <table id="excel-table" class="table">
+                    <thead>
+                        <tr>
+                            <th>ItemNumber</th>
+                            <th>ItemName</th>
+                            <th>MultiMRPId(MRP) </th>
+                            <th>Active</th>
+                            <th>Net Inventory </th>
+                            <th>CurrentNetInventory </th>
+                            <th>OpenPOQTy</th>
+                            <th>DCInventory</th>
+                            <th>AAP</th>
+                            <th>FreestockNetInventory</th>
+                            <th>Unit Price</th>
+                            <th>Amt</th>
+                            <th>APP</th>
+                            <th>MarginPercent</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let trade of NetStockList">
+                            <td>
+                                <span class="badge badge-warning ml-2">{{trade.ItemNumber}}</span>
+                            </td>
+                            <td>{{trade.ItemName}}</td>
+                            <td>
+                                {{trade.ItemMultiMrpId}} ({{trade.MRP}})
+                            </td>
+                            <td *ngIf="trade.IsActive>0" [ngStyle]="{'background-color':'palegreen'}">True</td>
+                            <td [ngStyle]="{'background-color':'lightcoral'}"  *ngIf="trade.IsActive==0">False</td>
+                            <td>
+                                {{trade.NetInventory}}
+                            </td>
+                            <td>
+                                <span  *ngIf="trade.CurrentNetInventory!=0"
+                                    class="badge badge-primary ml-2">{{trade.CurrentNetInventory}}</span>
+                                <span  *ngIf="trade.CurrentNetInventory==0"
+                                    class="badge badge-danger ml-2">{{trade.CurrentNetInventory}}</span>
+                            </td>
+                            <td>{{trade.OpenPOQTy}}</td>
+                            <td>
+                                <span  *ngIf="trade.CurrentDeliveryCanceledInventory>0" class="badge badge-info ml-2">
+                                    {{trade.CurrentDeliveryCanceledInventory}}
+                                </span>
+                            </td>
+                            <td>
+                                {{trade.AgingAvgPurchasePrice |number:'1.2-2'}}
+                            </td>
+                            <td>
+                                <span class="badge badge-danger ml-2">
+                                    {{trade.FreestockNetInventory}}
+                                </span>
+                            </td>
+                            <td>{{trade.Unitprice |number:'1.2-2'}}</td>
+                            <td>{{trade.CurrentNetStockAmount |number:'1.2-2'}}</td>
+                            <td>{{trade.AveragePurchasePrice |number:'1.2-2'}}</td>
+                            <td>{{trade.MarginPercent | number : '1.2-2'}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <br />
+
+        </div>
+    </div>
+
+</div>
+
+<!-- </div> -->
+<p-blockUI [blocked]="blocked"></p-blockUI>
+
+<p-progressSpinner *ngIf="blocked"
+    [style]="{width: '60px', height: '60px', position: 'absolute', left: '48%', top: '48%'}" strokeWidth="8"
+    fill="#EEEEEE" animationDuration=".5s"></p-progressSpinner>

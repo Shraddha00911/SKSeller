@@ -23,7 +23,7 @@ export class DonutChartComponent implements OnInit {
     animation: {
       animateScale: true,
       animateRotate: true
-    }
+    },
   };
 
   doughnutPieChartColors = [

@@ -1,0 +1,128 @@
+<form #flashDealForm="ngForm">
+    <div style="background-color: gainsboro;">
+        <h1> Flash Deal Item</h1>
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+
+                        <span *ngIf="IsEditable">
+                            <label for="maxQuant">MOQ : {{mainimage.MOQ}} </label>
+                        </span>
+                        <span *ngIf="!IsEditable">
+                            <label for="maxQuant">MOQ </label>
+                            <select class="form-control" id="maxQuant" [(ngModel)]="MOQItemId"
+                                (change)="ItemValue(MOQItemId)" name="moqs" #moqval="ngModel" required>
+                                <option [value]="">Select</option>
+                                <option *ngFor="let ss of MoqList" [value]="ss.ItemId">{{ss.MinOrderQty}}</option>
+                            </select>
+                            <div *ngIf="moqval.invalid && (moqval.dirty || moqval.touched)">
+                                <p *ngIf="!moqval.value || moqval.value == 'null' || moqval.value == ''">
+                                    MOQ is Required
+                                </p>
+                            </div>
+                        </span>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <!-- <span *ngIf="!IsEditable">
+                        <input type="button" class="btn btn-outline-success active form-control" value="Get"
+                            (click)="ItemValue()">
+                    </span> -->
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="totalQuantity">Total Quantity <b style="color: red;">(Multiple of MOQ)</b></label>
+                        <input type="number" class="form-control" id="totalQuantity" name="FlashDe" #FlashDea="ngModel"
+                            required [(ngModel)]="mainimage.FlashDealQtyAvaiable" [disabled]="IsEditable">
+                        <div *ngIf="FlashDea.invalid && (FlashDea.dirty || FlashDea.touched)">
+                            <p *ngIf="!FlashDea.value || FlashDea.value == 'null' || FlashDea.value == ''">
+                                Total Quantity
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="site-name">Unit Price:</label>
+                        <input id="UnitPriceNew" name="UnitPriceNew" type="number" class="form-control"
+                            #UnitPriceN="ngModel" required [(ngModel)]="mainimage.UnitPrice" [disabled]="true" />
+                        <div *ngIf="UnitPriceN.invalid && (UnitPriceN.dirty || UnitPriceN.touched)">
+                            <p *ngIf="!UnitPriceN.value || UnitPriceN.value == 'null' || UnitPriceN.value == ''">
+                                Unit Price is Required
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="site-name">Purchase Price:</label>
+                        <input id="UnitPriceNew" name="PurchasePriceNew" type="number" class="form-control"
+                            #PurchasePriceN="ngModel" required [(ngModel)]="mainimage.PurchasePrice"
+                            [disabled]="true" />
+                        <div *ngIf="PurchasePriceN.invalid && (PurchasePriceN.dirty || PurchasePriceN.touched)">
+                            <p
+                                *ngIf="!PurchasePriceN.value || PurchasePriceN.value == 'null' || PurchasePriceN.value == ''">
+                                Purchase Price is Required
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <label for="flashDealPrice">Flash Deal Special Price</label>
+                    <input type="number" class="form-control" id="flashDealPrice" name="FlashDealPrices"
+                        #FlashDealPrice="ngModel" required [(ngModel)]="mainimage.FlashDealSpecialPrice"
+                        [disabled]="IsEditable">
+                    <div *ngIf="FlashDealPrice.invalid && (FlashDealPrice.dirty || FlashDealPrice.touched)">
+                        <p
+                            *ngIf="!FlashDealPrice.value || FlashDealPrice.value == 'null' || FlashDealPrice.value == ''">
+                            Deal Special Price is Required
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="flashDealPrice">Enter Maximum Quantity <b style="color: red;">(Multiple of
+                                MOQ)</b></label>
+                        <input type="number" class="form-control" id="flashDealPrice" name="maxQuantitys"
+                            #maxQnty="ngModel" required [(ngModel)]="mainimage.FlashDealMaxQtyPersonCanTake"
+                            [disabled]="IsEditable">
+                        <div *ngIf="maxQnty.invalid && (maxQnty.dirty || maxQnty.touched)">
+                            <p *ngIf="!maxQnty.value || maxQnty.value == 'null' || maxQnty.value == ''">
+                                Maximum Quantity is Required
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <label for="flashDealPrice">Start Date</label>
+                    <p-calendar name="startInput" appendTo="body" [(ngModel)]="mainimage.OfferStartTime"
+                        [showTime]="true" [hourFormat]="24" [showButtonBar]="true" [showIcon]="true" required="1"
+                        #start="ngModel" [disabled]="IsEditable">
+                    </p-calendar>
+                </div>
+
+
+                <div class="col-md-6">
+                    <div>
+                        <label for="flashDealPrice">End Date</label>
+                        <p-calendar name="endInput" appendTo="body" [(ngModel)]="mainimage.OfferEndTime"
+                            [showTime]="true" [hourFormat]="24" [showButtonBar]="true" [showIcon]="true"
+                            #endtime="ngModel" [disabled]="IsEditable"></p-calendar>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<p-blockUI [blocked]="blocked"></p-blockUI>
+<p-progressSpinner *ngIf="blocked"
+    [style]="{width: '50px', height: '50px', position: 'absolute', left: '48%', top: '48%'}" strokeWidth="8"
+    fill="#EEEEEE" animationDuration=".5s"></p-progressSpinner>

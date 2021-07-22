@@ -29,13 +29,13 @@ export class ItemschememasterdetailComponent implements OnInit {
   OfferIds: string;
 
   ItemschemMasterDetailscols = [
-    { field: "ItemNumber", header: "Number"  },
+    { field: "ItemNumber", header: "Number" },
     { field: "CompanyCode", header: "Code" },
-    { field: "CompanyStockCode", header: "StockCode" },
+    { field: "CompanyStockCode", header: "StockC" },
     { field: "ItemName", header: "Name" },
     { field: "MRP", header: "MRP" },
     { field: "PTR", header: "PTR" },
-    { field: "BaseScheme", header: "BaseScheme" },
+    { field: "BaseScheme", header: "Scheme" },
     { field: "onvoiceMargin", header: "onvoice" },
     { field: "offinvoicemargin", header: "offinvoice" },
     { field: "IsActive", header: "IsActive" }
@@ -67,8 +67,8 @@ export class ItemschememasterdetailComponent implements OnInit {
   MasterId: number;
   baseURL: any;
   ItemSchemeMasterDc: any;
-  subcateid:number;
-  subcateName:string;
+  subcateid: number;
+  subcateName: string;
   constructor(private router: Router, private r: ActivatedRoute, private ItemschemeService: ItemschemeService, private confirmationService: ConfirmationService, private messageService: MessageService,) { this.baseURL = environment.apiBaseUrl; }
   ngOnInit() {
 
@@ -78,24 +78,29 @@ export class ItemschememasterdetailComponent implements OnInit {
     if (!this.subcateid) {
       this.router.navigateByUrl('/user-pages/subcatselection');
     }
+
+
+
     this.r.params.subscribe(param => {
       if (param && param.Id > 0) {
         this.ItemschemMaster = param;
-        this.blocked = true;
-
         this.ItemschemeService.getItemSchemeMasterById(param.Id).subscribe(x => {
-          this.blocked = false;
-
           if (x && x.Id > 0) {
+          
             this.BrandName = x.BrandName;
             this.MasterId = x.Id;
-            this.IsApproved = x.IsApproved
-            this.IsActive = x.IsActive
+            this.IsApproved = x.IsApproved;
+            this.IsActive = x.IsActive;
             this.ItemschemMaster = x;
             this.ItemSchemeMasterDc = x;
             this.ItemschemMasterDetails = x.ItemSchemeDetails;
           }
         });
+      }
+      else
+      {
+        this.router.navigateByUrl('/itemscheme/Itemschememaster')
+
       }
     })
   }
@@ -193,7 +198,7 @@ export class ItemschememasterdetailComponent implements OnInit {
     }
   }
   opendisplaySlab(row) {
-
+ 
     this.ItemschemSlab = row.Slabs;
     this.displaySlab = true;
     this.ItemschemFreebies = [];
@@ -231,6 +236,5 @@ export class ItemschememasterdetailComponent implements OnInit {
       });
     }
   }
-
 }
 

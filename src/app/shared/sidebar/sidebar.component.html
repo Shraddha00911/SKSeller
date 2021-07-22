@@ -1,13 +1,73 @@
+<br>
+<br>
+<br>
+<br>
+
+<!-- <div class=""> -->
+
+<!-- </div> -->
 <nav class="sidebar sidebar-offcanvas" id="sidebar">
+
   <div class="sidebar-brand-wrapper d-none d-lg-flex align-items-center justify-content-center fixed-top">
-    <a class="sidebar-brand brand-logo" routerLink="/dashboard">SK Sellers</a>
-    <a class="sidebar-brand brand-logo-mini" routerLink="/dashboard">SK</a>
+    <a class="sidebar-brand brand-logo" routerLink="/dashboard">{{subcateName}}</a>
+    <a class="sidebar-brand brand-logo-mini" routerLink="/dashboard">{{subcateName}}</a>
   </div>
-  <ul class="nav">
+
+
+  <!-- <ul class="nav"> -->
+  <!-- <li>
+      <a routerLink="/growbusiness/notification">Notification</a>
+    </li>
+    <li>
+      <a routerLink="/growbusiness/application-banner">Application Banner</a>
+    </li>
+    <li>
+      <a routerLink="/growbusiness/murli">Murli</a>
+    </li>
+    <li>
+      <a routerLink="/growbusiness/flash-deal">Flash-Deal</a>
+    </li>
+    <li>
+      <a routerLink="/growbusiness/brand-store">Brand-Store</a>
+    </li> -->
+  <!-- start Dynamic sidebar  -->
+  <!-- <span *ngFor="let menuSubItem of SubMenus">
+    <li class="nav-item menu-items" [ngClass]="{ 'active': title.isActive }" >
+      <a class="nav-link" [attr.aria-label]="menuSubItem.title" 
+      [routerLink]="[menuSubItem.path]" routerLinkActive="active"   #title="routerLinkActive">
+        <span class="menu-icon">
+          <i [ngClass]="[menuSubItem.icon]"></i>
+        </span>
+        <span class="menu-title" translate>{{menuSubItem.title}}</span>
+      </a>
+    </li>
+    </span> -->
+
+  <!-- end Dynamic sidebar -->
+
+  <!-- <li class="nav-item menu-items" *ngFor="let menu of menuItems" >
+    <a class="nav-link" (click)="uiBasicCollapsed = !uiBasicCollapsed" [attr.aria-expanded]="uiBasicCollapsed" aria-controls="ui-basic">
+      <span class="menu-icon">
+        <i class="mdi mdi-laptop"></i>
+      </span>
+      <span class="menu-title" translate>{{menu.title}}</span>
+      <i class="menu-arrow"></i>
+    </a>
+    <div class="collapse" [ngbCollapse]="!uiBasicCollapsed" *ngFor="let submenu of menu.submenu">
+      <ul class="nav flex-column sub-menu">
+        <li class="nav-item"> <a class="nav-link" href="{{submenu.path}}"  routerLinkActive="active" #buttons="routerLinkActive" translate>{{submenu.title}}</a></li>
+      </ul>
+    </div>
+  </li> -->
+  <!-- </ul> -->
+  <!-- <p-panelMenu [model]="menu"></p-panelMenu> -->
+
+  <p-panelMenu [model]="menu" [multiple]="false"></p-panelMenu>
+  <!-- <ul class="nav">
     <li class="nav-item menu-items" [ngClass]="{ 'active': dashboard.isActive }">
       <a class="nav-link" routerLink="/dashboard" routerLinkActive #dashboard="routerLinkActive">
         <span class="menu-icon">
-          <i class="mdi mdi-speedometer"></i> 
+          <i class="mdi mdi-view-dashboard"></i>
         </span>
         <span class="menu-title" translate>Dashboard</span>
       </a>
@@ -15,7 +75,7 @@
     <li class="nav-item menu-items" [ngClass]="{ 'active': subcatselection.isActive }">
       <a class="nav-link" routerLink="/user-pages/subcatselection" routerLinkActive #subcatselection="routerLinkActive">
         <span class="menu-icon">
-          <i class="mdi mdi-speedometer"></i> 
+          <i class="mdi mdi-key-change"></i>
         </span>
         <span class="menu-title" translate>Change Subcat</span>
       </a>
@@ -23,28 +83,56 @@
     <li class="nav-item menu-items" [ngClass]="{ 'active': uploadcfr.isActive }">
       <a class="nav-link" routerLink="/uploadcfr" routerLinkActive #uploadcfr="routerLinkActive">
         <span class="menu-icon">
-          <i class="mdi mdi-speedometer"></i> 
+          <i class="mdi mdi-upload"></i>
         </span>
         <span class="menu-title" translate>Upload CFR </span>
       </a>
     </li>
     <li class="nav-item menu-items" [ngClass]="{ 'active': Itemschemeuploader.isActive }">
-      <a class="nav-link" routerLink="/itemscheme/Itemschemeuploader" routerLinkActive #Itemschemeuploader="routerLinkActive">
+      <a class="nav-link" routerLink="/itemscheme/Itemschemeuploader" routerLinkActive
+        #Itemschemeuploader="routerLinkActive">
         <span class="menu-icon">
-          <i class="mdi mdi-speedometer"></i> 
+          <i class="mdi mdi-auto-upload"></i>
         </span>
         <span class="menu-title" translate> Scheme Uploader</span>
       </a>
     </li>
     <li class="nav-item menu-items" [ngClass]="{ 'active': Itemschememaster.isActive }">
-      <a class="nav-link" routerLink="/itemscheme/Itemschememaster" routerLinkActive #Itemschememaster="routerLinkActive">
+      <a class="nav-link" routerLink="/itemscheme/Itemschememaster" routerLinkActive
+        #Itemschememaster="routerLinkActive">
         <span class="menu-icon">
-          <i class="mdi mdi-speedometer"></i> 
+          <i class="mdi mdi-file-lock"></i>
         </span>
         <span class="menu-title" translate> Scheme Master </span>
       </a>
     </li>
-     <!-- <li class="nav-item menu-items" [ngClass]="{'active' : buttons.isActive || dropdowns.isActive || typography.isActive }">
+    <li class="nav-item menu-items" [ngClass]="{ 'active': Offer.isActive }">
+      <a class="nav-link" routerLink="/offer" routerLinkActive #Offer="routerLinkActive">
+        <span class="menu-icon">
+          <i class="mdi mdi-speedometer"></i>
+        </span>
+        <span class="menu-title" translate>Offer </span>
+      </a>
+    </li>
+    <li class="nav-item menu-items" [ngClass]="{'active': ledger.isActive }">
+      <a class="nav-link" routerLink="/account/ledger" routerLinkActive #ledger="routerLinkActive">
+        <span class="menu-icon">
+          <i class="mdi mdi-speedometer"></i>
+        </span>
+        <span class="menu-title" translate> Ledger </span>
+      </a>
+    </li>
+    <li class="nav-item menu-items" [ngClass]="{'active': payment.isActive }">
+      <a class="nav-link" routerLink="/account/payment" routerLinkActive #payment="routerLinkActive">
+        <span class="menu-icon">
+          <i class="mdi mdi-speedometer"></i>
+        </span>
+        <span class="menu-title" translate> Payment </span>
+      </a>
+    </li> -->
+
+
+  <!-- <li class="nav-item menu-items" [ngClass]="{'active' : buttons.isActive || dropdowns.isActive || typography.isActive }">
       <a class="nav-link" (click)="uiBasicCollapsed = !uiBasicCollapsed" [attr.aria-expanded]="uiBasicCollapsed" aria-controls="ui-basic">
         <span class="menu-icon">
           <i class="mdi mdi-laptop"></i>
@@ -128,5 +216,5 @@
         <span class="menu-title" translate>Documentation</span>
       </a>
     </li> -->
-  </ul>
+  <!-- </ul> -->
 </nav>

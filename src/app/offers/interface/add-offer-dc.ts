@@ -1,0 +1,30 @@
+export interface AddOfferDc {
+    CityIds?:any,
+    OfferName?:string,
+    OfferOn?:string,
+    start?:Date,
+    end?:Date,
+    DiscountPercentage?:number,
+    BillDiscountWallet?:number,
+    BillAmount?:number,
+    MaxBillAmount?:number,
+    MaxDiscount?:number,
+    IsMultiTimeUse?:boolean,
+    IsUseOtherOffer?:boolean,
+    WalletType?:string,
+    OfferAppType?:string,
+    SubCatId? :number;
+    OfferUseCount?:number;
+    BillDiscountOfferOn?:string;
+    IsActive?:boolean;
+    UserType?:string;
+    LineItem?:number;
+    Description:string;
+    itemIds?:any;
+    NoOffreeQuantity?:number;
+    MinOrderQuantity?:number;
+    FreeItemLimit?:number;
+    FreeItemId?:number;
+    ItemId?:number;
+    IsDispatchedFreeStock?:boolean;
+}

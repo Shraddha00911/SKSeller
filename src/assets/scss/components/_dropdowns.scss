@@ -3,22 +3,23 @@
 .dropdown {
   .dropdown-toggle {
     &:after {
-      border-top: 0;
-      border-right: 0;
-      border-left: 0;
-      border-bottom: 0;
+      // border-top: 0;
+      // border-right: 0;
+      // border-left: 0;
+      // border-bottom: 0;
       font: normal normal normal 24px/1 "Material Design Icons";
       content: "\f140";
       width: auto;
       height: auto;
       vertical-align: baseline;
       font-size: .75rem;
+      border: solid 1px black;
     }
   }
   .dropdown-menu {
     margin-top: .75rem;
     background-color: $dropdown-bg;
-    color: #ffffff;
+    color: black;//#ffffff;
     font-size: $default-font-size;
     .dropdown-item {
       font-size: 1rem;
@@ -28,7 +29,7 @@
         background: initial;
       }
       &:hover {
-        background: #13151b;
+        background: white;//#13151b;
       }
     }
   }

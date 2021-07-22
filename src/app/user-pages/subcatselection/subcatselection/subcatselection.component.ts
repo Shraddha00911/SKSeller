@@ -31,7 +31,9 @@ export class SubcatselectionComponent implements OnInit {
     if (this.subcateid > 0) {
       localStorage.setItem('SubCatId', this.subcateid);
       localStorage.setItem('subcateName', this.subcategoryobj.SubcategoryName);
-      this.router.navigateByUrl('/dashboard');
+
+      this.router.navigateByUrl('/dashboard');     
+
     }
     else {
       alert("Please select subcategory");

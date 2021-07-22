@@ -4,13 +4,13 @@
             <div class="col-lg-5 offset-sm-3">
                 <!-- Set Subcategory  -->
                 <div class="login-form">
-                    <div class="auth-form-dark text-left py-3 px-4 px-sm-5">
+                    <div class="auth-form-dark text-left py-3 px-4 px-sm-5 tp">
                         <form class="pt-3" name="sileInputForm" #subcatform="ngForm"
                             (ngSubmit)="SetSubcateId(subcatform)">
                                 <div class="form-group">
                                     <fieldset>
                                         <legend>Select SubCategory</legend>
-                                        <select id="subcategoryid" name="subcategoryname" class="form-control col-md-6 mg-b-10"
+                                        <select id="subcategoryid" name="subcategoryname" class="form-control col-md-10 mg-b-10 subcat"
                                             [(ngModel)]="subcategoryobj" placeholder="Select subcategory"
                                             #subcategory="ngModel">
                                             <option *ngFor="let subcategory of MappingsubcatList"

@@ -3,7 +3,7 @@ import { Injectable, PLATFORM_ID, Inject } from "@angular/core";
 import { Router } from "@angular/router";
 import { Observable } from 'rxjs';
 import { tap, mapTo, map } from 'rxjs/operators';
-import { isPlatformBrowser } from '@angular/common';  
+import { isPlatformBrowser } from '@angular/common';
 import { LocalStogareService } from '../services/local-stogare.service';
 declare var AES256;
 @Injectable()
@@ -62,9 +62,13 @@ export class AuthInterceptor implements HttpInterceptor {
             );
 
         if (isPlatformBrowser(this.platformId) && localStorage.getItem('selleruserToken') != null) {
-            
+
             let SubCatId = localStorage.getItem('SubCatId');
             let userid = localStorage.getItem('userid');
+            if (!userid) {
+                this.localStorageService.removeItem(this.localStorageService.tokenKey);
+                this.router.navigateByUrl('/user-pages/login');
+            }
             let clonedreq = null;
             clonedreq = req.clone({
                 setHeaders: {
@@ -82,7 +86,7 @@ export class AuthInterceptor implements HttpInterceptor {
                     // http response status code
                     if (error.status == 401) {
                         this.localStorageService.removeItem(this.localStorageService.tokenKey);
-                        this.router.navigateByUrl('/login');
+                        this.router.navigateByUrl('/user-pages/login');
                         // localStorage.removeItem('userToken');
                         // this.router.navigateByUrl('/login');
                     }
@@ -109,8 +113,8 @@ export class AuthInterceptor implements HttpInterceptor {
                             }
                             var passphras = "201907221201";
                             passphras = today.getFullYear() + "" + month + "" + day + "1201";
-                         
-                            
+
+
                             var data = JSON.parse(AES256.decrypt(event.body.Data, passphras));
                             event.body.Data = data;
                             event = event.clone({ body: event.body.Data });

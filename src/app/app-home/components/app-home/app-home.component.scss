@@ -1,0 +1,108 @@
+.mr-l-10{
+    margin-left: 15px;
+  }
+  
+  .round input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+  }
+  
+  .checkmark {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    height: 25px;
+    width: 25px;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    border: 1px solid #ccc;
+    border-radius: 50%;
+    margin-top: 10px;
+  }
+  
+  .round:hover input ~ .checkmark {
+    background-color: #ccc;
+  }
+  
+  .round input:checked ~ .checkmark {
+    background-color: #0bb475;
+    border-color: #0bb475;
+  }
+  
+  .checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+  }
+  
+  .round input:checked ~ .checkmark:after {
+    display: block;
+  }
+  
+  .round .checkmark:after {
+    left: 9px;
+    top: 5px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+  }
+  .section_type{
+    margin: 30px 0px 10px;
+    text-align: center;
+  }
+  .section_type label{
+    font-size: 14px;
+  }
+  .section_type select, .section_type input{
+    width: 100%;
+    display: inline-block;
+    border-radius: 5px;
+    padding: 7px 5px;
+    box-shadow: none;
+    border: 2px solid #0bb475;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+    font-size: 14px;
+  }
+  .shadowBox{
+    display: inline-block;
+    vertical-align: top;
+    width: 100%;
+    box-shadow: 0px 1px 6px 0px #ccc;
+    padding: 30px;
+    border-radius: 10px;
+  }
+  
+  .top-brdr{
+    border: solid 2px #4c33b8;
+    padding: 2px;
+    max-width: 300px;
+  }
+  
+  .btm-brdr{
+    border: solid 2px gray;
+    padding: 5px;
+    min-height: 600px;
+    max-height: 600px;
+    overflow: auto;
+  }
+  
+  
+  .pop-up-layout{
+    position: absolute;
+      top: 50px;
+      background: wheat;
+      z-index: 999;
+      max-width: 269px;
+      margin: 16px;
+      border: 1px solid gray;
+      box-shadow: 3px 3px grey;
+      border-radius: 10px;
+  }

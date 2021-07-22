@@ -1,0 +1,743 @@
+<p-toast [style]="{marginTop: '450px'}"></p-toast>
+
+<div class="page-header">
+    <!-- Item Scheme Master -->
+
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <h4>History</h4>
+            <hr style="background-color: white;">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="row">
+                <div class="col-2">
+                    <label>Request Type</label>
+                    <div>
+                        <select class="form-control dr" id="requestType" [(ngModel)]="RequestType"
+                            (change)="modo($event.target.value)">
+                            <option disabled>Select</option>
+                            <option value="1">AppBanner </option>
+                            <option value="2">Notification </option>
+                            <option value="3">Flashdeal </option>
+                            <option value="4">BrandStore </option>
+                            <option value="5">Murli</option>
+                        </select>
+                    </div>
+
+                </div>
+
+                <div class="col-sm-3">
+                    <label for="FromDate">StartDate</label>
+                    <input type="datetime-local" id="FromDate" name="FromDate" class="form-control dr"
+                        [ngModel]="startdate | date:'yyyy-MM-ddTHH:mm'" (ngModelChange)="startdate = $event" />
+                </div>
+                <div class="col-sm-3">
+                    <label for="FromDate">ToDate</label>
+                    <input type="datetime-local" id="ToDate" name="ToDate" class="form-control dr"
+                        [ngModel]="enddate | date:'yyyy-MM-ddTHH:mm'" (ngModelChange)="enddate = $event" />
+
+                </div>
+
+                <div class="col-2">
+                    <label for="City">City</label><br>
+                    <p-multiSelect [style]="{minWidth:''}" id="Cityid" name="CityName" [options]="CityList"
+                        [(ngModel)]="dataset.cityid" (onChange)="GetCityWarehouse(dataset.cityid)"
+                        [panelStyle]="{minWidth:'25em'}" optionLabel="CityName" appendTo="body">
+                    </p-multiSelect>
+
+                </div>
+                <div class="col-2">
+                    <label>Select Hub</label>
+                    <div>
+                        <p-multiSelect [style]="{minWidth:''}" id="warehouse" name="warehouse" [options]="wareHouseList"
+                            (onChange)="selectedwarehouse()" [(ngModel)]="selectedHub" [panelStyle]="{minWidth:'25em'}"
+                            optionLabel="WareHouseName" appendTo="body">
+                        </p-multiSelect>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-2">
+            <br>
+            <button type="button" class="btn btn-raised btn-success mr-1 " (click)="getGrowBusinesslist()">
+                Search
+            </button>
+        </div>
+
+        <div class="col-sm-2" *ngIf="IsExportable">
+            <br>
+            <button type="button" class="btn btn-raised btn-success mr-1" (click)="Export()">
+                Export
+            </button>
+        </div>
+    </div>
+
+    <br>
+    <div>
+        <p-table [value]="growBusinessHistoryDcs" [paginator]="true" [totalRecords]="totalcount" [lazy]="true"
+            (onLazyLoad)="loadLazy($event)" [rows]="take">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>Sr No</th>
+                    <th>Brand</th>
+
+                    <th>Warehouse</th>
+                    <th *ngIf="RequestType==2">Start</th>
+                    <th *ngIf="RequestType==2">End </th>
+                    <th>status</th>
+                    <th>Details</th>
+                    <th *ngIf="RequestType==2||RequestType==5">
+                        Views</th>
+                    <th *ngIf="RequestType==2||RequestType==5">
+                        Sent</th>
+                    <th *ngIf="RequestType==2||RequestType==5">
+                        Received</th>
+                    <th>Created</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-rowIndex="rowIndex" let-list>
+                <tr>
+                    <td>{{rowIndex+1}}</td>
+                    <td>{{list.SubCatName}}</td>
+                    <td>{{list.WarehouseName}}</td>
+                    <td *ngIf="RequestType==2">{{list.StartDate | date:'medium'}}</td>
+                    <td *ngIf="RequestType==2">{{list.EndDate | date:'medium'}}</td>
+                    <td>
+                        <span *ngIf="list.Status=='Pending'" style="color: red;">
+                            {{list.Status}}
+                        </span>
+                        <span *ngIf="list.Status=='Approved'" style="color: green;">
+                            {{list.Status}}
+                        </span>
+                        <span *ngIf="list.Status=='Reject'" style="color: red;">
+                            {{list.Status}}
+                        </span>
+                        <span *ngIf="list.Status=='Accept'" style="color: yellowgreen;">
+                            {{list.Status}}
+                        </span>
+                        <span *ngIf="list.Status=='Cancel' || list.Status=='Cancle'" style="color:saddlebrown;">
+                            {{list.Status}}
+                        </span>
+                    </td>
+
+                    <td>
+                        <button class="btn btn-primary" (click)="edit(list)">
+                            Details
+                        </button>
+                    </td>
+
+
+
+                    <td *ngIf="RequestType==2||RequestType==5">
+                        {{list.TotalViews}}</td>
+
+
+                    <td *ngIf="RequestType==2||RequestType==5">
+                        {{list.TotalSent}}</td>
+                    <td *ngIf="RequestType==2||RequestType==5">
+                        {{list.TotalReceived}}</td>
+
+                    <td>{{list.CreatedDate | date:'medium'}}</td>
+
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+
+
+
+</div>
+<div *ngIf="growBusinessDetails">
+    <p-dialog header="AppBanner" [(visible)]="opendetailspopup" *ngIf="RequestType==1"
+        [style]="{width: 'auto', height: '500px'}" maximizable="true" appendTo="body">
+
+        <div class="row">
+            <div class="col-4">
+                <label>WarehouseName</label>
+                <input class="form-control" disabled [(ngModel)]="growBusinessDetails.WarehouseName">
+            </div>
+            <div class="col-4">
+                <label>StartDate</label>
+                <input type="datetime-local" id="FromDate" name="FromDate" class="form-control dr"
+                    [ngModel]="growBusinessDetails.StartDate | date:'yyyy-MM-ddTHH:mm'"
+                    (ngModelChange)="growBusinessDetails.StartDate = $event" />
+
+            </div>
+            <div class="col-4">
+                <label>EndDate</label>
+                <input type="datetime-local" id="ToDate" name="ToDate" class="form-control dr"
+                    [ngModel]="growBusinessDetails.EndDate | date:'yyyy-MM-ddTHH:mm'"
+                    (ngModelChange)="growBusinessDetails.EndDate = $event" />
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-4">
+                <label>Type</label>
+                <input class="form-control" disabled [(ngModel)]="growBusinessDetails.Type">
+            </div>
+            <div class="col-4">
+                <label> Discription</label>
+                <textarea type="text" maxlength="500" id="AppBannerDiscription" name="AppBannerDiscription"
+                    class="form-control dr" [(ngModel)]="growBusinessDetails.AppBannerDiscription"
+                    placeholder="Enter Discription" rows="5" #DescriptionInput="ngModel" required>
+                </textarea>
+            </div>
+
+            <div class="col-4">
+                <label>Comment</label>
+                <textarea type="text" maxlength="500" id="comment" name="comment" class="form-control"
+                    [(ngModel)]="growBusinessDetails.Comment" placeholder="Enter Comment" rows="5"
+                    #DescriptionInput="ngModel" required></textarea>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-4" *ngIf="growBusinessDetails.IsApproved">
+                <label>ApprovedDate</label>
+                <input type="datetime-local" class="form-control" disabled
+                    [ngModel]="growBusinessDetails.ApprovedDate | date:'yyyy-MM-ddTHH:mm'">
+            </div>
+
+            <div class="col-4">
+                <label>Status</label>
+                <input class="form-control" disabled [(ngModel)]="growBusinessDetails.Status">
+
+            </div>
+            <div class="col-4">
+                <label>CreatedDate</label>
+                <input type="datetime-local" class="form-control" disabled
+                    [ngModel]="growBusinessDetails.CreatedDate | date:'yyyy-MM-ddTHH:mm'">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-4">
+                <label>Image</label>
+                <input class="btn btn-raised btn-info" id="file" type="file" accept="image/*"
+                    (change)="upload($event.target.files)" />
+                <button type="button" class="btn btn-raised btn-primary" *ngIf="uploadFlag" (click)="uploadImage()">
+                    Upload
+                </button>
+                <div>
+                    <br>
+                    <img alt="" src="{{baseURL}}{{growBusinessDetails.ImageUrl}}" height="100px;" class="img-square">
+                    <a href="{{baseURL}}{{growBusinessDetails.ImageUrl}}" target="_blank">View Image</a>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-2">
+                <span *ngIf="growBusinessDetails.Status=='Pending' || growBusinessDetails.Status=='Reject'">
+                    <button class="btn btn-primary" (click)="updateappbanner()">Update</button>
+
+                </span>
+            </div>
+            <div class="col-2">
+                <span *ngIf="growBusinessDetails.Status=='Pending' || growBusinessDetails.Status=='Reject'">
+                    <button class="btn btn-danger" (click)="Cancel()">
+                        Cancel</button>
+                </span>
+            </div>
+        </div>
+
+    </p-dialog>
+
+    <p-dialog header="Notification" [(visible)]="opendetailspopup" *ngIf="RequestType==2"
+        [style]="{width: 'auto', height: '500px'}" maximizable="true" appendTo="body">
+
+        <div class="row">
+            <div class="col-6">
+                <label>WarehouseName</label>
+                <input class="form-control" disabled [(ngModel)]="growBusinessDetails.WarehouseName">
+            </div>
+            <div class="col-6">
+                <label>Date</label>
+                <input type="date" id="FromDate" name="FromDate" class="form-control" style="color: black;"
+                    [ngModel]="growBusinessDetails.StartDate | date:'yyyy-MM-dd'"
+                    (ngModelChange)="growBusinessDetails.StartDate = $event" />
+
+            </div>
+            <!-- <div class="col-4">
+                <label>EndDate</label>
+                <input type="datetime-local" id="ToDate" name="ToDate" class="form-control" style="color:#fff;"
+                    [ngModel]="growBusinessDetails.EndDate | date:'yyyy-MM-ddTHH:mm'"
+                    (ngModelChange)="growBusinessDetails.EndDate = $event" />
+
+            </div> -->
+        </div>
+        <div class="row">
+            <div class="col-4">
+                <label>Title</label>
+                <input class="form-control" id="NotificationTitle" name="NotificationTitle"
+                    [(ngModel)]="growBusinessDetails.NotificationTitle">
+            </div>
+            <div class="col-4">
+                <label>Notification message</label>
+                <textarea type="text" maxlength="500" id="Description" name="Description" class="form-control"
+                    [(ngModel)]="growBusinessDetails.NotificationDescription"
+                    placeholder="Enter NotificationDescription" rows="5" #DescriptionInput="ngModel" required>
+               </textarea>
+            </div>
+
+            <div class="col-4">
+                <label>Comment</label>
+                <textarea type="text" maxlength="500" id="comment" name="comment" class="form-control"
+                    [(ngModel)]="growBusinessDetails.Comment" placeholder="Enter Comment" rows="5"
+                    #commentInput="ngModel" required>
+                 </textarea>
+            </div>
+
+        </div>
+        <div class="row">
+
+            <div class="col-6">
+                <label>Status</label>
+                <input class="form-control" disabled [(ngModel)]="growBusinessDetails.Status">
+            </div>
+            <div class="col-6">
+                <label>CreatedDate</label>
+                <input type="datetime-local" class="form-control" disabled
+                    [ngModel]="growBusinessDetails.CreatedDate | date:'yyyy-MM-ddTHH:mm'">
+            </div>
+
+        </div>
+
+        <div class="row" *ngIf="growBusinessDetails.IsApproved">
+            <div class="col-4">
+                <label>ApprovedDate</label>
+                <input type="datetime-local" class="form-control" disabled
+                    [ngModel]="growBusinessDetails.ApprovedDate | date:'yyyy-MM-ddTHH:mm'">
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="col-4">
+                <label>Image</label>
+                <input class="btn btn-raised btn-info" id="file" type="file" accept="image/*"
+                    (change)="upload($event.target.files)" />
+                <button type="button" class="btn btn-raised btn-primary" *ngIf="uploadFlag" (click)="uploadImage()">
+                    Upload
+                </button>
+                <div>
+                    <br>
+                    <img alt="" src="{{baseURL}}{{growBusinessDetails.ImageUrl}}" height="100px;" class="img-square">
+                    <a href="{{baseURL}}{{growBusinessDetails.ImageUrl}}" target="_blank">View Image</a>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+
+            <div class="col-2">
+                <span *ngIf="growBusinessDetails.Status=='Pending' || growBusinessDetails.Status=='Reject'">
+                    <button class="btn btn-primary" (click)="updatenotification()">Update</button>
+
+                </span>
+            </div>
+            <div class="col-2">
+                <span *ngIf="growBusinessDetails.Status=='Pending' || growBusinessDetails.Status=='Reject'">
+                    <button class="btn btn-danger" (click)="Cancel()">
+                        Cancel</button>
+                </span>
+            </div>
+        </div>
+
+    </p-dialog>
+
+    <p-dialog header="Flashdeal" [(visible)]="opendetailspopup" *ngIf="RequestType==3" appendTo="body"
+        [style]="{width: 'auto', height: '500px'}" maximizable="true">
+
+        <div class="row">
+            <div class="col-4">
+                <label>WarehouseName</label>
+                <input class="form-control" disabled [(ngModel)]="growBusinessDetails.WarehouseName">
+            </div>
+            <div class="col-4">
+                <label>Status</label>
+                <input class="form-control" disabled [(ngModel)]="growBusinessDetails.Status">
+
+            </div>
+            <div class="col-4">
+                <label>CreatedDate</label>
+                <input type="datetime-local" class="form-control" disabled
+                    [ngModel]="growBusinessDetails.CreatedDate | date:'yyyy-MM-ddTHH:mm'">
+            </div>
+            <!-- <div class="col-4">
+                <label>StartDate</label>
+                <input type="datetime-local" id="FromDate" name="FromDate" class="form-control" style="color:black;"
+                    [ngModel]="growBusinessDetails.StartDate | date:'yyyy-MM-ddTHH:mm'"
+                    (ngModelChange)="growBusinessDetails.StartDate = $event" />
+            </div>
+            <div class="col-4">
+                <label>EndDate</label>
+                <input type="datetime-local" id="ToDate" name="ToDate" class="form-control" style="color: black;"
+                    [ngModel]="growBusinessDetails.EndDate | date:'yyyy-MM-ddTHH:mm'"
+                    (ngModelChange)="growBusinessDetails.EndDate = $event" />
+            </div> -->
+        </div>
+        <div class="row">
+            <div class="col-4">
+                <label>Comment</label>
+                <textarea type="text" maxlength="500" id="comment" name="comment" class="form-control"
+                    [(ngModel)]="growBusinessDetails.Comment" placeholder="Enter Comment" rows="5"
+                    #commentInput="ngModel" required>
+                </textarea>
+            </div>
+            <div class="col-4" *ngIf="growBusinessDetails.IsApproved">
+                <label>ApprovedDate</label>
+                <input type="datetime-local" class="form-control" disabled
+                    [ngModel]="growBusinessDetails.ApprovedDate | date:'yyyy-MM-ddTHH:mm'">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6" *ngIf="ItemName">
+                <label>ItemName</label>
+                <input class="form-control" disabled [(ngModel)]="growBusinessDetails.ItemName">
+            </div>
+            <div class="col-6" *ngIf="Moq">
+                <label>Moq</label>
+                <input class="form-control" disabled [(ngModel)]="growBusinessDetails.Moq">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6" *ngIf="AvailableQty">
+                <label>AvailableQty</label>
+                <input class="form-control" [(ngModel)]="growBusinessDetails.AvailableQty">
+            </div>
+            <div class="col-6" *ngIf="MaxQty">
+                <label>MaxQty</label>
+                <input class="form-control" [(ngModel)]="growBusinessDetails.MaxQty">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-4" *ngIf="IsFlashDealPrice">
+                <label>FlashDealPrice</label>
+                <input class="form-control" [(ngModel)]="growBusinessDetails.FlashDealPrice">
+            </div>
+            <!-- <div class="col-4">
+                <label>ImageUrl</label>
+                <span
+                    *ngIf="!growBusinessDetails.IsApproved && growBusinessDetails.Status=='Pending' || growBusinessDetails.Status=='Reject'">
+                    <input class="btn btn-raised btn-info" id="file" type="file" accept="image/*"
+                        (change)="upload($event.target.files)" />
+                    <button type="button" class="btn btn-raised btn-primary" *ngIf="uploadFlag" (click)="uploadImage()">
+                        Upload
+                    </button>
+                </span>
+
+                <div>
+                    <br>
+                    <img alt="" src="{{baseURL}}{{growBusinessDetails.ImageUrl}}" height="100px;" class="img-square">
+                    <a href="{{baseURL}}{{growBusinessDetails.ImageUrl}}" target="_blank">View Image</a>
+                </div>
+            </div> -->
+        </div>
+        <br>
+        <div *ngIf="ItemTable">
+            <div class="row">
+                <table class="table table-bordered">
+                    <thead class="thead-dark">
+                        <th>Item Name</th>
+                        <th>MRP</th>
+                        <th>Moq</th>
+                        <th>AvailableQty</th>
+                        <th>MaxQty</th>
+                        <th>FlashDealPrice</th>
+                        <th>StartDate</th>
+                        <th>EndDate</th>
+                        <th>Action</th>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let list of ItemList; index as i">
+                            <td>{{list.ItemName}}</td>
+                            <td>{{list.MRP}}</td>
+                            <td>{{list.Moq}}</td>
+                            <td>
+                                <input type="text" [(ngModel)]="list.AvailableQty"
+                                    onkeypress="return (event.charCode >= 48 && event.charCode <= 57)"
+                                    #AvailableQty="ngModel" required [disabled]="!list.isEditable" />
+                                <div class="text-danger"
+                                    *ngIf="AvailableQty.invalid && (AvailableQty.dirty || AvailableQty.touched)">Please
+                                    enter Qty.
+                                </div>
+                            </td>
+                            <td>
+                                <input type="text" [(ngModel)]="list.MaxQty"
+                                    onkeypress="return (event.charCode >= 48 && event.charCode <= 57)" #MaxQty="ngModel"
+                                    required [disabled]="!list.isEditable" />
+                                <div class="text-danger" *ngIf="MaxQty.invalid && (MaxQty.dirty || MaxQty.touched)">
+                                    Please enter Qty.
+                                </div>
+                            </td>
+                            <td>
+                                <input type="text" [(ngModel)]="list.FlashDealPrice"
+                                    onkeypress="return (event.charCode >= 48 && event.charCode <= 57 || event.charCode==46)"
+                                    #FlashDealPrice="ngModel" required [disabled]="!list.isEditable" />
+                                <div class="text-danger"
+                                    *ngIf="FlashDealPrice.invalid && (FlashDealPrice.dirty || FlashDealPrice.touched)">
+                                    Please enter price.
+                                </div>
+                            </td>
+                            <td>
+                                <input type="datetime-local" id="FromDate" name="FromDate"
+                                   class="form-control"
+                                    [ngModel]="list.StartDate | date:'yyyy-MM-ddTHH:mm'" #StartDate="ngModel" required
+                                    (ngModelChange)="list.StartDate = $event" [disabled]="!list.isEditable" />
+
+                                <div class="text-danger"
+                                    *ngIf="StartDate.invalid && (StartDate.dirty || StartDate.touched)">
+                                    Select Date.
+                                </div>
+                            </td>
+                            <td>
+                                <input type="datetime-local" id="EndDate" name="EndDate"
+                                    class="form-control"
+                                    [ngModel]="list.EndDate | date:'yyyy-MM-ddTHH:mm'" #EndDate="ngModel" required
+                                    (ngModelChange)="list.EndDate = $event" [disabled]="!list.isEditable" />
+
+                                <div class="text-danger"
+                                    *ngIf="EndDate.invalid && (EndDate.dirty || EndDate.touched)">
+                                    Select Date.
+                                </div>
+                            </td>
+                            <td>
+                                <button (click)="list.isEditable=!list.isEditable" [disabled]="list.IsRemove"
+                                    *ngIf="!list.isEditable">Edit</button>
+                                <button *ngIf="list.isEditable" (click)="list.isEditable=!list.isEditable">Save</button>
+                                <button *ngIf="!list.IsRemove" (click)="Remove(list.Id,i)">Remove</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+
+            <div class="col-2">
+                <span *ngIf="growBusinessDetails.Status=='Pending' || growBusinessDetails.Status=='Reject'">
+                    <button class="btn btn-primary" [disabled]="IsUpdateDisable"
+                        (click)="updateflashdeal()">Update</button>
+
+                </span>
+            </div>
+            <div class="col-2">
+                <span *ngIf="growBusinessDetails.Status=='Pending' || growBusinessDetails.Status=='Reject'">
+                    <button class="btn btn-danger" (click)="Cancel()">
+                        Cancel</button>
+                </span>
+            </div>
+        </div>
+    </p-dialog>
+
+    <p-dialog header="BrandStore" [(visible)]="opendetailspopup" *ngIf="RequestType==4" appendTo="body"
+        [style]="{width: 'auto', height: '450px'}" maximizable="true">
+
+        <div class="row">
+
+            <div class="col-4">
+                <label>WarehouseName</label>
+                <input class="form-control" disabled [(ngModel)]="growBusinessDetails.WarehouseName">
+            </div>
+
+            <div class="col-4">
+                <label>StartDate</label>
+                <input type="datetime-local" id="FromDate" name="FromDate" class="form-control" style="color: black;"
+                    [ngModel]="growBusinessDetails.StartDate | date:'yyyy-MM-ddTHH:mm'"
+                    (ngModelChange)="growBusinessDetails.StartDate = $event" />
+
+            </div>
+
+            <div class="col-4">
+                <label>EndDate</label>
+                <input type="datetime-local" id="ToDate" name="ToDate" class="form-control" style="color: black;"
+                    [ngModel]="growBusinessDetails.EndDate | date:'yyyy-MM-ddTHH:mm'"
+                    (ngModelChange)="growBusinessDetails.EndDate = $event" />
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-4">
+                <label>CategoryName</label>
+                <input class="form-control" disabled [(ngModel)]="growBusinessDetails.CategoryName">
+
+            </div>
+
+            <div class="col-4">
+                <label>Comment</label>
+                <textarea type="text" maxlength="500" id="comment" name="comment" class="form-control"
+                    [(ngModel)]="growBusinessDetails.Comment" placeholder="Enter Comment" rows="5"
+                    #commentInput="ngModel" required>
+         </textarea>
+            </div>
+            <div class="col-4" *ngIf="growBusinessDetails.IsApproved">
+                <label>ApprovedDate</label>
+                <input type="datetime-local" class="form-control" disabled
+                    [ngModel]="growBusinessDetails.ApprovedDate | date:'yyyy-MM-ddTHH:mm'">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-4">
+                <label>Status</label>
+                <input class="form-control" disabled [(ngModel)]="growBusinessDetails.Status">
+            </div>
+            <div class="col-4">
+                <label>CreatedDate</label>
+                <input type="datetime-local" class="form-control" disabled
+                    [ngModel]="growBusinessDetails.CreatedDate | date:'yyyy-MM-ddTHH:mm'">
+
+            </div>
+            <div class="col-4">
+                <label>Image</label>
+                <input class="btn btn-raised btn-info" id="file" type="file" accept="image/*"
+                    (change)="upload($event.target.files)" />
+                <button type="button" class="btn btn-raised btn-primary" *ngIf="uploadFlag" (click)="uploadImage()">
+                    Upload
+                </button>
+                <div>
+                    <br>
+                    <img alt="" src="{{baseURL}}{{growBusinessDetails.ImageUrl}}" height="100px;" class="img-square">
+                    <a href="{{baseURL}}{{growBusinessDetails.ImageUrl}}" target="_blank">View Image</a>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="row">
+
+            <div class="col-2">
+                <span *ngIf="growBusinessDetails.Status=='Pending' || growBusinessDetails.Status=='Reject'">
+                    <button class="btn btn-primary" (click)="updatebrandstore()">Update</button>
+
+                </span>
+            </div>
+            <div class="col-2">
+                <span *ngIf="growBusinessDetails.Status=='Pending' || growBusinessDetails.Status=='Reject'">
+                    <button class="btn btn-danger" (click)="Cancel()">
+                        Cancel</button>
+                </span>
+            </div>
+        </div>
+
+    </p-dialog>
+
+    <p-dialog header="Murli" [(visible)]="opendetailspopup" *ngIf="RequestType==5" appendTo="body"
+        [style]="{width: 'auto', height: '450px'}" maximizable="true">
+
+        <div class="row">
+
+            <div class="col-4">
+                <label>WarehouseName</label>
+                <input class="form-control" disabled [(ngModel)]="growBusinessDetails.WarehouseName">
+            </div>
+            <div class="col-4">
+                <label>StartDate</label>
+                <input type="datetime-local" id="FromDate" name="FromDate" class="form-control" style="color: black;"
+                    [ngModel]="growBusinessDetails.StartDate | date:'yyyy-MM-ddTHH:mm'"
+                    (ngModelChange)="growBusinessDetails.StartDate = $event" />
+
+            </div>
+            <div class="col-4">
+                <label>EndDate</label>
+                <input type="datetime-local" id="ToDate" name="ToDate" class="form-control" style="color: black;"
+                    [ngModel]="growBusinessDetails.EndDate | date:'yyyy-MM-ddTHH:mm'"
+                    (ngModelChange)="growBusinessDetails.EndDate = $event" />
+
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <label>Murli Description</label>
+                <textarea type="text" id="MurliDescription" name="MurliDescription" class="form-control"
+                    [(ngModel)]="growBusinessDetails.MurliDescription" placeholder="Enter MurliDescription"
+                    #MurliDescriptionInput="ngModel" required> </textarea>
+            </div>
+            <div class="col-6">
+                <label>Comment</label>
+                <textarea type="text" id="comdment" name="comdment" class="form-control"
+                    [(ngModel)]="growBusinessDetails.Comment" placeholder="Enter Comment" #comdmentInput="ngModel"
+                    required>
+         </textarea>
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <label>Status</label>
+                <input class="form-control" disabled [(ngModel)]="growBusinessDetails.Status">
+
+            </div>
+            <div class="col-6">
+                <label>CreatedDate</label>
+                <input type="datetime-local" class="form-control" disabled
+                    [ngModel]="growBusinessDetails.CreatedDate | date:'yyyy-MM-ddTHH:mm'">
+            </div>
+        </div>
+
+        <div class="row">
+
+            <div class="col-4">
+                <label>MurliNotificationTitle</label>
+                <textarea type="text" maxlength="500" id="NotificationTitle" name="NotificationTitle"
+                    class="form-control" [(ngModel)]="growBusinessDetails.MurliNotificationTitle"
+                    placeholder="Enter Murli Notification Title" rows="5">
+                </textarea>
+            </div>
+
+            <div class="col-4">
+                <label>MurliNotificationMsg</label>
+                <textarea type="text" maxlength="500" id="NotificationMsg" name="NotificationMsg" class="form-control"
+                    [(ngModel)]="growBusinessDetails.MurliNotificationMsg" placeholder="Enter Murli NotificationMsg "
+                    rows="5">
+                </textarea>
+            </div>
+            <div class="col-4" *ngIf="growBusinessDetails.ApprovedDate">
+                <label>ApprovedDate</label>
+                <input type="datetime-local" class="form-control" disabled
+                    [ngModel]="growBusinessDetails.ApprovedDate | date:'yyyy-MM-ddTHH:mm'">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-4" *ngIf="growBusinessDetails.MurliFile">
+                <label>MurliFile</label><br>
+                <audio controls class="audiowidth" style="width: 117px;">
+                    <source src="{{growBusinessDetails.MurliFile}}" type="audio/mp3">
+                </audio>
+
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-2">
+                <span *ngIf="growBusinessDetails.Status=='Pending' || growBusinessDetails.Status=='Reject'">
+                    <button class="btn btn-primary" (click)="updatemurli()">Update</button>
+
+                </span>
+            </div>
+            <div class="col-2">
+                <span *ngIf="growBusinessDetails.Status=='Pending' || growBusinessDetails.Status=='Reject'">
+                    <button class="btn btn-danger" (click)="Cancel()">
+                        Cancel</button>
+                </span>
+            </div>
+        </div>
+
+    </p-dialog>
+</div>
+
+
+<p-confirmDialog #cd appendTo="body" header="Confirmation">
+    <p-footer>
+
+        <button type="button" class="btn btn-raised btn-primary mr-1" (click)="cd.reject()">No</button>
+        <button type="button" class="btn btn-raised btn-danger mr-1" (click)="cd.accept()">Yes</button>
+    </p-footer>
+</p-confirmDialog>
+
+<p-blockUI [blocked]="blocked"></p-blockUI>

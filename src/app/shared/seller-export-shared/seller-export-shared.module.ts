@@ -12,11 +12,17 @@ import { DialogModule } from 'primeng/dialog';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { Checkbox, CheckboxModule } from 'primeng/checkbox';
 import {ProgressSpinnerModule} from 'primeng/progressspinner';
+import {MultiSelectModule} from 'primeng/multiselect';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { AutoCompleteModule } from 'primeng/autocomplete';
+import { HistoryComponent } from '../history/history.component';
+import { AgmCoreModule } from '@agm/core';
 
 
 @NgModule({
   declarations: [
     SpinnerComponent,
+    HistoryComponent,
   ],
   imports: [
     CommonModule,
@@ -26,8 +32,11 @@ import {ProgressSpinnerModule} from 'primeng/progressspinner';
     CalendarModule,
     BlockUIModule,
     ToastModule,
+    AutoCompleteModule,
+    AgmCoreModule
   ],
   exports: [
+    CommonModule,
     FormsModule,
     SpinnerComponent,
     AccordionModule,
@@ -38,7 +47,12 @@ import {ProgressSpinnerModule} from 'primeng/progressspinner';
     DialogModule,
     ConfirmDialogModule,
     CheckboxModule,
-    ProgressSpinnerModule
+    ProgressSpinnerModule,
+    MultiSelectModule,
+    NgSelectModule,
+    AutoCompleteModule,
+    AgmCoreModule,
+    HistoryComponent
   ],
   providers: [
     ConfirmationService,

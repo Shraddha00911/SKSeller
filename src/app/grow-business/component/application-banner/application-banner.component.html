@@ -1,0 +1,129 @@
+
+<p-toast [style]="{marginTop: '450px'}"></p-toast>
+
+<div class="page-header">
+    <!-- Item Scheme Master -->
+
+</div>
+<div class="col-12 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+
+                <div class="col-12">
+                    <h4>Application Banner</h4>
+                    <hr style="background-color: white;">
+                </div>
+            </div>
+          <form class="form" name="fform" #apBannerForm="ngForm">
+            <div class="row">
+                <div class="col-12">
+                    <div class="row">
+                        <div class="col-3">
+                            <label for="City">City</label><br>
+                            <p-multiSelect [style]="{minWidth:'',color:'black',background : 'white'}" id="Cityid" name="CityName" [options]="CityList"
+                                [(ngModel)]="dataset.cityid" (onChange)="GetCityWarehouse(dataset.cityid)"
+                                [panelStyle]="{minWidth:'25em'}" optionLabel="CityName" appendTo="body">
+                            </p-multiSelect>
+
+                        </div>
+                        <div class="col-3">
+                            <label>Select Hub</label><br>
+                            <!-- <select class="form-control" name="warehouse" id="warehouse" [(ngModel)]="appBannerRequestDC.WarehouseId">
+                    <option>--Select--</option>
+                    <option *ngFor="let data of wareHouseList" [ngValue]="data.WareHouseId">{{data.WareHouseName}}
+                    </option>
+                </select> -->
+                            <p-multiSelect [style]="{minWidth:'',color:'black',background : 'white'}" id="warehouse" name="warehouse"
+                                [options]="wareHouseList" (onChange)="selectedwarehouse()"
+                                [(ngModel)]="appBannerRequestDC.WarehouseIds" [panelStyle]="{minWidth:'25em'}"
+                                optionLabel="WareHouseName" appendTo="body">
+                            </p-multiSelect>
+                        </div>
+                        <div class="col-sm-3">
+                            <label for="FromDate">StartDate</label>
+                            <input type="datetime-local" id="FromDate" name="FromDate" [min]="minDate | date:'yyyy-MM-ddTHH:mm'" class="form-control"
+                                style="color:black;background: white;" [ngModel]="appBannerRequestDC.StartDate | date:'yyyy-MM-ddTHH:mm'"
+                             #FromDateInput="ngModel" required   (ngModelChange)="appBannerRequestDC.StartDate = $event" />
+                       
+                             <div *ngIf="isInvalid && !FromDateInput.valid && FromDateInput.errors.required">
+                                    <code>StartDate is required</code>
+                                </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <label for="FromDate">ToDate</label>
+                            <input type="datetime-local" id="ToDate" name="ToDate" class="form-control" [min]="minDate | date:'yyyy-MM-ddTHH:mm'"
+                                style="color:black;background: white;" [ngModel]="appBannerRequestDC.EndDate | date:'yyyy-MM-ddTHH:mm'"
+                             #ToDateInput="ngModel" required  (ngModelChange)="appBannerRequestDC.EndDate = $event" />
+
+                             <div *ngIf="isInvalid && !ToDateInput.valid && ToDateInput.errors.required">
+                                 <code>ToDate is required</code>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-10">
+                    <div class="row">
+                        <div class="col-3">
+                            <label>Banner show</label>
+                            <select class="form-control dr" name="bannerStore" id="bannerStore"
+                                [(ngModel)]="appBannerRequestDC.Type" required #bannerStoreInput="ngModel">
+                                <!-- <option value="OnStore">OnStore</option> -->
+                                <option value="OnHome">OnHome</option>
+                            </select>
+
+                             <div *ngIf="isInvalid && !bannerStoreInput.valid && bannerStoreInput.errors.required">
+                                 <code>Banner show is required</code>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-2">
+
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-6">
+                    <div class="imageUpload">
+                        <br>
+                        <input class="btn btn-raised btn-info" id="file" type="file" accept="image/jpeg, image/png" 
+                            (change)="upload($event.target.files)" />
+                        <button type="button" class="btn btn-raised btn-primary" *ngIf="uploadFlag" (click)="uploadImage()">
+                            Upload
+                        </button>
+                        <div>
+                            <br>
+                            <img alt="" src="{{baseURL}}{{appBannerRequestDC.ImageUrl}}" height="100px;"
+                                class="img-square">
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <br>
+            <div class="row">
+                <div class="col-6">
+                    <textarea type="text" maxlength="500" id="Description" name="Description" #DescriptionInput="ngModel"  class="form-control dr"
+                       required [(ngModel)]="appBannerRequestDC.AppBannerDiscription" placeholder="Enter Description" rows="5">
+                     </textarea>
+
+                     <div *ngIf="isInvalid && !DescriptionInput.valid && DescriptionInput.errors.required">
+                                 <code>Banner show is required</code>
+                    </div>
+            </div>
+                <div class="col-6">
+                    <button type="submit" class="btn btn-primary" (click)="onSave(apBannerForm)">Send</button>
+                </div>
+            </div>
+
+            </form>
+        </div>
+    </div>
+    <p-blockUI [blocked]="blocked"></p-blockUI>

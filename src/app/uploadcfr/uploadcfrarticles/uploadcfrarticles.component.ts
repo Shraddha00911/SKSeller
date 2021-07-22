@@ -65,7 +65,7 @@ export class UploadcfrarticlesComponent implements OnInit {
   }
 
   UploadCfr() {
-    debugger;
+   
     if (this.subcatid > 0 && this.cfruploadfile) {
 
       let formData = new FormData();

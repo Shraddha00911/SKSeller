@@ -60,7 +60,8 @@
 .table {
   th,
   td {
-    white-space: nowrap;color:#fff;
+    white-space: nowrap;color:black;
+    background: white;
   }
 }
 
@@ -81,3 +82,20 @@ td{padding:6px;}}
 
 
 }
+:host ::ng-deep .p-multiselect{
+  background: none !important;
+}
+:host ::ng-deep .btn-xs{ font-size: 0.85rem !important;}
+.alignleft {
+	float: left;
+}
+.alignright {
+	float: right;
+}
+
+// .card-body{
+//   flex: 1 1 auto;
+//   min-height: 1px;
+//   padding: 1.25rem;
+//   background: white;
+// }

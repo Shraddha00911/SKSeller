@@ -1,0 +1,169 @@
+<br>
+<div class="page-header">
+    <h3 class="page-title"> Target List</h3>
+</div>
+<div class="col-12 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <p-toast [style]="{marginTop: '10px'}"></p-toast>
+            <p-confirmDialog #cd appendTo="body" header="Confirmation">
+                <p-footer class="ovelFieldForm">
+                    <button type="button" class="btn btn-raised btn-primary mr-1" (click)="cd.reject()">No</button>
+                    <button type="button" class="btn btn-raised btn-danger mr-1" (click)="cd.accept()">Yes</button>
+                </p-footer>
+            </p-confirmDialog>
+            <div class="row">
+                <div class="col-md-2">
+                    <label>Search By Keyword</label>
+                    <input type="text" [(ngModel)]="Searchkeyword" class="form-control">
+                </div>
+                <div class="col-md-2">
+                    <label>Store Name </label>
+                    <select id="Store" name="Store" value="Store" class="form-control"
+                        (change)="GetMrpItemList(SelectedStoreId,Searchkeyword)" [(ngModel)]="SelectedStoreId">
+                        <option value="0">--select--</option>
+                        <option *ngFor="let m of storelist" [ngValue]="m.StoreId">
+                            {{m.StoreName}}
+                        </option>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <br>
+                    <button type="button" class="btn btn-raised btn-primary"
+                        (click)="Search(SelectedStoreId,Searchkeyword)">Search</button> &nbsp;
+                    <button type="button" class="btn btn-raised btn-success"
+                        (click)="Export(SelectedStoreId)">Export</button>
+                </div>
+                <div class="col-md-4">
+                    <button type="button" class="btn btn-raised btn-primary float-right align-self-end"
+                        style="margin-top: 10px;" (click)="AddItem()">
+                        <i class="fa fa-plus-circle"></i> Add New Item
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-12 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <p-table #dt [value]="salestargetList" [totalRecords]="totalcount" (onLazyLoad)="load($event)"
+                    [lazy]="true" [paginator]="true" [rows]="10" appendTo="body"
+                    [style]="{width: 'auto', height: 'auto'}">
+                    <ng-template pTemplate="header">
+                        <th>Sr No</th>
+                        <th>ItemBaseName</th>
+                        <th>ItemNumber</th>
+                        <th>ItemMultiMrpId</th>
+                        <th>BaseQty</th>
+                        <th>Action</th>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-rowIndex="rowIndex" let-list>
+                        <tr>
+                            <td>{{rowIndex+1}}</td>
+                            <td>{{list.itemBaseName}}</td>
+                            <td>{{list.ItemNumber}}</td>
+                            <td>{{list.ItemMultiMrpId}}</td>
+                            <td>{{list.BaseQty}}</td>
+                            <td>
+                                <button class="btn btn-primary" (click)="Edit(list)">
+                                    Edit
+                                </button>
+                                <button class="btn btn-primary" (click)="Delete(list)">
+                                    Delete
+                                </button>
+                            </td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+        </div>
+    </div>
+</div>
+<div *ngIf="isOpenPopup">
+    <p-dialog [(visible)]="isOpenPopup" [resizable]="false" [modal]="true" appendTo="body" positionTop="10"
+        [style]="{width: '50%',height: '60%'}">
+        <div class="row">
+            <!-- <div class="col-md-6" *ngIf="disableStore">
+                <label>Store Name </label>
+                <select id="Store" name="Store" value="Store" class="form-control"
+                    (change)="GetMrpItemList(addtarget.StoreId)" [(ngModel)]="addtarget.StoreId">
+                    <option value="0">--select--</option>
+                    <option *ngFor="let m of storelist" [ngValue]="m.StoreId">
+                        {{m.StoreName}}
+                    </option>
+                </select>
+            </div> -->
+            <div class="col-md-6" *ngIf="disableItemName">
+                <label>Item Name</label>
+                <select id=" itemBaseName" name="itemBaseName" value="itemBaseName" class="form-control"
+                    (change)="selectChange(addtarget.ItemMultiMrpId)" [(ngModel)]="addtarget.ItemMultiMrpId">
+                    <option value="0">--select--</option>
+                    <option *ngFor="let m of ItemList" [ngValue]="m.ItemMultiMrpId">
+                        {{m.itemBaseName}}
+                    </option>
+                </select>
+            </div>
+
+            <div class="col-md-3">
+                <label>Base Qty</label>
+                <input type="text" class="form-control" [(ngModel)]="addtarget.BaseQty" onkeypress="return (event.charCode >= 48 && event.charCode <= 57)" id="BaseQty">
+            </div>
+            <div class="col-md-3">
+                <button class="btn btn-success mt" id=btnAdditem (click)="AddItemInList()">Add Item</button>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <table class="table table-bordered">
+                <thead class="thead-dark">
+                    <th>SrNo</th>
+                    <th>itemBaseName</th>
+                    <th>ItemNumber</th>
+                    <th>BaseQty</th>
+                    <th>ItemMultiMrpId</th>
+                    <th>MRP</th>
+                    <th>Action</th>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let list of addItemList; index as i">
+                        <td>{{i+1}}</td>
+                        <td>{{list.itemBaseName}}</td>
+                        <td>{{list.ItemNumber}}</td>
+                        <td>{{list.BaseQty}}</td>
+                        <td>{{list.ItemMultiMrpId}}</td>
+                        <td>{{list.MRP}}</td>
+                        <td><button (click)="Remove(i)">Remove</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="button" class="btn btn-primary mt" (click)="SaveTarget()">Submit</div>
+                <div class="button" class="btn btn-danger mt" (click)="cancel()">cancel</div>
+            </div>
+        </div>
+    </p-dialog>
+</div>
+
+<div *ngIf="isEditPopup">
+    <p-dialog [(visible)]="isEditPopup" [resizable]="false" [modal]="true" appendTo="body" positionTop="10"
+        [style]="{width: '50%',height: '35%'}">
+        <div class="row">
+            <div class="col-md-6">
+                <label>Base Qty</label>
+                <input type="text" class="form-control" onkeypress="return (event.charCode >= 48 && event.charCode <= 57)" [(ngModel)]="EditTarget.BaseQty" id="BaseQty">
+            </div>
+            <div class="col-md-3">
+                <button class="btn btn-success mt" id=btnAdd (click)="EditBaseQty()">Update</button>
+            </div>
+        </div>
+    </p-dialog>
+</div>
+
+<p-blockUI [blocked]="blocked"></p-blockUI>
+<p-progressSpinner *ngIf="blocked"
+    [style]="{width: '60px', height: '60px', position: 'absolute', left: '48%', top: '48%'}" strokeWidth="8"
+    fill="#EEEEEE" animationDuration=".5s"></p-progressSpinner>

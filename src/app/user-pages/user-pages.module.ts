@@ -14,12 +14,13 @@ import { SellerExportSharedModule } from '../shared/seller-export-shared/seller-
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'subcatselection', component: SubcatselectionComponent },
-  { path: 'changepassword', component: ChangePasswordComponent },
-  { path: 'forgotpassword', component: ForgotPasswordComponent },
-  { path: 'loginviamobile', component: LoginViaMobileComponent },
-  { path: 'loginotpconfirmation', component: LoginOtpConfirmationComponent },
-  { path: 'updatepassword', component: UpdatePasswordComponent },
-  { path: 'register', component: RegisterComponent },
+  
+  // { path: 'changepassword', component: ChangePasswordComponent },
+  // { path: 'forgotpassword', component: ForgotPasswordComponent },
+  // { path: 'loginviamobile', component: LoginViaMobileComponent },
+  // { path: 'loginotpconfirmation', component: LoginOtpConfirmationComponent },
+  // { path: 'updatepassword', component: UpdatePasswordComponent },
+  // { path: 'register', component: RegisterComponent },
 ]
 @NgModule({
   declarations: [

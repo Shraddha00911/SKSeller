@@ -15,8 +15,9 @@ export class DashboardService {
     return this.http.get<any>(this.apiURL + '/api/Seller/GetCatelogueItemWithCFR/' + cityid + '/' + WarehouseId);
   }
 
-  GetSellerSales(cityid: any) {
-    return this.http.get<any>(this.apiURL + '/api/Seller/GetSellerSales/' + cityid);
+  GetSellerSales(object) {
+
+    return this.http.post<any>(this.apiURL + '/api/Seller/GetSellerSales', object);
   }
 
   GetDashboardPoStatusCount(object) {
@@ -29,6 +30,7 @@ export class DashboardService {
   }
 
   GetDashboardOrderFillRate(object) {
+
     return this.http.post<any>(this.apiURL + '/api/Seller/DashboardOrderFillRate', object);
 
   }
@@ -54,14 +56,44 @@ export class DashboardService {
 
   }
   GetPareto(object, type, itemnumber) {
-  
-    return this.http.post<any>(this.apiURL + '/api/Seller/Pareto/'+type+'/'+itemnumber, object);
-  }
- GetOrderDetailExport(object,type){
-   debugger;
-  return this.http.post<any>(this.apiURL + '/api/Seller/OrderDetailExport/' + type,  object);
- }
 
+    return this.http.post<any>(this.apiURL + '/api/Seller/Pareto/' + type + '/' + itemnumber, object);
+  }
+  GetOrderDetailExport(object, type) {
+
+    return this.http.post<any>(this.apiURL + '/api/Seller/OrderDetailExport/' + type, object);
+  }
+  GetWarehouseByCityids(postdc) {
+
+    return this.http.post<any>(this.apiURL + '/api/Seller/GetWarehouseByCityids/cityids', postdc);
+  }
+
+  CatalogCFRExport(cityid, WarehouseId) {
+    return this.http.get<any>(this.apiURL + '/api/Seller/CatalogCFRExport/' + cityid + '/' + WarehouseId);
+  }
+
+  CatelogueItemExport(cityid, WarehouseId) {
+    return this.http.get<any>(this.apiURL + '/api/Seller/CatelogueItemExport/' + cityid + '/' + WarehouseId);
+  }
+
+
+  GetSalesExport(object) {
+    return this.http.post<any>(this.apiURL + '/api/Seller/SalesExport', object);
+  }
+
+  GetPOFillRateExport(object) {
+    return this.http.post<any>(this.apiURL + '/api/Seller/POFillRateExport', object);
+  }
+
+  GetOrderFillRateExport(object) {
+    return this.http.post<any>(this.apiURL + '/api/Seller/OrderFillRateExport', object);
+  }
+  StockDetailExport(warehouse){
+    return this.http.get<any>(this.apiURL+'/api/SellerNetStockController?WarehouseId='+warehouse)
+  }
+  GetBrandLedger(object) {
+    return this.http.post<any>(this.apiURL + '/api/SellerLedger/Brand', object);
+  }
 }
 
 

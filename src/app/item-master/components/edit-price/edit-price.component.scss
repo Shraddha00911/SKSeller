@@ -1,0 +1,60 @@
+.srh
+{
+    border: 1px solid cadetblue;
+    border-radius: 5px 5px 5px 5px;
+}
+// .p-autocomplete {
+//     display: inline-flex;
+//     position: relative;
+//     width: 125%;
+// }
+.inputEdit {
+    width: 182px;//140px;
+    margin-top: 10px;
+    border: 1px solid cadetblue;
+    color: black;
+}
+.inputEdits {
+    width: 182px;//140px;
+    margin-top: 10px;
+    border: 1px solid cadetblue;
+    color: aqua;
+}
+.form-control:disabled, .form-control[readonly] {
+    background-color: #1B2A47;//black;//aquamarine;
+    opacity: 1;
+}
+.tb{margin-top: 10px;}
+.limitInp
+{
+        margin-left: 40px;
+        margin-top: -12px;
+}
+.hd{margin-left: 17px;}
+.hdd{margin-left: 33px;}
+.dp{
+    background-color: cornflowerblue !important;
+    color: black;
+    font-size: larger;
+    border-bottom: 1px solid black;
+}
+
+.tp-itemEdit {
+    margin-left: 28px;
+    margin-right: 15px;
+    // margin-top: 16px;
+    margin-bottom: 19px;
+}
+.err
+{
+    color: red;
+    margin-top: 5px;
+}
+.p-dialog .p-dialog-header {
+    border-bottom: 0 none;
+    background: #ffffff;
+    color: #495057;
+    padding: 0.5rem;
+    border-top-right-radius: 3px;
+    border-top-left-radius: 3px;
+}

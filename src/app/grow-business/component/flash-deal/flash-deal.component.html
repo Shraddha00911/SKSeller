@@ -1,0 +1,196 @@
+<p-toast [style]="{marginTop: '450px'}"></p-toast>
+
+<div class="page-header">
+    <!-- Item Scheme Master -->
+
+</div><br>
+<div class="col-12 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+
+                <div class="col-12">
+                    <h4>Flash deal</h4>
+                    <hr style="background-color: white;">
+                </div>
+            </div>
+
+            <form class="form" name="fform" #flashdealForm="ngForm">
+                <div class="row">
+
+                    <div class="col-4">
+                        <label for="City">City</label><br>
+                        <p-multiSelect [style]="{minWidth:''}" id="Cityid" name="CityName" [options]="CityList"
+                            [(ngModel)]="dataset.cityid" (onChange)="GetCityWarehouse(dataset.cityid)"
+                            [panelStyle]="{minWidth:'25em'}" optionLabel="CityName" appendTo="body">
+                        </p-multiSelect>
+
+                    </div>
+                    <div class="col-4">
+                        <label>Select Hub</label><br>
+                        <p-multiSelect [style]="{minWidth:''}" id="warehouse" name="warehouse" [options]="wareHouseList"
+                            (onChange)="selectedwarehouse(dataset.cityid)" [(ngModel)]="flashDealRequest.WarehouseIds"
+                            [panelStyle]="{minWidth:'25em'}" optionLabel="WareHouseName" appendTo="body">
+                        </p-multiSelect>
+                    </div>
+                    <div class="col-4">
+                        <label>Item</label>
+                        <select class="form-control" id="site-ItemId" name="site-ItemId"
+                            (ngModelChange)="selectedItem($event)" [(ngModel)]="flashDealRequest.ItemId"
+                            #siteItemInput="ngModel" required>
+                            <option value="{{s.Id}}" *ngFor="let s of ItemsList">
+                                {{s.Name}} </option>
+                        </select>
+
+                        <div *ngIf="isInvalid && !siteItemInput.valid && siteItemInput.errors.required">
+                            <code>Item is required</code>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+
+                    <div class="col-2">
+                        <label>UnitPrice</label>
+                        <div>
+                            <input type="number" disabled name="UnitPrice" id="UnitPrice" class="form-control"
+                                [(ngModel)]="UnitPrice">
+                        </div>
+                    </div>
+                    <div class="col-2">
+                        <label>Moq</label>
+                        <div>
+                            <input type="number" disabled name="moq" id="moq" class="form-control"
+                                [(ngModel)]="moqvalue">
+                        </div>
+                    </div>
+                    <div class="col-2">
+                        <label>MRP</label>
+                        <div>
+                            <input type="text" disabled name="MRP" id="MRP" class="form-control" [(ngModel)]="MRP">
+                        </div>
+                    </div>
+
+                    <div class="col-sm-3">
+                        <label for="FromDate">StartDate</label>
+                        <input type="datetime-local" id="FromDate" name="FromDate"
+                            [min]="minDate | date:'yyyy-MM-ddTHH:mm'" class="form-control"
+                            [ngModel]="flashDealRequest.StartDate | date:'yyyy-MM-ddTHH:mm'"
+                            (ngModelChange)="flashDealRequest.StartDate = $event" />
+
+                    </div>
+                    <div class="col-sm-3">
+                        <label for="FromDate">ToDate</label>
+                        <input type="datetime-local" id="ToDate" name="ToDate" [min]="minDate | date:'yyyy-MM-ddTHH:mm'"
+                            class="form-control" [ngModel]="flashDealRequest.EndDate | date:'yyyy-MM-ddTHH:mm'"
+                            (ngModelChange)="flashDealRequest.EndDate = $event" />
+
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-3">
+                        <label>Limit quantity</label>
+                        <div>
+                            <input class="form-control" (click)="selectfield($event.target.value)" id="availableQty"
+                                name="availableQty" type="text"
+                                onkeypress="return (event.charCode >= 48 && event.charCode <= 57)"
+                                [(ngModel)]="flashDealRequest.AvailableQty">
+                        </div>
+                        <!-- <div *ngIf="isInvalid && !availableQtyInput.valid && availableQtyInput.errors.required">
+                            <code>Limit quantity is required</code>
+                        </div> -->
+                        <!-- <div *ngIf="isInvalid && availableQtyInput.touched">
+                            <code>Please enter avl qty in multiple of moq</code>
+                        </div> -->
+                    </div>
+                    <div class="col-3">
+                        <label>Max quantity</label>
+                        <div>
+                            <input class="form-control" (click)="selectmaxfield($event.target.value)" id="maxquantity"
+                                name="maxquantity" type="text"
+                                onkeypress="return (event.charCode >= 48 && event.charCode <= 57)"
+                                [(ngModel)]="flashDealRequest.MaxQty">
+                        </div>
+                        <!-- <div *ngIf="isInvalid && !maxquantityInput.valid && maxquantityInput.errors.required">
+                            <code>Maxquantity is required</code>
+                        </div> -->
+                        <!-- <div *ngIf="isInvalid && maxquantityInput.touched">
+                            <code>Please enter Max  qty in multiple of moq</code>
+                        </div> -->
+                    </div>
+                    <br>
+                    <div class="col-3">
+                        <label>Flash Deal Price</label>
+                        <div>
+                            <input class="form-control" type="text"
+                                onkeypress="return (event.charCode >= 48 && event.charCode <= 57 || event.charCode==46)"
+                                id="flashdealP" name="flashdealP" [(ngModel)]="flashDealRequest.FlashDealPrice">
+                        </div>
+                        <!-- <div *ngIf="isInvalid && !flashdealPInput.valid && flashdealPInput.errors.required">
+                            <code>flashdealPrice is required</code>
+                        </div> -->
+                    </div>
+                    <div class="col-3">
+                        <button type="button" (click)="AddItemDt(flashDealRequest)"
+                            class="btn btn-raised btn-primary mt">Add Item</button>
+                    </div>
+                </div>
+
+                <br>
+                <div class="row">
+                    <div class="col-6">
+                        <!-- <div class="imageUpload">
+                            <br>
+                            <input class="btn btn-raised btn-info" id="file" type="file" accept="image/jpeg, image/png"
+                                (change)="upload($event.target.files)" />
+                            <button type="button" class="btn btn-raised btn-primary" *ngIf="uploadFlag"
+                                (click)="uploadImage()">
+                                Upload
+                            </button>
+                            <div>
+                                <br>
+                                <img alt="" src="{{baseURL}}{{flashDealRequest.ImageUrl}}" height="100px;"
+                                    class="img-square">
+                            </div>
+                        </div> -->
+
+                    </div>
+                </div>
+                <div class="row">
+                    <table class="table table-bordered">
+                        <thead class="thead-dark">
+                            <th>SrNo</th>
+                            <th>ItemName</th>
+                            <th>Moq</th>
+                            <th>AvailableQty</th>
+                            <th>MaxQty</th>
+                            <th>FlashDealPrice</th>
+                            <th>StartDate</th>
+                            <th>EndDate</th>
+                            <th>Action</th>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let list of addItemList; index as i">
+                                <td>{{i+1}}</td>
+                                <td>{{list.ItemName}}</td>
+                                <td>{{list.Moq}}</td>
+                                <td>{{list.AvailableQty}}</td>
+                                <td>{{list.MaxQty}}</td>
+                                <td>{{list.FlashDealPrice}}</td>
+                                <td>{{list.StartDate | date:'medium'}}</td>
+                                <td>{{list.EndDate | date:'medium'}}</td>
+                                <td><button (click)="Remove(i)">Remove</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-2">
+                    <button type="submit" class="btn btn-primary" *ngIf="IsSendButton"
+                        (click)="onSave(flashdealForm)">Send</button>
+                </div>
+                <br>
+            </form>
+        </div>
+    </div>
+    <p-blockUI [blocked]="blocked"></p-blockUI>

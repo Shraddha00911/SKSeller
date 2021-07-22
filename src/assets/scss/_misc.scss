@@ -21,7 +21,8 @@ body {
   @include flex-direction(row);
   padding-left: 0;
   padding-right: 0;
-  width: calc(100% - #{$sidebar-width-lg});
+   width: calc(100% - #{$sidebar-width-lg});//
+  //width: calc(115% - #{$sidebar-width-lg});///// pooja
   transition: width $action-transition-duration $action-transition-timing-function, margin $action-transition-duration $action-transition-timing-function;
 
   &.full-page-wrapper {
@@ -38,6 +39,7 @@ body {
 .main-panel {
   transition: width $action-transition-duration $action-transition-timing-function, margin $action-transition-duration $action-transition-timing-function;
   width: 100%;
+  //margin-left: 18%;/////pooja
   min-height: calc(100vh - #{$navbar-height});
   padding-top: $navbar-height;
   @include display-flex();
@@ -90,7 +92,7 @@ code {
   }
 }
 .page-title {
-  color: #ffffff;
+  color: black;//#ffffff;
   font-size: 1.125rem;
   margin-bottom: 0;
   margin-left:15px;

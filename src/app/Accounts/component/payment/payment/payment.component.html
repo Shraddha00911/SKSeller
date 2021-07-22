@@ -1,0 +1,163 @@
+<div class="page-header">
+    <!-- <h3 class="page-title">
+      fff
+    </h3> -->
+</div>
+<div class="col-12 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">Payment : {{subcateName}}</h4>
+            <form class="form-inline">
+                <div class="input-group mb-2 mr-sm-3">
+                    <select class="form-control mb-2 mr-sm-3 dr" id="Month" name="Month" [(ngModel)]="MonthId">
+                        <option>Select Month</option>
+                        <option *ngFor="let month of Months" [ngValue]="month.id">
+                            {{month.Name}}
+                        </option>
+                    </select>
+                </div>
+                <div class="input-group mb-2 mr-sm-3">
+                    <select class="form-control mb-2 mr-sm-3 dr" id="Year" name="Year" [(ngModel)]="YearId">
+                        <option>Select Year</option>
+                        <option *ngFor="let Year of YearList" [ngValue]="Year.id">
+                            {{Year.Name}}
+                        </option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary mb-3" (click)="Search()">Search</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="col-lg-12 grid-margin stretch-card" *ngIf="YearId>0 && MonthId>0">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">Service Detail</h4>
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th> # </th>
+                            <th> Service type </th>
+                            <th> Charge Amount </th>
+                            <th> Detail </th>
+                            <th> Export </th>
+                        </tr>
+                    </thead>
+                  
+                    <tbody *ngIf="charges">
+                        <tr *ngFor="let item of charges; let i = index">
+                            <td> {{1+i}} </td>
+                            <td>{{item.ChargeType}} </td>
+                            <td><i class="fa fa-inr"></i> {{item.ChargeAmount | number : '1.2-2'}} </td>
+                            <td><button class="btn btn-primary btn-xs" (click)="Detail(item.ChargeType)">Detail</button>
+                            </td>
+                            <td><button class="btn btn-primary btn-xs" (click)="Export(item.ChargeType)">
+                                    <i class="fa fa-share-square-o"></i> Export</button></td>
+                                   
+                        </tr>
+                    </tbody>
+                    <tr>
+                        <td colspan="3"></td>
+                        <td class="p-text-right">Net Payable amount: </td>
+                        <td class="text-danger"><i class="fa fa-inr"></i> {{getTotalAmount() | number : '1.2-2'}}</td>
+                    </tr>
+                </table>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<p-dialog [(visible)]="Isdisplay" *ngIf="YearId>0 && MonthId>0"  appendTo="body" [style]="{width: '1040px', height: '450px'}">
+    <!-- <div class="col-lg-12 grid-margin stretch-card" *ngIf="YearId>0 && MonthId>0"> -->
+        <!-- <div class="card"> <div class="card-body">-->
+
+        <!-- <h4 class="card-title"> Detail</h4> -->
+        <div class="table-responsive" *ngIf="chargesdetail">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th> # </th>
+                        <th> WarehouseName </th>
+                        <th> CityName </th>
+                        <th> Service type </th>
+                        <th> Amount </th>
+                        <th> Charge Amount </th>
+                        <!-- <th> Export </th> -->
+                    </tr>
+                </thead>
+                <tbody *ngIf="chargesdetail">
+                    <tr *ngFor="let item of chargesdetail; let i = index">
+                        <td> {{1+i}} </td>
+                        <td>{{item.WarehouseName}} </td>
+                        <td>{{item.CityName}} </td>
+                        <td>{{item.ChargeType}} </td>
+                        <td>{{item.Amount | number : '1.2-2'}} </td>
+                        <td><i class="fa fa-inr"></i> {{item.ChargeAmount | number : '1.2-2'}} </td>
+
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="table-responsive" *ngIf="ActivetedItemsdetail">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th> # </th>
+                        <th> WarehouseName </th>
+                        <th> CityName </th>
+                        <th> ItemNumber </th>
+                        <th> ActivatedDate </th>
+                    </tr>
+                </thead>
+                <tbody *ngIf="ActivetedItemsdetail">
+                    <tr *ngFor="let item of ActivetedItemsdetail; let i = index">
+                        <td> {{1+i}} </td>
+                        <td>{{item.WarehouseName}} </td>
+                        <td>{{item.CityName}} </td>
+                        <td>{{item.ItemNumber}} </td>
+                        <td>{{item.ActivatedDate | date : "dd/MM/yyyy h:mm a"}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="table-responsive" *ngIf="SellerClosingLineItems">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th> # </th>
+                        <th> WarehouseName </th>
+                        <th> CityName </th>
+                        <th> ItemNumber </th>
+                        <th> itemBaseName </th>
+                        <th> AvgClosingQty </th>
+                        <th> AvgClosingAmt </th>
+                        <th> Charge </th>
+                    </tr>
+                </thead>
+                <tbody *ngIf="SellerClosingLineItems">
+                    <tr *ngFor="let item of SellerClosingLineItems; let i = index">
+                        <td> {{1+i}} </td>
+                        <td>{{item.WarehouseName}} </td>
+                        <td>{{item.CityName}} </td>
+                        <td>{{item.ItemNumber}} </td>
+                        <td>{{item.itemBaseName}}</td>
+                        <td>{{item.AvgClosingQty}}</td>
+                        <td>{{item.AvgClosingAmt}}</td>
+                        <td>{{item.Charge}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- </div> </div> -->
+    <!-- </div> -->
+</p-dialog>
+<p-blockUI [blocked]="blocked"></p-blockUI>
+<p-progressSpinner *ngIf="blocked"
+    [style]="{width: '60px', height: '60px', position: 'absolute', left: '48%', top: '48%'}" strokeWidth="8"
+    fill="#EEEEEE" animationDuration=".5s"></p-progressSpinner>

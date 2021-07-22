@@ -1,0 +1,108 @@
+
+<div class="page-header">
+    <!-- <h3 class="page-title">
+      fff
+    </h3> -->
+</div>
+<div class="col-12 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <h3>{{subcateName}}</h3>
+            <div class="row mt6 fontsize-12">                
+                <p-toast [style]="{marginTop: '10px'}"></p-toast>
+                <div class="col-sm-3">
+                   <label></label><br>
+                    <p-multiSelect [options]="CityList" [(ngModel)]="selectedCities" optionLabel="CityName">
+                    </p-multiSelect>
+                </div>
+                <div class="col-sm-3">
+                    <label for="StartDate">StartDate</label>
+                    <input type="datetime-local" id="StartDate" name="StartDate" class="form-control dr"
+                        [ngModel]="SearchData.StartDate | date:'yyyy-MM-ddTHH:mm'"
+                        (ngModelChange)="SearchData.StartDate = $event" />
+                </div>
+                <div class="col-sm-3">
+                    <label for="FromDate">EndDate</label>
+                    <input type="datetime-local" id="EndDate" name="EndDate" class="form-control dr"
+                        [ngModel]="SearchData.EndDate | date:'yyyy-MM-ddTHH:mm'"
+                        (ngModelChange)="SearchData.EndDate = $event" />
+                </div>
+                <div class="col-sm-2">
+                    <br>
+                    <button type="button" class="btn btn-raised btn-success mr-1 btn-lg" (click)="Search()"
+                        [disabled]="!selectedCities">
+                        Search
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-12 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-lg-12 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-body">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>WarehouseName</th>
+                                        <th>SaleAmount</th>
+                                        <th>GrossMargin</th>
+                                        <th>Margin</th>
+                                        <th>NetSale</th>
+                                        <th>InventoryDays</th>
+                                        <th>ClosingStock</th>
+                                        <th>Export</th>
+                                    </tr>
+                                </thead>
+                                <tbody *ngIf="LedgerList">
+                                    <tr *ngFor="let item of LedgerList">
+                                        <td>
+                                            {{item.WarehouseName}}
+                                        </td>
+                                        <td><button class="btn btn-primary btn-xs">
+
+                                                {{item.SaleAmount | number : '1.2-2'}}
+
+                                            </button></td>
+                                        <td><button class="btn btn-info btn-xs">
+
+                                                {{item.GrossMargin | number : '1.2-2'}}
+                                            </button></td>
+                                        <td><button class="btn btn-success btn-xs">
+
+                                                {{item.MarginPercent | number : '1.2-2'}}
+                                            </button></td>
+                                        <td><button class="btn btn-success btn-xs">
+
+                                                {{item.NetSale | number : '1.2-2'}}
+                                            </button></td>
+
+                                        <td><button class="btn btn-primary btn-xs">
+
+                                                {{item.InventoryDays | number : '1.2-2'}}
+                                            </button></td>
+                                        <td><button class="btn btn-danger btn-xs">
+
+                                                {{item.ClosingStock | number : '1.2-2'}}
+                                            </button></td>
+                                        <td><button class="btn btn-gray btn-xs" (click)="Export(item)">
+                                                Export
+                                            </button></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<p-blockUI [blocked]="blocked"></p-blockUI>
+<p-progressSpinner *ngIf="blocked"
+    [style]="{width: '60px', height: '60px', position: 'absolute', left: '48%', top: '48%'}" strokeWidth="8"
+    fill="#EEEEEE" animationDuration=".5s"></p-progressSpinner>

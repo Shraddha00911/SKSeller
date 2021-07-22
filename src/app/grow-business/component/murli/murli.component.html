@@ -1,0 +1,109 @@
+<p-toast [style]="{marginTop: '450px'}"></p-toast>
+
+<div class="page-header">
+    <!-- Item Scheme Master -->
+
+</div>
+<div class="col-12 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+
+                <div class="col-12">
+                    <h4>Murli</h4>
+                    <hr style="background-color: white;">
+                </div>
+            </div>
+         <form class="form" name="fform" #murliForm="ngForm">
+            <div class="row">
+                <div class="col-12">
+                    <div class="row">
+                        <div class="col-3">
+                            <label for="City">City</label><br>
+                            <p-multiSelect [style]="{minWidth:''}" id="Cityid" name="CityName" [options]="CityList"
+                                [(ngModel)]="dataset.cityid" (onChange)="GetCityWarehouse(dataset.cityid)"
+                                [panelStyle]="{minWidth:'25em'}" optionLabel="CityName" appendTo="body">
+                            </p-multiSelect>
+
+                        </div>
+                        <div class="col-3">
+                            <label>Select Hub</label><br>
+                            <p-multiSelect [style]="{minWidth:''}" id="warehouse" name="warehouse"
+                                [options]="wareHouseList" (onChange)="selectedwarehouse()"
+                                [(ngModel)]="murliRequest.WarehouseIds" [panelStyle]="{minWidth:'25em'}"
+                                optionLabel="WareHouseName" appendTo="body">
+                            </p-multiSelect>
+                            <!-- <select class="form-control" name="warehouse" id="warehouse" [(ngModel)]="murliRequest.WarehouseId">
+                    <option>--Select--</option>
+                    <option *ngFor="let data of wareHouseList" [ngValue]="data.WareHouseId">{{data.WareHouseName}}
+                    </option>
+                </select> -->
+                        </div>
+                        <div class="col-sm-3">
+                            <label for="FromDate">StartDate</label>
+                            <input type="datetime-local" id="FromDate" name="FromDate" [min]="minDate | date:'yyyy-MM-ddTHH:mm'" class="form-control"
+                                 [ngModel]="murliRequest.StartDate | date:'yyyy-MM-ddTHH:mm'"
+                              #FromDateInput="ngModel" required (ngModelChange)="murliRequest.StartDate = $event" />
+                        
+                         <div *ngIf="isInvalid && !FromDateInput.valid && FromDateInput.errors.required">
+                                <code>StartDate is required</code>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <label for="FromDate">ToDate</label>
+                            <input type="datetime-local" id="ToDate" name="ToDate" [min]="minDate | date:'yyyy-MM-ddTHH:mm'" class="form-control"
+                                [ngModel]="murliRequest.EndDate | date:'yyyy-MM-ddTHH:mm'"
+                               #ToDateInput="ngModel" required (ngModelChange)="murliRequest.EndDate = $event" />
+                        
+                        <div *ngIf="isInvalid && !ToDateInput.valid && ToDateInput.errors.required">
+                                 <code>ToDate is required</code>
+                            </div> 
+                        
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <br>
+            <div class="row">
+
+            </div>
+
+            <br>
+            <div class="row">
+                <div class="col-6">
+                    <label>Murli Title</label>
+                    <input class="form-control" id="MurliNotificationTitle" name="MurliNotificationTitle"
+                        [(ngModel)]="murliRequest.MurliNotificationTitle" #MurliNotificationTitleTitleInput="ngModel"
+                        required>
+                    <div
+                        *ngIf="isInvalid && !MurliNotificationTitleTitleInput.valid && MurliNotificationTitleTitleInput.errors.required">
+                        <code>Murli Title is required</code>
+                    </div>
+                </div>
+
+                <div class="col-6">
+                    <label>Murli Description</label>
+                    <textarea type="text" maxlength="500" id="Description" class="form-control" name="Description"
+                        [(ngModel)]="murliRequest.MurliDescription" placeholder="Enter Description" rows="5"
+                        #DescriptionInput="ngModel" required>
+                    </textarea>
+
+                    <div *ngIf="isInvalid && !DescriptionInput.valid && DescriptionInput.errors.required">
+                                 <code>Description is required</code>
+                    </div> 
+                </div>
+                
+                <br>
+                <div class="row">
+                    <div class="col-6">
+                        <button type="submit" class="btn btn-primary" (click)="onSave(murliForm)">Send</button>
+                    </div>
+                </div>
+                
+            </div>
+        </form>
+        </div>
+    </div>
+    <p-blockUI [blocked]="blocked"></p-blockUI>

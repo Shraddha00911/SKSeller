@@ -1,0 +1,13 @@
+agm-map {
+    height: 300px;
+  }
+  :host ::ng-deep .p-multiselect{
+    background: none !important;
+  }
+  :host ::ng-deep .btn-xs{ font-size: 0.85rem !important;}
+  .alignleft {
+    float: left;
+  }
+  .alignright {
+    float: right;
+  }

@@ -1,0 +1,50 @@
+<div class="page-header">
+
+</div>
+<!-- <p>history works!</p> -->
+<section id="history">
+<button type="button" class="btn btn-raised btn-primary d-flex float-right" style="margin-right: 10px;" 
+(click)="onExport()" *ngIf="isHistory">Export</button>
+<br/>
+<br/>
+<div class="d-flex" *ngIf="isHistory">
+
+    <div class="datascroll">
+        <table  #table>
+          <thead>
+            <tr>
+              <th style="text-align: center">
+                User
+              </th>
+              <th style="text-align: center">
+                Audit Timestamp
+              </th>
+              <th *ngFor="let col of EntityHistory.FieldNames" style="text-align: center">
+                {{col}}
+              </th>
+            </tr>
+          </thead>
+         
+          <tbody>
+            <tr  *ngFor="let data of EntityHistory.AuditHistory">
+              <td style="text-align: center">
+                {{data.AuditAction}} by {{data.UserName}}
+              </td>
+              <td style="text-align: center">
+                {{data.AuditDate| date:'medium'}}
+              </td>
+              <td *ngFor=" let row of data.AuditFields"
+                [ngStyle]="data.AuditAction != 'Added' && row.NewValue!=row.OldValue && {'background-color':'#D32F2F','color':'white'} || {'background-color': 'transparent'}">
+                {{row.NewValue}}
+              </td>
+            </tr>
+          </tbody>
+      
+        </table>
+      </div>
+
+    </div>
+    <div style="margin-left: 36px;" *ngIf="!isHistory">
+      <h4><b>No History Found</b></h4>
+    </div>
+</section>

@@ -1,0 +1,203 @@
+<div *ngIf="!history">
+    <div class="page-header">
+
+    </div>
+    <div class="col-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <!-- <p-toast [style]="{marginTop: '10px'}"></p-toast> -->
+                <h4 class="card-title">Edit Price  : {{subcateName}}</h4>
+                <div class="row">
+                    <div class="col-lg-2">
+                        <div class="form-group">
+                            <div>
+                                <label for="SelectCity"><b>Select City: </b><b style="color: red;">*</b></label><br>
+                                <select id="city" name="city" class="form-control srh dr" [(ngModel)]="Cityid" autofocus = "autofocus">
+                                    <option class="dp" [value]="null">--Select City--</option>
+                                    <option *ngFor="let city of cities" [ngValue]="city.Cityid" class="dp">
+                                        {{city.CityName}}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-5">
+                        <div class="form-group">
+                            <div>
+                            <label for="projectinput7"><b>Item List</b> <span style="color:red"> *</span></label>
+                            <p-autoComplete [multiple]="false" [(ngModel)]="selectedItem" [suggestions]="ItemList" [disabled]="searchDisable"
+                            [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}" class="p-autocomplete"
+                            (completeMethod)="onItemTextchange($event,Cityid)" field="itemBaseName" [size]="30" 
+                            placeholder="Enter at least 3 chars Item Name or Number"
+                            [minLength]="3" name="itembarcode" (onSelect)="onmodelChange()">
+                            <ng-template let-selectedItem pTemplate="ItemList">
+                                <div class="ui-helper-clearfix"> 
+                                     {{selectedItem.itemBaseName}} 
+                                     <span style="color:rgb(235, 17, 17)"> 
+                                        <b>=> ({{selectedItem.Number}})</b>
+                                      </span> 
+                                     <span style="color: black;"> 
+                                        => MRP: {{selectedItem.MRP}}
+                                    </span> 
+                                    </div>
+                              </ng-template>
+                          </p-autoComplete>   
+                        </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 text-right">
+                        <button class="btn btn-raised btn-raised btn-primary" style="margin-top: 27px;"
+                            (click)="clear()">Clear</button>
+                    </div>
+                    <div class="col-lg-2 text-right">
+                        <button class="btn btn-raised btn-raised btn-primary" style="margin-top: 27px;"
+                            (click)="refresh()">Refresh</button>
+                    </div>
+                </div>  
+            </div>
+        </div>
+    </div>
+    <div class="page-header" *ngIf = "showdata == true">
+        <div class="pull-left hd">
+        <h3><u>Item Edit Price</u></h3>
+        </div>        
+    </div>
+    <div class="col-12 grid-margin stretch-card" *ngIf = "showdata == true">
+    
+        <div class="card">
+            <div class="card-body">
+                <div class="tp-itemEdit">
+                    <div class="row">
+                        <div class="col-lg-2" style="margin-right: 25px;">PoPrice 
+                            <input placeholder="Po Price" class="form-control inputEdit dr" [(ngModel)]="mymodel" (ngModelChange)="valuePoPrice($event)" type="number"/> 
+                        </div>                   
+                        <!-- <div class="col-lg-2" style="margin-right: 15px;">Dis% 
+                            <input placeholder="Dis%" class="form-control inputEdit" [(ngModel)]="mymodel2" (ngModelChange)="valueDis($event)" type="number"/> 
+                        </div> -->
+                        <div class="col-lg-2" style="margin-right: 25px;">Margin 
+                            <input placeholder="Margin" class="form-control inputEdit dr" [(ngModel)]="mymodel3" (ngModelChange)="valueMargin($event)" type="number"/> 
+                        </div> 
+                        <div class="col-lg-2" style="margin-right: 25px;">PurchasePrice 
+                            <input placeholder="PurchasePrice" class="form-control inputEdit dr" [ngModel]="PurchasePriceA" (ngModelChange)="valuePurPrice($event)" type="number"/> 
+                        </div>                     
+                        <div class="col-lg-2" style="margin-right: 25px;">UnitPrice 
+                            <input placeholder="UnitPrice" class="form-control inputEdits dr" [ngModel]="UnitPriceA" type="number" disabled/> 
+                        </div>
+                        </div>
+                        </div>
+    
+                <p-table #dt [value]="FindItemList"  [scrollable]="true" scrollHeight="130vh" text-align: center>                                
+                                                
+                <ng-template pTemplate="header" style="background-color: aquamarine !important;">
+                    <tr>
+                        <th>Hub Name</th>
+                        <th>Selling Unit Name</th> 
+                        <th>MOQ</th> 
+    
+                        <th>Po Price</th>   
+                        <!-- <th>APP</th>  
+                        <th>NPP</th>   -->
+                        <!-- <th>Dis%</th>   -->
+                        <th>Purchase Price</th>  
+                        <th>Margin</th>  
+                        <th>MRP</th>  
+                        <th>Unit Price</th>  
+                        <!-- <th >Prime Price</th>   -->
+                        <th>Active/InActive</th>
+                        <th>History</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-item>                                   
+                    <tr [ngStyle]="(item.active)?{'background-color':'#86E4A4'}:{'background-color':'#F296A2'}">
+                        <td>{{item.WarehouseName}}</td>
+                        <td>{{item.SellingUnitName}}</td> 
+                        <td>{{item.MinOrderQty}}</td> 
+    
+                        <td><input style="width: 60px;" [(ngModel)]="item.POPurchasePrice" type="number"/></td> 
+                        <!-- <td style="background-color: darkorange;" >{{item.AveragePurchasePrice}}</td>    
+                        <td>{{item.NetPurchasePrice}}</td>     -->
+                        <!-- <td><input style="width: 60px;" [(ngModel)]="item.Discount" (ngModelChange)="SICDisMargin(item)"  type="number"/></td>   -->
+                        <td><input style="width: 60px;" [(ngModel)]="item.PurchasePrice" (ngModelChange)="SICPurPrice(item)"  type="number"/></td>                                
+                        <td><input style="width: 60px;" [(ngModel)]="item.Margin" (ngModelChange)="SICDisMargin(item)"  type="number"/></td>
+                        <td>{{item.MRP}}</td>    
+                        <td>{{item.UnitPrice}}</td> 
+                        <!-- <td [ngStyle]="(item.IsPrimeActive == true)?{'background-color': 'lightgreen'}:{'background-color':'lightsalmon'}" ><input style="width: 60px;" [(ngModel)]="item.PrimePrice" type="number"/></td>  -->
+                        <td><input [(ngModel)]="item.active" style="width: 20px; height: 20px; border-block: green;" type="checkbox"/>
+                        </td>
+                        <td> <a href="javascript:void(0);" (click)="historyData(item)"><i class="fa fa-history" style="font-size:31px;border-bottom: 1px solid skyblue;"></i></a></td>
+                    </tr>
+                </ng-template>
+            </p-table>
+                <br />
+            </div>
+        </div>
+    </div>
+    
+    <div class="page-header hdd" *ngIf = "showdata == true">
+        <div class="pull-left hd">
+            <div class="row">
+            <h3><u>Item Edit Limit Quantity</u></h3>
+            <div class="limitInp">
+                <input placeholder="Limit Qty" class="form-control inputEdit dr" [ngModel]="mymodel4" (ngModelChange)="valueLimitQty($event)" type="number"/>
+            </div>
+        </div>
+        </div>        
+    </div>
+    
+    <div class="col-12 grid-margin stretch-card" *ngIf = "showdata == true">
+       
+        <div class="card">
+            <div class="card-body">
+                <p-table #dt [value]="LimitItemList"  [scrollable]="true" scrollHeight="130vh" text-align: center>                               
+                <ng-template pTemplate="header" style="background-color: aquamarine !important;">
+                    <tr>
+                        <th>Hub Name</th>
+                        <th>Item Name</th>
+                        <th>Is Item Limit</th> 
+                        <th>Limit Qty</th>   
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-limititem >                                   
+                    <tr [ngStyle]="(limititem.IsItemLimit)?{'background-color':'#86E4A4'}:{'background-color':'#F296A2'}">
+                        <td>{{limititem.WarehouseName}}</td>
+                        <td>{{limititem.itemname}}</td> 
+                        <td> <input type="checkbox" style="width: 20px; height: 20px; border-block: green;" [(ngModel)]="limititem.IsItemLimit" 
+                           binary="false" (click)="updateBtn = true; itemLimitdata(limititem)" /> </td><!--(ngModelChange)="(limititem.IsItemLimit == false || limititem.IsItemLimit == null)?updateBtn = false: updateBtn = true" -->
+                        <td><input [(ngModel)]="limititem.ItemlimitQty" type="text" (click)="itemLimitQtydata(limititem)" (ngModelChange)="(limititem.ItemlimitQty > 0 && limititem.IsItemLimit)?updateBtn = false: updateBtn = true"/><br>
+                        <span *ngIf="limititem.IsItemLimit && limititem.ItemlimitQty < 0 " class="err">(Limit Qty cannot be negative)</span>
+                        <span *ngIf="limititem.IsItemLimit && limititem.ItemlimitQty == '0' "  class="err">(Limit Qty cannot be zero)</span>
+                        <span *ngIf="(limititem.IsItemLimit == true && limititem.ItemlimitQty =='') || (valid == true && limititem.ItemlimitQty == null)"  class="err">(Limit Qty is Mandatory!)</span>
+                    </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+            </div>           
+        </div>          
+    </div>
+    <div class="ui-fluid shadow mb-2 bg-white rounded">
+        <button class="btn btn-raised btn-success mr-1 btn-lg" *ngIf = "showdata == true" style="margin-right: 5px; float: right;" [disabled]="updateBtn"
+        (click)="Update(FindItemList)">Update </button>
+    </div>
+    </div>
+                
+    
+    
+    <p-toast position="top-right" [style]="{marginTop: '60px'}"></p-toast>
+    <p-blockUI [blocked]="blocked"></p-blockUI>
+    <p-confirmDialog #cd appendTo="body" header="Confirmation">
+        <p-footer class="ovelFieldForm">
+            <button type="button" class="btn btn-raised btn-primary mr-1" (click)="cd.reject()">No</button>
+            <button type="button" class="btn btn-raised btn-danger mr-1" (click)="cd.accept()">Yes</button>
+        </p-footer>
+    </p-confirmDialog>
+    <p-progressSpinner *ngIf="blocked"
+        [style]="{width: '60px', height: '60px', position: 'absolute', left: '48%', top: '48%'}" strokeWidth="8"
+        fill="#EEEEEE" animationDuration=".5s"></p-progressSpinner>
+
+        
+        <p-dialog header="History" [(visible)]="history" [resizable]="false"  positionTop="50" appendTo="body" [modal]="true" 
+        [style]="{width: '90%',height: '75%', overflow: 'auto', top: '30px'}">  
+            <div class="panel panel-info">
+                <app-history *ngIf="history" [entity]="entity" [id]="entityID"></app-history>
+            </div>
+        </p-dialog>

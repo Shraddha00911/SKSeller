@@ -34,9 +34,13 @@ import { BlockUIModule } from 'primeng/blockui';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { SpinnerComponent } from './shared/spinner/spinner.component';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import {MultiSelectModule} from 'primeng/multiselect';
+import { AgmCoreModule } from '@agm/core';
+import{ environment} from '../environments/environment';
+import {PanelMenuModule} from 'primeng/panelmenu';
+import {MenuItem} from 'primeng/api';
 
-
-
+// import { AgmOverlays } from "agm-overlays";
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/');
@@ -55,7 +59,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     TodoRtlComponent,
     ContentAnimateDirective,
     DonutChartComponent,
-    UploadcfrarticlesComponent
+    UploadcfrarticlesComponent,
   ],
   imports: [
     BrowserModule,
@@ -73,12 +77,21 @@ export function HttpLoaderFactory(http: HttpClient) {
     TableModule,
     BlockUIModule,
     ProgressSpinnerModule,
+    DialogModule,
+    MultiSelectModule,
+    PanelMenuModule,
+    // MenuItem,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
         useFactory: HttpLoaderFactory,
         deps: [HttpClient]
     }
+    }),
+    AgmCoreModule.forRoot({
+      // apiKey: ''
+      apiKey:  environment.apiKeyGoogle + '&libraries=visualization',
+      libraries: ['places', 'drawing', 'geometry', 'visualization'],
     })
   ],
   providers: 
@@ -97,3 +110,9 @@ export function HttpLoaderFactory(http: HttpClient) {
 })
 export class AppModule { }
 
+declare module "@angular/core" {
+  interface ModuleWithProviders<T = any> {
+    ngModule: Type<T>;
+    providers?: Provider[];
+  }
+}

@@ -18,7 +18,7 @@ export class NavbarComponent implements OnInit {
 
   ngOnInit() {
     this.UserName = localStorage.getItem('userName');
-    
+    this.toggleSidebar();
   }
   logout() {
     localStorage.clear();
@@ -35,7 +35,7 @@ export class NavbarComponent implements OnInit {
     let body = document.querySelector('body');
     if ((!body.classList.contains('sidebar-toggle-display')) && (!body.classList.contains('sidebar-absolute'))) {
       this.iconOnlyToggled = !this.iconOnlyToggled;
-      if (this.iconOnlyToggled) {
+      if (!this.iconOnlyToggled) {
         body.classList.add('sidebar-icon-only');
       } else {
         body.classList.remove('sidebar-icon-only');

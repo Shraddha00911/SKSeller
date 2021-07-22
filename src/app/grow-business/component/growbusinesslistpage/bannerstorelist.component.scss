@@ -1,0 +1,26 @@
+
+:host ::ng-deep .p-multiselect{
+    background: none !important;
+  }
+  :host ::ng-deep .btn-xs{ font-size: 0.85rem !important;}
+  .alignleft {
+    float: left;
+  }
+  .alignright {
+    float: right;
+  }
+
+  // .img-square:hover{
+  //   height: 250px;
+  //   width:250px;
+  // }
+
+  input.form-control{
+    // background-color: #1B2A47 !important;
+    color: black;
+  }
+
+  textarea{
+    // background-color: #1B2A47 !important;  
+    color: black;
+  }

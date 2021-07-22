@@ -1,0 +1,166 @@
+<div class="page-header">
+    <!-- Item Scheme Master -->
+</div>
+<div class="col-12 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">Executive Tracking  : {{subcateName}}</h4>
+            <div class="row">
+                <div class="col-sm-4">
+                    <label>City </label>
+                    <br />
+                    <p-multiSelect [style]="{minWidth:''}" id="Cityid" name="CityName" [options]="CityList"
+                        [(ngModel)]="dataset.cityid" (onChange)="GetCityWarehouse(dataset.cityid)"
+                        [panelStyle]="{minWidth:'25em'}" optionLabel="CityName" appendTo="body">
+                    </p-multiSelect>
+                </div>
+                <div class="col-sm-4">
+                    <label>Warehouse </label>
+                    <select class="form-control dr" name="warehouse" id="warehouse" [(ngModel)]="WareHouseId"
+                        (change)="onChange(WareHouseId.WareHouseId)">
+                        <option>--Select--</option>
+                        <option *ngFor="let data of wareHouseList" [ngValue]="data">{{data.WareHouseName}}</option>
+                    </select>
+
+                </div>
+                <div class="col-md-4">
+                    <label>Executive </label>
+                    <select class="form-control dr" [(ngModel)]="ExecutiveId">
+                        <option value="">--Select--</option>
+                        <option *ngFor="let data of excutiveData" [value]="data.ExecutiveId">{{data.ExecutiveName}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-4">
+                    <label>Date</label><br>
+                    <input type="date" id="CDate" class="form-control dr" [(ngModel)]="CDate">
+                </div>
+                <div class="col-md-2">
+                </div>
+                <div class="col-md-2">
+                    <br>
+                    <button type="submit" class="btn btn-primary searchbutton" (click)="search()">Search</button>
+                </div>
+                <div class="col-md-2">
+                </div>
+                <div class="col-md-2">
+                    <br>
+                    <button type="submit" class="btn btn-primary" (click)="Export()">Export</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="col-12 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <br>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label> Start Date Time</label>
+                        </div>
+                        <div class="col-md-6">
+                            {{starttime | date:'medium'}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Start Address</label>
+                        </div>
+                        <div class="col-md-6">
+                            {{startaddress}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br><br>
+            <!--map statr here-->
+            <div class="row">
+                <div class="col-md-6">
+                    <h4><b>Planned Route</b></h4>
+                    <div class="mapcard">
+
+                        <agm-map [latitude]="latAstart" [longitude]="lngAStart" [fullscreenControl]="true"
+                            [zoom]="zoom">
+                            <agm-marker *ngFor="let m of markers; let i = index" [latitude]="m.lat" [longitude]="m.lng">
+                                <agm-info-window> <span style="color:black;">{{m.label}}</span></agm-info-window>
+                            </agm-marker>
+                            <agm-polyline [visible]="true" [strokeColor]="'#0066ff'" [strokeWeight]="3">
+                                <agm-polyline-point *ngFor="let test of PlannedRoutesdata" [latitude]="test.lat"
+                                    [longitude]="test.lg"></agm-polyline-point>
+                            </agm-polyline>
+                        </agm-map>
+                        <br>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <h4><b>Actual Route</b></h4>
+                    <div class="mapcard">
+                        <agm-map [latitude]="latAstart" [longitude]="lngAStart" [fullscreenControl]="true"
+                            [zoom]="zoom">
+                            <agm-marker *ngFor="let m of actualmarkers; let i = index" [latitude]="m.lat"
+                                [longitude]="m.lng">
+                                <agm-info-window><span style="color:black;">{{m.label}}</span></agm-info-window>
+                            </agm-marker>
+                            <agm-polyline [visible]="true" [strokeColor]="'#0066ff'" [strokeWeight]="3">
+                                <agm-polyline-point *ngFor="let test of ActualRoutesdata" [latitude]="test.ExecLat"
+                                    [longitude]="test.ExecLng"></agm-polyline-point>
+                            </agm-polyline>
+                        </agm-map>
+                    </div>
+                </div>
+            </div>
+            <br><br><br><br>
+
+            <div class="row">
+                <table id="excel-table" class="table">
+                    <thead>
+                        <tr>
+                            <th>Emp Code</th>
+                            <th>Emp Name </th>
+                            <th> Warehouse name </th>
+                            <th>Cluster Name </th>
+                            <th>Sk code </th>
+                            <th>Shopname </th>
+                            <!-- <th>Retailer Mob No.</th> -->
+                            <th>Timing</th>
+                            <th>Todays Beat Customer (yes / no)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let sup of PlannedRoutesdata">
+
+                            <td>{{sup.ExecutiveId }}</td>
+                            <td>{{sup.Name}}</td>
+                            <td>{{sup.WarehouseName }}</td>
+                            <td>{{sup.ClusterName }}</td>
+                            <td>{{sup.Skcode }}</td>
+                            <td>{{sup.ShopName}}</td>
+                            <!-- <td>{{sup.Mobile}}</td> -->
+                            <td>{{sup.VisitedOn | date:'medium'}}</td>
+                            <td *ngIf="sup.IsVisited==true">Yes</td>
+                            <td *ngIf="sup.IsVisited==false">No</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+<p-blockUI [blocked]="blocked"></p-blockUI>
+
+<p-progressSpinner *ngIf="blocked"
+    [style]="{width: '60px', height: '60px', position: 'absolute', left: '48%', top: '48%'}" strokeWidth="8"
+    fill="#EEEEEE" animationDuration=".5s"></p-progressSpinner>
