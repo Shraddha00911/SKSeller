@@ -212,14 +212,14 @@ p-panelmenu .p-panelmenu-header > a {
     transition: box-shadow 0.2s;
 }
 .form-control {
-    border: 1px solid #1B2A47;
+    border: 1px solid $grayc;
     font-family: "Rubik", sans-serif;
     font-size: 0.875rem;
     font-weight: normal;
     padding: 0.625rem 0.6875rem;
     background-color: white;//#1B2A47;
     color: black;//white;
-    outline: 1px solid #000;
+    outline: 0px solid #ccc;
     border-radius: 2px;
 }
 .p-multiselect .p-multiselect-trigger {

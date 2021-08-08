@@ -1,9 +1,9 @@
-<div class="panel-heading card-header" role="tab">
+<div class="panel-heading card-header p-0" role="tab">
   <div class="panel-title">
     <div>
-      <div class="panel-body card-block card-body">
+      <div class="panel-body card-block card-body p-0">
         <div class="row">
-          <div class="col-md-4">
+          <div class="col-md-3">
             <div class="form-group">
               <div class="form-group">
                 <label for="colCount"> Number of Columns :</label>
@@ -11,7 +11,7 @@
                   (change)="saveColumnCount()">
                   <option [value]="0"
                     [selected]="!item.ColumnCount || item.ColumnCount == 0 || item.ColumnCount == 'null' || item.ColumnCount == ''">
-                    ----- Select Number of Columns -----</option>
+                    Select Number of Columns </option>
                   <option [value]=1>1</option>
                   <option [value]=2>2</option>
                   <option [value]=3>3</option>
@@ -20,7 +20,7 @@
 
             </div>
           </div>
-          <div class="col-md-2">
+          <div class="col-md-3">
             <div class="form-group">
               <div class="form-group">
                 <input type="button" id="newrows" class="btn btn-outline-success active pull-right form-control"
@@ -52,11 +52,12 @@
         <ng-container *ngIf="item.AppItemsList && item.AppItemsList.length > 0">
           <div class="row">
             <ng-container *ngFor="let mainimage of item.AppItemsList; let j = index">
+
               <ng-container *ngIf="!mainimage.Deleted || mainimage.Deleted == 'false'">
                 <div class="rowSection"
                   [ngClass]="{'col-md-12': item.ColumnCount == 1, 'col-md-6' : item.ColumnCount == 2, 'col-md-4' : item.ColumnCount == 3}"
                   style="position: relative;">
-                  <div class="panel-body card-block card-body" [ngClass]="{
+                  <div class="panel-body card-block card-body p2" [ngClass]="{
                       'validOfferForm': item.SectionSubType == 'Offer' && (mainimage.TileImage && mainimage.TileImage != '' && mainimage.TileImage != 'null' && mainimage.TileName && mainimage.TileName != 'null' && mainimage.TileName != '' && mainimage.RedirectionID && mainimage.RedirectionID != '' && mainimage.RedirectionID != 'null' && mainimage.OfferStartTime && mainimage.OfferStartTime != 'null' && mainimage.OfferStartTime != '' && mainimage.OfferEndTime && mainimage.OfferEndTime != 'null' && mainimage.OfferEndTime != '')
                   , 'invalidOfferForm': item.SectionSubType == 'Offer' && (!mainimage.TileImage || !mainimage.TileName || !mainimage.RedirectionID || !mainimage.OfferStartTime || !mainimage.OfferEndTime)
                     , 'validFlashDealForm': item.SectionSubType == 'Flash Deal' && ( mainimage.TileImage && mainimage.TileName && mainimage.RedirectionID && mainimage.RedirectionID && mainimage.OfferStartTime && mainimage.OfferEndTime && mainimage.MOQ && mainimage.FlashDealQtyAvaiable && mainimage.FlashDealSpecialPrice && mainimage.UnitPrice && mainimage.PurchasePrice && mainimage.FlashDealMaxQtyPersonCanTake)
@@ -72,19 +73,24 @@
                           (click)="clearTileItem(j)">
                       </div>
                     </p-header> -->
-
-                    <button type="button" style="float: right;" (click)="showDialog(j)" pButton icon="pi pi-info-circle"
-                      label="Edit Item"></button>
+                    <div class="row">
+                      <div class="col-sm-6">
+                        <div [ngClass]="{'col-md-12': (!item.TileBackgroundImage || item.TileBackgroundImage == ''),
+                        'col-md-6' : (item.TileBackgroundImage != '')}">
+                       <img class=" imageShow" style="height: 350px;" *ngIf="mainimage && mainimage.TileImage"
+                         [src]=photoURL(mainimage.TileImage) alt="text">
+                      
+                       Tile Image
+                       <hr>
+                     </div>
+                      </div>
+                      <div class="col-sm-6 text-right"> <button type="button" (click)="showDialog(j)" pButton icon="pi pi-info-circle"
+                        label="Edit Item" class="btn btn-warning btn btn-sm"></button></div>
+                    </div>
+                   
 
                     <div class="row">
-                      <div [ngClass]="{'col-md-12': (!item.TileBackgroundImage || item.TileBackgroundImage == ''),
-                         'col-md-6' : (item.TileBackgroundImage != '')}">
-                        <img class=" imageShow" style="height: 350px;" *ngIf="mainimage && mainimage.TileImage"
-                          [src]=photoURL(mainimage.TileImage) alt="text">
-                        <br>
-                        Tile Image
-                        <hr>
-                      </div>
+                     
                       <div class="col-md-6" style=" border-left: solid 1px black;"
                         *ngIf="item.TileBackgroundImage && item.TileBackgroundImage != ''">
                         <img class="imageShow" style="height: 350px;" [src]=photoURL(item.TileBackgroundImage)
@@ -103,47 +109,47 @@
                     <div class="sectionItemContent">
                       <div class="row">
                         <div [ngClass]="{'col-md-6': !showMobileView, 'col-md-12' : showMobileView }">
-                          <div class="form-group">
-                            <label for="maxQuant">Redirection Type : </label>
-                            {{mainimage.RedirectionType}}
+                          <div class="form-group row">
+                            <label for="maxQuant" class="col-6 pt1">Redirection Type: </label>
+                           <div class="col-6"> {{mainimage.RedirectionType}}</div>
                           </div>
-                          <div class="form-group">
-                            <label for="totalQuantity">Tile Name</label>
-                            {{mainimage.TileName}}
+                          <div class="form-group row">
+                            <label for="totalQuantity" class="col-6 pt1">Tile Name:</label>
+                            <div class="col-6"> {{mainimage.TileName}}</div>
                           </div>
-                          <div class="form-group">
-                            <label for="maxQuant">Has Offer : </label>
-                            {{mainimage.HasOffer == 'true' ? 'yes' : 'no'}}
+                          <div class="form-group row">
+                            <label for="maxQuant" class="col-6 pt1">Has Offer: </label>
+                            <div class="col-6"> {{mainimage.HasOffer == 'true' ? 'yes' : 'no'}}</div>
                           </div>
-                          <div class="form-group" *ngIf="mainimage.HasOffer">
-                            <label for="maxQuant">Offer Start Time : </label>
-                            {{mainimage.OfferStartTime}}
+                          <div class="form-group row" *ngIf="mainimage.HasOffer">
+                            <label for="maxQuant" class="col-6 pt1">Offer Start Time: </label>
+                            <div class="col-6"> {{mainimage.OfferStartTime}}</div>
                           </div>
-                          <div class="form-group" *ngIf="mainimage.HasOffer">
-                            <label for="maxQuant">Offer End Time : </label>
-                            {{mainimage.OfferEndTime}}
+                          <div class="form-group row" *ngIf="mainimage.HasOffer">
+                            <label for="maxQuant" class="col-6 pt1">Offer End Time: </label>
+                            <div class="col-6"> {{mainimage.OfferEndTime}}</div>
                           </div>
                           <div *ngIf="item.SectionSubType == 'Flash Deal'">
                             <h3>Flash Deal Details</h3>
-                            <div class="form-group">
-                              <label for="maxQuant">Minimum Order Quantity : </label>
-                              {{mainimage.MOQ}}
+                            <div class="form-group row">
+                              <label for="maxQuant" class="col-6 pt1">Minimum Order Quantity: </label>
+                              <div class="col-6"> {{mainimage.MOQ}}</div>
                             </div>
-                            <div class="form-group">
-                              <label for="maxQuant">Total Quantity : </label>
-                              {{mainimage.FlashDealQtyAvaiable}}
+                            <div class="form-group row">
+                              <label for="maxQuant" class="col-6 pt1">Total Quantity: </label>
+                              <div class="col-6"> {{mainimage.FlashDealQtyAvaiable}}</div>
                             </div>
-                            <div class="form-group">
-                              <label for="maxQuant">Flash Deal Special Price : </label>
-                              {{mainimage.FlashDealSpecialPrice}}
+                            <div class="form-group row">
+                              <label for="maxQuant" class="col-6 pt1">Flash Deal Special Price: </label>
+                              <div class="col-6"> {{mainimage.FlashDealSpecialPrice}}</div>
                             </div>
-                            <div class="form-group">
-                              <label for="maxQuant">Purchase Price : </label>
-                              {{mainimage.PurchasePrice}}
+                            <div class="form-group row">
+                              <label for="maxQuant" class="col-6 pt1">Purchase Price: </label>
+                              <div class="col-6">{{mainimage.PurchasePrice}}</div>
                             </div>
-                            <div class="form-group">
-                              <label for="maxQuant">Flash Deal Max Qty : </label>
-                              {{mainimage.FlashDealMaxQtyPersonCanTake}}
+                            <div class="form-group row">
+                              <label for="maxQuant" class="col-6 pt1">Flash Deal Max Qty: </label>
+                              <div class="col-6"> {{mainimage.FlashDealMaxQtyPersonCanTake}}</div>
                             </div>
                             <!-- <div class="form-group">
                                 <label for="maxQuant">Offer Start Time : </label>
@@ -158,11 +164,11 @@
                       </div>
                     </div>
 
-                    <p-footer class="deletRow">
+                    <div class="deletRow">
                       <div class="text-right">
                         <ng-container *ngIf="item.ColumnCount == 2">
                           <div *ngIf="j/2 % 1" style="position: relative;">
-                            <button type="button" id="newrows" class="btn btn-outline-success active form-control"
+                            <button type="button" id="newrows" class="btn btn-outline-danger active btn-xs"
                               (click)="deleteRow(j)">
                               Delete Row
                               <i aria-hidden="true" class="fa fa-trash"></i>
@@ -172,7 +178,7 @@
 
                         <ng-container *ngIf="item.ColumnCount == 1">
                           <div style="position: relative;">
-                            <button type="button" id="newrows" class="btn btn-outline-success active form-control"
+                            <button type="button" id="newrows" class="btn btn-outline-danger active btn-xs"
                               (click)="deleteRow(j)">
                               Delete Row
                               <i aria-hidden="true" class="fa fa-trash"></i>
@@ -181,7 +187,7 @@
                         </ng-container>
                         <ng-container *ngIf="item.ColumnCount == 3">
                           <div *ngIf="(j+1)%3 == 0" style="position: relative;">
-                            <button type="button" id="newrows" class="btn btn-outline-success active form-control"
+                            <button type="button" id="newrows" class="btn btn-outline-danger active btn-xs"
                               (click)="deleteRow(j)">
                               Delete Row
                               <i aria-hidden="true" class="fa fa-trash"></i>
@@ -189,17 +195,16 @@
                           </div>
                         </ng-container>
                       </div>
-                    </p-footer>
+                    </div>
 
                   </div>
                 </div>
               </ng-container>
-              <br />
+            
             </ng-container>
-            <div class="rowSection" class="col-md-8" style="position: relative;">
-            </div>
-            <div class="col-md-12 text-right">
-              <button type="button" style="float: right;margin-top: 1rem;" (click)="saveList(item.AppItemsList)" pButton
+   
+            <div class="col-md-12 text-right mb4 ">
+              <button type="button" class="btn btn-success" (click)="saveList(item.AppItemsList)" pButton
                 icon="pi pi-info-circle" label="Save"></button>
 
             </div>
@@ -222,33 +227,32 @@
                         <p-header>
                           <span class="title">Tile Header</span>
                         </p-header>
-                        <div class="panel-title" style="border: 1px solid black">
+                        <div class="panel-title">
                           <div class="accordion-toggle" role="button" aria-expanded="false">
-                            <!---->
-
-                            <div class="panel-body card-block card-body">
-                              <p-toggleButton (onChange)="item.HasBackgroundColor != !item.HasBackgroundColor"
-                                onLabel="Has Tile Background Image" offLabel="Has Tile Background Color"
-                                onIcon="fa fa-picture-o" offIcon="fa fa-paint-brush" iconPos="right"
-                                [(ngModel)]="item.HasBackgroundImage"></p-toggleButton>
-                              <div *ngIf="item.HasBackgroundImage" class="panel-body card-block card-body">
-                                <img class="imageShow" style="height: 350px;"
-                                  *ngIf="item && item.TileSectionBackgroundImage"
-                                  [src]=photoURL(item.TileSectionBackgroundImage) alt="text">
-                                <p *ngIf="!item.TileSectionBackgroundImage">Please upload Title Background Image</p>
-                                <div><input type="file"
-                                    (change)="upload($event.target.files, 'TileSectionBackgroundImage', 1)" />
+                            <div class="row">
+                              <div class="col-sm-6">
+                                <p-toggleButton (onChange)="item.HasBackgroundColor != !item.HasBackgroundColor"
+                                  onLabel="Has Tile Background Image" offLabel="Has Tile Background Color"
+                                  onIcon="fa fa-picture-o" offIcon="fa fa-paint-brush" iconPos="right"
+                                  [(ngModel)]="item.HasBackgroundImage" class="p2"></p-toggleButton>
+                                <div *ngIf="item.HasBackgroundImage" class="pl2 pt2" >
+                                  <img class="imageShow" style="height: 350px;"
+                                    *ngIf="item && item.TileSectionBackgroundImage"
+                                    [src]=photoURL(item.TileSectionBackgroundImage) alt="text">
+                                  <p *ngIf="!item.TileSectionBackgroundImage">Please upload Title Background Image</p>
+                                  <div><input type="file"
+                                      (change)="upload($event.target.files, 'TileSectionBackgroundImage', 1)" />
+                                  </div>
                                 </div>
                               </div>
-                              <div *ngIf="!item.HasBackgroundImage">
-
-
-                                <label>Choose Color</label>
-                                <p-colorPicker (onChange)="disableImageSelection('TileSectionBackgroundImage')"
-                                  [(ngModel)]="item.TileHeaderBackgroundColor"></p-colorPicker>
+                              <div class="col-sm-6">
+                                <div *ngIf="!item.HasBackgroundImage">
+                                  <label>Choose Color</label>
+                                  <p-colorPicker (onChange)="disableImageSelection('TileSectionBackgroundImage')"
+                                    [(ngModel)]="item.TileHeaderBackgroundColor"></p-colorPicker>
+                                </div>
                               </div>
                             </div>
-
                           </div>
                         </div>
                       </p-accordionTab>
@@ -257,12 +261,15 @@
                         <p-header>
                           <span class="title">Tile Header Background</span>
                         </p-header>
-                        <div class="panel-body card-block card-body">
+                        <div class="p2">
+                          <div class="row">
+                            <div class="col-sm-6">
                           <p-toggleButton (onChange)="item.HasHeaderBackgroundColor != !item.HasHeaderBackgroundColor"
                             onLabel="Has Header Background Image" offLabel="Has Header Background Color"
                             onIcon="fa fa-picture-o" offIcon="fa fa-paint-brush" iconPos="right"
                             [(ngModel)]="item.HasHeaderBackgroundImage"></p-toggleButton>
-                          <div *ngIf="item.HasHeaderBackgroundImage" class="panel-body card-block card-body">
+                           
+                          <div *ngIf="item.HasHeaderBackgroundImage" class="pl2 pt2" >
                             <img class="imageShow" style="height: 350px;" *ngIf="item && item.TileHeaderBackgroundImage"
                               [src]=photoURL(item.TileHeaderBackgroundImage) alt="text">
                             <p *ngIf="!item.TileBackgroundImage">Please upload Title Background Image</p>
@@ -270,15 +277,17 @@
                                 (change)="upload($event.target.files, 'TileHeaderBackgroundImage', 1)" />
                             </div>
                           </div>
+                          </div>
+                            <div class="col-sm-6">
                           <div *ngIf="!item.HasHeaderBackgroundImage">
 
 
                             <label>Choose Color</label>
                             <p-colorPicker (onChange)="disableImageSelection('TileHeaderBackgroundImage')"
                               [(ngModel)]="item.TileBackgroundColor"></p-colorPicker>
-
-
                           </div>
+                          </div>
+                        </div>
                         </div>
                       </p-accordionTab>
                       <br />

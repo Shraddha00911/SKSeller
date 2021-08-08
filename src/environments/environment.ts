@@ -5,7 +5,7 @@
 export const environment = {
   //apiBaseUrl: 'http://localhost:26265',
   apiBaseUrl: 'https://uat.shopkirana.in',
- apiKeyGoogle : 'WsdfSyD5ftRk6-UwGVAWWKEEd5IWtm4yxppzP6_xs'
+ apiKeyGoogle : 'WsdfSyD5ftRk6-UwGVAWWKEEd5IWtm4yxppzP6_xs',
   production: false,
 
 };

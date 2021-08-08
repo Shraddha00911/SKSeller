@@ -234,3 +234,13 @@
     }
   }
 }
+.deleteAccordion{cursor: pointer;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  z-index: 99;
+  color:$red;
+  font-size: 20px;
+}
+.p-accordion p-accordiontab:not(:first-child) .p-accordion-header .p-accordion-header-link{border: top 1px !important;}
+.p-accordion .p-accordion-header .p-accordion-header-link{padding: 0.6rem;}

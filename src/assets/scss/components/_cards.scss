@@ -3,6 +3,7 @@
 .card {
   border-radius: 0.25rem;
   background: whitesmoke;
+  margin-bottom: 15px;
   color: black;
   .card-body {
     padding: $card-padding-y $card-padding-x;
@@ -12,13 +13,12 @@
   }
   .card-title {
     // color: $card-title-color;
-    margin-bottom: 1.125rem;
+    margin: 0;
     text-transform: capitalize;
     font-family: $type1;
     font-weight: $font-weight-medium;
     font-size: 1.125rem;
     color: black;
-    text-decoration: underline
   }
   .card-subtitle {
     @extend .text-gray;

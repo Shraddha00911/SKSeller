@@ -36,10 +36,10 @@
   padding: 0.625rem 0.6875rem;
   // background-color: #1B2A47;
   color: black;//white;
-  outline: 1px solid #000;
+  outline: 1px solid #ccc;
   border-radius: 2px;
   &::placeholder {
-    color: black//$white;//$text-muted; /////
+    color: #ccc//$white;//$text-muted; /////
   }
   &:focus {
     border: 1px solid rgba(71, 164, 71, 0.5);
@@ -51,11 +51,13 @@
 select {
   &.form-control {
     padding: .4375rem .75rem;
-    border: 0;
-    outline: 1px solid #000;
+    border:1px solid $grayc;
+    outline: 0;
     color: $input-placeholder-color;
+    border-radius: 4px;
     &:focus {
-      outline: 1px solid #2F2741;
+      border: 1px solid $grayc;
+      outline: none;
     }
     @each $color,
     $value in $theme-colors {
@@ -68,7 +70,8 @@ select {
     }
   }
 }
-
+.p-togglebutton.p-button.p-highlight{font-size: 12px!important;width: 100%;}
+  
 .form-group {
   label {
     font-size: $default-font-size;
