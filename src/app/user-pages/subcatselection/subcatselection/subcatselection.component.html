@@ -9,15 +9,19 @@
                             (ngSubmit)="SetSubcateId(subcatform)">
                                 <div class="form-group">
                                     <fieldset>
-                                        <legend>Select SubCategory</legend>
+                                        <legend>Select SubCategory </legend>
                                         <select id="subcategoryid" name="subcategoryname" class="form-control col-md-10 mg-b-10 subcat"
-                                            [(ngModel)]="subcategoryobj" placeholder="Select subcategory"
+                                            [(ngModel)]="subcategoryobj" placeholder="Select subcategory" required
                                             #subcategory="ngModel">
+                                            <option [ngValue]="null">Select Subcategory</option>
                                             <option *ngFor="let subcategory of MappingsubcatList"
                                                 [ngValue]="subcategory" >
                                                 {{subcategory.SubcategoryName}}
                                             </option>
                                         </select>
+                                        <div *ngIf="subcatform.submitted && !subcategory.valid">
+                                            <code>Please select subcategory</code>
+                                        </div>
                                     </fieldset>
                                 </div>
                            

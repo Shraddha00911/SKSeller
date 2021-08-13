@@ -68,7 +68,8 @@ export class BannerstorelistComponent implements OnInit {
   ItemName: boolean;
   Rowpopup: boolean;
   ExportHistoryData: any;
-  IsUpdateDisable:boolean;
+  IsUpdateDisable: boolean;
+  StatusValue:string;
   constructor(private router: Router, private growbusinessService: GrowBusinessService,
     private cityservice: CityService, private dashboardservice: DashboardService,
     private messageService: MessageService,
@@ -112,14 +113,14 @@ export class BannerstorelistComponent implements OnInit {
     } else { alert("Please city "); this.blocked = false; }
   }
   getGrowBusinesslist() {
-    debugger
+ 
     this.warehouseId = this.seleware;
     this.searchListrecord.skip = this.skip;
     this.searchListrecord.take = this.take;
     this.searchListrecord.RequestType = this.RequestType;
     this.searchListrecord.startdate = this.startdate;
     this.searchListrecord.enddate = this.enddate;
-
+    this.searchListrecord.StatusValue = this.StatusValue;
     let WarehouseIds = [];
     for (var i in this.selectedHub) {
       WarehouseIds.push(this.selectedHub[i].WareHouseId)
@@ -135,9 +136,9 @@ export class BannerstorelistComponent implements OnInit {
       this.totalcount = 0;
       this.growbusinessService.getGrowBusinessList(this.searchListrecord).subscribe(res => {
         this.blocked = false;
-        debugger;
+        
         console.log(res, 'res');
-        debugger
+        
         this.growBusinessHistoryDcs = res.GrowBusinessHistoryDcs;
         this.totalcount = res.totalcount;
         if (this.growBusinessHistoryDcs[0].ReqTypeName == "Murli") {
@@ -151,7 +152,7 @@ export class BannerstorelistComponent implements OnInit {
     }
   }
   modo(e) {
-    debugger
+ 
     e.RequestType;
     this.growBusinessHistoryDcs = [];
   }
@@ -180,7 +181,7 @@ export class BannerstorelistComponent implements OnInit {
       this.blocked = false;
       console.log(res, 'res', 'growBusinessDetails');
       this.growBusinessDetails = res;
-      debugger
+    
       this.ItemList = res.FlashDealItemsDcs;
 
       if (this.ItemList.length > 0) {
@@ -190,7 +191,7 @@ export class BannerstorelistComponent implements OnInit {
         this.IsFlashDealPrice = false;
         this.Moq = false;
         this.ItemName = false;
-       // this.IsUpdateDisable=false;
+        // this.IsUpdateDisable=false;
       }
       else {
         this.ItemTable = false;
@@ -199,7 +200,7 @@ export class BannerstorelistComponent implements OnInit {
         this.IsFlashDealPrice = true;
         this.Moq = true;
         this.ItemName = true;
-       // this.IsUpdateDisable=true;
+        // this.IsUpdateDisable=true;
       }
     })
   }
@@ -210,8 +211,8 @@ export class BannerstorelistComponent implements OnInit {
         this.ItemList.splice(item, 1)
         this.growbusinessService.DeleteItemRow(Id).subscribe(res => {
           alert("Item Deleted");
-          if(this.ItemList.length==0){
-            this.IsUpdateDisable=true;
+          if (this.ItemList.length == 0) {
+            this.IsUpdateDisable = true;
           }
         })
       }
@@ -305,7 +306,7 @@ export class BannerstorelistComponent implements OnInit {
   }
 
   updateappbanner() {
-    debugger
+  
     this.confirmationService.confirm({
       message: 'Are you sure that you want to perform this action?',
       accept: () => {
@@ -381,7 +382,7 @@ export class BannerstorelistComponent implements OnInit {
         // this.messageService.add({ severity: 'success', summary: 'updated successfully', detail: '' });
         if (this.RequestType = 3) {
           this.blocked = true;
-          debugger
+      
           this.growBusinessDetails.FlashDealRequestItems = this.ItemList;
           this.growbusinessService.postFlashDealReq(this.growBusinessDetails).subscribe(res => {
 
@@ -453,7 +454,7 @@ export class BannerstorelistComponent implements OnInit {
 
 
   uploadImage() {
-    debugger
+  
     if (!this.file) {
       this.messageService.add({ severity: 'error', summary: 'please choose file', detail: '' });
       return
@@ -476,7 +477,7 @@ export class BannerstorelistComponent implements OnInit {
   }
 
   selectedwarehouse() {
-    debugger;
+   
     this.seleware = [];
     for (var i in this.selectedHub) {
       this.seleware.push(this.selectedHub[i].WarehouseId);

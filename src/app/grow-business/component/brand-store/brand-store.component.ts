@@ -94,7 +94,7 @@ export class BrandStoreComponent implements OnInit {
         this.brandStoreRequest.WarehouseIds=this.selectedWarehouseid;
         this.brandStoreRequest.SubCatId=this.subcateid;
         this.growbusinessService.postBrandStoreReq(this.brandStoreRequest).subscribe(res=>{
-          debugger
+          
           console.log(res);
           if(res.Result){
             alert(res.msg);
@@ -121,7 +121,7 @@ export class BrandStoreComponent implements OnInit {
 }
 
 upload(file: File[]) {
-  debugger
+  
   const allowed_types = ['image/png', 'image/jpeg'];
   this.file = file;
   var reader = new FileReader();
@@ -149,7 +149,7 @@ upload(file: File[]) {
 
 
 uploadImage(){
-  debugger
+ 
   if (!this.file) {
     this.messageService.add({ severity: 'error', summary: 'please choose file', detail: '' });
     return

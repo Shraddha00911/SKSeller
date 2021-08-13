@@ -52,7 +52,7 @@ export class AppHomeBannerComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(simplechanges: SimpleChanges) {
-    debugger;
+   
     simplechanges.subsubcats && simplechanges.subsubcats.currentValue && simplechanges.subsubcats.currentValue.length ?
       this.subsubcats = simplechanges.subsubcats.currentValue : '';
 
@@ -72,7 +72,7 @@ export class AppHomeBannerComponent implements OnInit, OnChanges {
   }
 
   deleteItem(index) {
-    debugger;
+   
     Swal.fire({
       title: 'Are you sure?',
       text: 'Item will be Cleared',
@@ -96,7 +96,7 @@ export class AppHomeBannerComponent implements OnInit, OnChanges {
   }
 
   SaveSection(SectionID) {
-    debugger;
+    
     this.addSection.emit(SectionID);
     let appItemInvalidArray = [];
     let appItemInvalidCount = 0;
@@ -138,7 +138,7 @@ export class AppHomeBannerComponent implements OnInit, OnChanges {
 
     this.itemService.uploadImage(formData).subscribe(result => {
       this.blocked = false;
-      debugger;
+     
       if (result == null) {
         Swal.fire("uploaded image are inappropriate, please upload correct image");
         return false;
@@ -158,7 +158,7 @@ export class AppHomeBannerComponent implements OnInit, OnChanges {
   }
 
   createNewBannerItem() {
-    debugger;
+    
     if (this.checkInvalidTileItem() == false) {
       let bannerItemData = new SectionItem();
       // bannerItemData.BannerName = 'New Banner Item' + this.count;
@@ -213,7 +213,7 @@ export class AppHomeBannerComponent implements OnInit, OnChanges {
   }
 
   setBannerItemName(bannerItem) {
-    debugger;
+   
     this.disablePublish.emit(false);
     this.currentAppItem.BannerName = this[bannerItem.arrayName].filter(item => item[bannerItem.nameOfId] == bannerItem.redirectionId)[0][bannerItem.catName];
     if (!this.currentAppItem.BannerImage) {
@@ -223,7 +223,7 @@ export class AppHomeBannerComponent implements OnInit, OnChanges {
   }
 
   handleClose(event) {
-    debugger;
+   
     this.disablePublish.emit(false);
     this.deleteItem(this.item.AppItemsList[event.index].SectionItemID);
   }
@@ -237,10 +237,7 @@ export class AppHomeBannerComponent implements OnInit, OnChanges {
 
 
   saveSectionItem(currentAppItem) {
-    debugger;
-
-
-
+   
     if (currentAppItem.HasOffer && (currentAppItem.OfferEndTime == undefined || currentAppItem.OfferStartTime == undefined)) {
       alert(" Please choose start and end date");
       currentAppItem = null;
@@ -255,12 +252,12 @@ export class AppHomeBannerComponent implements OnInit, OnChanges {
     // this.currentAppItem.RedirectionType = this.item.SectionSubType == 'Offer' || this.item.SectionSubType == 'Slider' ? 'null' : this.item.SectionSubType;
   }
   saveList(AppItemsList) {
-    debugger;
+    
     console.log('item', this.item);
     this.blocked = true;
 
     this.appHomeService.saveSection(this.item).subscribe(x => {
-      debugger;
+      
       this.blocked = false;
 
 

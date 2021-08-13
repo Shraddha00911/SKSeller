@@ -208,7 +208,7 @@ export class FlashDealComponent implements OnInit {
     this.getItem();
   }
   selectfield(event) {
-    debugger
+  
     event = this.flashDealRequest.AvailableQty;
     if (this.flashDealRequest.AvailableQty % this.minOrderQty == 0) {
       // this.propervalueFlag=false;
@@ -220,7 +220,7 @@ export class FlashDealComponent implements OnInit {
   }
   selectmaxfield(event) {
     event = this.flashDealRequest.MaxQty;
-    debugger
+  
     if (this.flashDealRequest.MaxQty % this.minOrderQty == 0) {
       this.isInvalid = false;
     } else {
@@ -233,7 +233,7 @@ export class FlashDealComponent implements OnInit {
   MRP:any;
   ItemMultiMRPId:any;
   selectedItem(moqval) {
-    debugger;
+   
     this.ItemsList;
     this.ItemsList.forEach(el => {
       if (moqval == el.Id) {

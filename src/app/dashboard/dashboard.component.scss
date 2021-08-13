@@ -1,4 +1,4 @@
-@import '../../styles.scss';
+@import "../../styles.scss";
 
 .card {
   &.corona-gradient-card {
@@ -14,8 +14,8 @@
     }
     @media (max-width: 576px) {
       .banner-text {
-       font-size: 0.75rem;
-     }
+        font-size: 0.75rem;
+      }
     }
   }
 }
@@ -60,7 +60,8 @@
 .table {
   th,
   td {
-    white-space: nowrap;color:black;
+    white-space: nowrap;
+    color: black;
     background: white;
   }
 }
@@ -69,28 +70,36 @@ mgl-map {
   height: 100%;
   width: 100%;
 }
-h3{margin: 0px!important;;}
-.custom-table{width:100%;
-td{padding:6px;}}
-@media only screen and (max-width: 767px) and (min-width: 200px) {canvas{
-.stretch-card{
-  text-align: center!important;
-  .text-right{text-align: center!important;
-  }
+h3 {
+  margin: 0px !important;
+}
+.custom-table {
+  width: 100%;
+  td {
+    padding: 6px;
   }
 }
-
-
+@media only screen and (max-width: 767px) and (min-width: 200px) {
+  canvas {
+    .stretch-card {
+      text-align: center !important;
+      .text-right {
+        text-align: center !important;
+      }
+    }
+  }
 }
-:host ::ng-deep .p-multiselect{
+:host ::ng-deep .p-multiselect {
   background: none !important;
 }
-:host ::ng-deep .btn-xs{ font-size: 0.85rem !important;}
+:host ::ng-deep .btn-xs {
+  font-size: 0.85rem !important;
+}
 .alignleft {
-	float: left;
+  float: left;
 }
 .alignright {
-	float: right;
+  float: right;
 }
 
 // .card-body{
@@ -99,3 +108,24 @@ td{padding:6px;}}
 //   padding: 1.25rem;
 //   background: white;
 // }
+
+:host ::ng-deep .p-multiselect {
+  width: 100% !important;
+}
+
+.mr-1 {
+  margin-top: 5px;
+}
+
+.w-100 {
+  margin-bottom: 1em;
+}
+
+.hrdt {
+  text-align: right;
+  padding-top: 4px;
+}
+:host ::ng-deep .Pgrir {
+  padding-top: inherit!important;
+  text-align: center!important;
+}

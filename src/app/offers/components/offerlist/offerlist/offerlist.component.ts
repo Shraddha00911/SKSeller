@@ -62,7 +62,7 @@ export class OfferlistComponent implements OnInit {
     }
   }
   load(event) {
-debugger;
+
     this.searchModel.First = (event.first == 0 || event.first) ? event.first + 1 : this.searchModel.First;
     this.searchModel.Last =20;// event.rows ? event.first + event.rows : this.searchModel.Last;
 
@@ -86,7 +86,7 @@ debugger;
 
 
   ShowDetails(row) {
-    debugger;
+ 
     this.ShowDetail = null;
 
     // this.ShowDetail = row;

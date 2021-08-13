@@ -1,10 +1,10 @@
 <p-toast [style]="{marginTop: '450px'}"></p-toast>
 
-<div class="page-header">
+<div class="page-header pt17">
     <!-- Item Scheme Master -->
 
 </div>
-<div class="container">
+<div class="container-fluid">
     <div class="row">
         <div class="col-12">
             <h4>History</h4>
@@ -12,55 +12,62 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-12">
-            <div class="row">
-                <div class="col-2">
-                    <label>Request Type</label>
-                    <div>
-                        <select class="form-control dr" id="requestType" [(ngModel)]="RequestType"
-                            (change)="modo($event.target.value)">
-                            <option disabled>Select</option>
-                            <option value="1">AppBanner </option>
-                            <option value="2">Notification </option>
-                            <option value="3">Flashdeal </option>
-                            <option value="4">BrandStore </option>
-                            <option value="5">Murli</option>
-                        </select>
-                    </div>
+        <div class="col-2">
+            <label>Request Type</label>
+            <div>
+                <select class="form-control dr" id="requestType" [(ngModel)]="RequestType"
+                    (change)="modo($event.target.value)">
+                    <option disabled>Select</option>
+                    <option value="1">AppBanner </option>
+                    <option value="2">Notification </option>
+                    <option value="3">Flashdeal </option>
+                    <option value="4">BrandStore </option>
+                    <option value="5">Murli</option>
+                </select>
+            </div>
 
-                </div>
+        </div>
 
-                <div class="col-sm-3">
-                    <label for="FromDate">StartDate</label>
-                    <input type="datetime-local" id="FromDate" name="FromDate" class="form-control dr"
-                        [ngModel]="startdate | date:'yyyy-MM-ddTHH:mm'" (ngModelChange)="startdate = $event" />
-                </div>
-                <div class="col-sm-3">
-                    <label for="FromDate">ToDate</label>
-                    <input type="datetime-local" id="ToDate" name="ToDate" class="form-control dr"
-                        [ngModel]="enddate | date:'yyyy-MM-ddTHH:mm'" (ngModelChange)="enddate = $event" />
+        <div class="col-sm-2">
+            <label for="FromDate">StartDate</label>
+            <input type="datetime-local" id="FromDate" name="FromDate" class="form-control dr"
+                [ngModel]="startdate | date:'yyyy-MM-ddTHH:mm'" (ngModelChange)="startdate = $event" />
+        </div>
+        <div class="col-sm-2">
+            <label for="FromDate">ToDate</label>
+            <input type="datetime-local" id="ToDate" name="ToDate" class="form-control dr"
+                [ngModel]="enddate | date:'yyyy-MM-ddTHH:mm'" (ngModelChange)="enddate = $event" />
 
-                </div>
+        </div>
 
-                <div class="col-2">
-                    <label for="City">City</label><br>
-                    <p-multiSelect [style]="{minWidth:''}" id="Cityid" name="CityName" [options]="CityList"
-                        [(ngModel)]="dataset.cityid" (onChange)="GetCityWarehouse(dataset.cityid)"
-                        [panelStyle]="{minWidth:'25em'}" optionLabel="CityName" appendTo="body">
-                    </p-multiSelect>
+        <div class="col-2">
+            <label for="City">City</label><br>
+            <p-multiSelect [style]="{minWidth:''}" id="Cityid" name="CityName" [options]="CityList"
+                [(ngModel)]="dataset.cityid" (onChange)="GetCityWarehouse(dataset.cityid)"
+                [panelStyle]="{minWidth:'25em'}" optionLabel="CityName" appendTo="body">
+            </p-multiSelect>
 
-                </div>
-                <div class="col-2">
-                    <label>Select Hub</label>
-                    <div>
-                        <p-multiSelect [style]="{minWidth:''}" id="warehouse" name="warehouse" [options]="wareHouseList"
-                            (onChange)="selectedwarehouse()" [(ngModel)]="selectedHub" [panelStyle]="{minWidth:'25em'}"
-                            optionLabel="WareHouseName" appendTo="body">
-                        </p-multiSelect>
-                    </div>
-                </div>
+        </div>
+        <div class="col-2">
+            <label>Select Hub</label>
+            <div>
+                <p-multiSelect [style]="{minWidth:''}" id="warehouse" name="warehouse" [options]="wareHouseList"
+                    (onChange)="selectedwarehouse()" [(ngModel)]="selectedHub" [panelStyle]="{minWidth:'25em'}"
+                    optionLabel="WareHouseName" appendTo="body">
+                </p-multiSelect>
             </div>
         </div>
+        <div class="col-2">
+            <label for="FromDate">Status</label>
+            <select name="" value="" [(ngModel)]="StatusValue" class="form-control">
+                <option value="All">All</option>
+                <option value="Pending">Pending</option>
+                <option value="Approved">Approved</option>
+                <option value="Accept">Accept</option>
+                <option value="Reject">Reject</option>
+            </select>
+        </div>
+
     </div>
 
     <div class="row">
@@ -485,8 +492,7 @@
                                 </div>
                             </td>
                             <td>
-                                <input type="datetime-local" id="FromDate" name="FromDate"
-                                   class="form-control"
+                                <input type="datetime-local" id="FromDate" name="FromDate" class="form-control"
                                     [ngModel]="list.StartDate | date:'yyyy-MM-ddTHH:mm'" #StartDate="ngModel" required
                                     (ngModelChange)="list.StartDate = $event" [disabled]="!list.isEditable" />
 
@@ -496,13 +502,11 @@
                                 </div>
                             </td>
                             <td>
-                                <input type="datetime-local" id="EndDate" name="EndDate"
-                                    class="form-control"
+                                <input type="datetime-local" id="EndDate" name="EndDate" class="form-control"
                                     [ngModel]="list.EndDate | date:'yyyy-MM-ddTHH:mm'" #EndDate="ngModel" required
                                     (ngModelChange)="list.EndDate = $event" [disabled]="!list.isEditable" />
 
-                                <div class="text-danger"
-                                    *ngIf="EndDate.invalid && (EndDate.dirty || EndDate.touched)">
+                                <div class="text-danger" *ngIf="EndDate.invalid && (EndDate.dirty || EndDate.touched)">
                                     Select Date.
                                 </div>
                             </td>

@@ -78,7 +78,7 @@ export class AddofferComponent implements OnInit {
   SearchMainItem(OfferON) {
 
     this.itemData = null;
-    debugger;
+ 
     if (this.selectedCities.length > 0 && this.subcateid > 0 && OfferON == "Item") {
       this.blocked = true;
       this.OfferService.GetFirstHubItem(this.selectedCities[0].Cityid).subscribe((x: any) => {
@@ -99,7 +99,7 @@ export class AddofferComponent implements OnInit {
 
 
   GenerateOffer() {
-    debugger;
+ 
     console.log(this.AddOffer);
     let cityids = [];
     for (var i in this.selectedCities) {
@@ -148,7 +148,7 @@ export class AddofferComponent implements OnInit {
 
   GetItemList(data) {
     this.ItemsList = null;
-    debugger;
+  
     if (this.selectedCities.length > 0 && this.subcateid > 0 && data == "Yes") {
 
       this.blocked = true;

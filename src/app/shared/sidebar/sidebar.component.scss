@@ -831,3 +831,23 @@
 :host ::ng-deep  .sel-tb .p-menuitem-text{
   color: #237693 !important;
 }
+
+// :host ::ng-deep  .p-menuitem-text{
+//   color:whitesmoke !important;
+  
+// }
+// .p-panelmenu .p-panelmenu-header.p-highlight > a {
+//   background-color: whitesmoke;
+// }
+
+:host ::ng-deep .p-panelmenu .p-panelmenu-content .p-menuitem .p-menuitem-link .p-menuitem-text
+{
+  color: whitesmoke !important;
+}
+:host ::ng-deep .p-panelmenu .p-panelmenu-content .p-menuitem .p-menuitem-link:not(.p-disabled):hover {
+  background: #587088 !important;
+}
+
+:host ::ng-deep .sklogo{
+  width: 66%!important;
+}

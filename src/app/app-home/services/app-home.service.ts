@@ -13,7 +13,7 @@ export class AppHomeService {
   }
 
   getSectionsByWarehouseId(data) {
-    debugger;
+    
     return this.http.get(this.apiURL + '/api/SellerAppHome/GetSellerAppHome?appType=' + data.AppType + '&wId=' + data.WarehouseId);
   }
 
@@ -39,7 +39,7 @@ export class AppHomeService {
   }
 
   saveSection(data): Observable<any> {
-    debugger;
+  
     return this.http.post<any>(this.apiURL + '/api/SellerAppHome/AddSection', data)
       .pipe(
         catchError((err) => {

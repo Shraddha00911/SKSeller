@@ -93,6 +93,7 @@
 
 .login-form{
     background:white;border-radius: 20px;color:$black;width:90%;margin-bottom:20px;
+    margin-top: 15%;
     a{color:$black;}
     .login-img{width: 100px;margin: 0px auto;}
     .login-textfield{background:$white;border:none;width:90%;}
@@ -212,14 +213,14 @@ p-panelmenu .p-panelmenu-header > a {
     transition: box-shadow 0.2s;
 }
 .form-control {
-    border: 1px solid $grayc;
+    border: 1px solid #1B2A47;
     font-family: "Rubik", sans-serif;
     font-size: 0.875rem;
     font-weight: normal;
     padding: 0.625rem 0.6875rem;
     background-color: white;//#1B2A47;
     color: black;//white;
-    outline: 0px solid #ccc;
+    outline: 1px solid #000;
     border-radius: 2px;
 }
 .p-multiselect .p-multiselect-trigger {
@@ -285,3 +286,8 @@ body .ui-dropdown{
 //  .dropdown-item:hover{color:$white}
 //  .navbar-toggler{color:$white!important;}
 //  .nav{margin-left:-45px!important;}
+
+
+.p-datepicker table td {
+    padding: 0rem !important;
+}

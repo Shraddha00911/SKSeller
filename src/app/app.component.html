@@ -3,10 +3,10 @@
   <div class="container-fluid page-body-wrapper">
     <app-settings-panel *ngIf="showSettings"></app-settings-panel>
     <app-navbar *ngIf="showNavbar"></app-navbar>
-    <div class="main-panel" [ngClass]="{ 'main-panel-only' : !showSidebar }">
-      <div class="content-wrapper">
+    <div class="main-panel pt-0" [ngClass]="{ 'main-panel-only' : !showSidebar }">
+      <div class="content-wrapper pt-0">
         <!-- <app-spinner *ngIf="isLoading"></app-spinner> -->
-        <div contentAnimate *ngIf="!isLoading" class="h-100 pt-3">
+        <div contentAnimate *ngIf="!isLoading" class="h-100">
           <router-outlet></router-outlet>
         </div>
       </div>

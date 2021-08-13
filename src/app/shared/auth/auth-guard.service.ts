@@ -26,7 +26,7 @@ export class AuthGuard implements CanActivate {
       this.router.navigateByUrl('/user-pages/login');
       return false;
     }
-    // debugger;
+
     // this.menu = localStorage.getItem('Menus');
     // let isPresent = this.menu.find(x => x.path == state.url);
     // if (!isPresent) {

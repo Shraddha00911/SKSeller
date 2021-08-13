@@ -35,7 +35,7 @@ export class SidebarComponent implements OnInit {
   activeTitles: string[] = [];
   expanded: boolean;
   nav_collapsed_open = false;
-  logoUrl = 'assets/img/logo.png';
+  // logoUrl = 'assets/img/logo.png';
   public config: any = {};
   searchValue = '';
   @Input() navItems: Array<any>;
@@ -49,13 +49,17 @@ export class SidebarComponent implements OnInit {
   itemData: any[] = [];
   data: any[] = [];
   menu: MenuItem[];
+  logoUrl:any;
   constructor(private router: Router, private cityservice: CityService) {
     this.backendURL = environment.apiBaseUrl;
   }
 
   ngOnInit() {
+
     this.subcateid = parseInt(localStorage.getItem('SubCatId'));
     this.subcateName = localStorage.getItem('subcateName');
+    this.logoUrl = localStorage.getItem('SublogoUrl');
+
     const body = document.querySelector('body');
 
     // add class 'hover-open' to sidebar navitem while hover in sidebar-icon-only menu
@@ -110,7 +114,7 @@ export class SidebarComponent implements OnInit {
       //           module.submenu.push(child);
       //         });
       //       }
-      //       debugger;
+    
       //       this.menuItems.push(module);
 
       //       this.SubMenus = this.menuItems[0].submenu;
@@ -127,7 +131,6 @@ export class SidebarComponent implements OnInit {
       // for parenting
       if (result && result.length > 0) {
         this.menu = [];
-        // debugger;
         result.forEach(item => {
           
           if (item.IsGroup2PortalUrl) {

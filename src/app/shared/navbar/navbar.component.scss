@@ -442,11 +442,12 @@
       &.fixed-top {
         margin: auto;
         max-width: $boxed-container-width;
+        
       }
     }
   }
 }
-
+.fixed-top{z-index: 99!important;}
 :host-context(.boxed-layout.sidebar-icon-only) {
   @media(min-width: 1200px) {
     .navbar{
@@ -497,4 +498,13 @@
       right: #{$sidebar-width-icon};
     }
   }
-}  
+}
+:host ::ng-deep .mod {
+  background-color: grey!important;
+}
+:host ::ng-deep .sklogo{
+  width: 66%!important;
+}
+:host ::ng-deep .logoskd{
+  background-color: whitesmoke!important;
+}

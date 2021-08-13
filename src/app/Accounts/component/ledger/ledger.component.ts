@@ -61,7 +61,7 @@ export class LedgerComponent implements OnInit {
       this.SearchData.CityIds = cityids;
       this.blocked = true;
       this.LedgerService.GetBrandLedger(this.SearchData).subscribe((x: any) => {
-debugger;
+
         this.blocked = false;
         this.LedgerList = x;
       }, error => {

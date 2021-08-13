@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbDropdownConfig } from '@ng-bootstrap/ng-bootstrap';
+import { GlobalSettingService } from '../services/global-setting.service';
 
 @Component({
   selector: 'app-navbar',
@@ -12,16 +13,34 @@ export class NavbarComponent implements OnInit {
   public iconOnlyToggled = false;
   public sidebarToggled = false;
   UserName: string;
-  constructor(config: NgbDropdownConfig, private router: Router) {
+  logoUrl: string;
+  subcateName:string;
+  constructor(config: NgbDropdownConfig, private router: Router, private globalSettingService: GlobalSettingService) {
     config.placement = 'bottom-right';
   }
 
   ngOnInit() {
     this.UserName = localStorage.getItem('userName');
+    this.logoUrl = localStorage.getItem('SublogoUrl');
+    this.subcateName = localStorage.getItem('subcateName');
+
     this.toggleSidebar();
+
+    this.globalSettingService.isChangeSubCategory.subscribe(() => {
+      this.UserName = localStorage.getItem('userName');
+      this.logoUrl = localStorage.getItem('SublogoUrl');
+      this.subcateName = localStorage.getItem('subcateName');
+
+    })
   }
   logout() {
     localStorage.clear();
+    localStorage.removeItem('selleruserToken');
+    localStorage.removeItem('sellertokenData');
+    localStorage.removeItem('userid');
+    localStorage.removeItem('userName');
+    localStorage.removeItem('SubCatId');
+    
     this.router.navigateByUrl('user-pages/login');
   }
 
@@ -53,5 +72,5 @@ export class NavbarComponent implements OnInit {
   toggleRightSidebar() {
     document.querySelector('#right-sidebar').classList.toggle('open');
   }
-  
+
 }

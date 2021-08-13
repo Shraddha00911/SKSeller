@@ -60,10 +60,9 @@ export class TargetListComponent implements OnInit {
     this.filterdata.StoreId = this.SelectedStoreId;
     this.filterdata.SubCateId = this.subcateid;
     this.filterdata.Searchkeyword = this.Searchkeyword;
-    debugger
+ 
     if (this.SelectedStoreId > 0) {
       this._service.GetSalesTargetList(this.filterdata).subscribe(res => {
-        debugger
         this.salestargetList = res.res;
         this.totalcount = res.totalcount;
       })
@@ -136,7 +135,6 @@ export class TargetListComponent implements OnInit {
     this.addItemList = [];
   }
   AddItemInList() {
-    debugger
     if (this.addtarget.ItemMultiMrpId == null || this.addtarget.ItemMultiMrpId == 0) {
       alert("Select Item");
       return;
@@ -182,7 +180,7 @@ export class TargetListComponent implements OnInit {
     this.isEditPopup = true;
   }
   EditBaseQty() {
-    debugger
+
     if (this.EditTarget.BaseQty == null || this.EditTarget.BaseQty == 0  || this.EditTarget.BaseQty == "" || this.EditTarget.BaseQty == undefined) {
       alert("Enter Base Qty");
       return;

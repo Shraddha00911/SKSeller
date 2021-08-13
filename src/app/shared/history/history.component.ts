@@ -17,11 +17,10 @@ export class HistoryComponent implements OnInit {
   constructor(private historyService : HistoryService , private exportService : ExportServiceService) { this.EntityHistory = {} }
 
   ngOnInit() {
-    debugger;
+  
     this.isHistory = true;
     this.historyService.getHistory(this.entity , this.id).subscribe(result => {
       console.log(result);
-     debugger;
       if(result == null || result.AuditEntity == null){
         this.isHistory = false;
       }else{

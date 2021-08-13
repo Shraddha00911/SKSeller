@@ -31,7 +31,7 @@ export class FlashDealComponent implements OnInit {
   constructor(private appphomeservice: AppHomeService) { }
 
   ngOnInit() {
-    debugger;
+ 
     console.log(this.mainimage);
 
     this.copyItems = this.Items;
@@ -41,7 +41,7 @@ export class FlashDealComponent implements OnInit {
   }
 
   ngOnChanges(simpleChanges: SimpleChanges) {
-    debugger
+   
     this.itemidtemp = simpleChanges.RedirectionID.currentValue;
     if (!this.itemidtemp) {
       this.MOQItemId = null;
@@ -61,7 +61,7 @@ export class FlashDealComponent implements OnInit {
   }
 
   ItemValue(MOqItemId) {
-    debugger;
+ 
     console.log(this.itemidtemp);
     this.copyItems.forEach((item, index) => {
       if (item.ItemId == MOqItemId) {

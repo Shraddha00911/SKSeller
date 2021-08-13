@@ -225,6 +225,8 @@ export class DashboardComponent implements OnInit {
     }
   ];
   isLoading: boolean;
+  IsPurchase: boolean;
+
   DashboardPoStatusCount: any;
   DashboardOrderStatusData: any;
   DashboardOrderFillRate: any;
@@ -253,7 +255,7 @@ export class DashboardComponent implements OnInit {
   POGRIRAmountChartData: any;
   POGRIRAmountChartDataLabels: any;
   POGRIRData: any;
-
+  IsPurchasegrIr: boolean;
   PoShowType: boolean;
   showPOCountValue: boolean = false;
   showPOGRIRAmountValue: boolean = false;
@@ -281,7 +283,7 @@ export class DashboardComponent implements OnInit {
 
     this.Searchcityids = {};
   }
-  ngOnInit() {
+  async ngOnInit() {
 
     this.subcateid = parseInt(localStorage.getItem('SubCatId'));
     this.subcateName = localStorage.getItem('subcateName');
@@ -304,15 +306,25 @@ export class DashboardComponent implements OnInit {
     this.SearchData.SubCatId = this.subcateid;
     this.blocked = true;
 
-    this.cityservice.GetAllCity().subscribe(x => {
+    this.cityservice.GetAllCity().subscribe(async x => {
 
       this.CityList = x;
       this.blocked = false;
+      if (this.CityList && this.CityList.length > 0) {
+        this.selectedCities = [this.CityList[0]];
+        await this.GetCityWarehouse();
+        this.Search();
+
+        if (this.WarehouseData && this.WarehouseData.length > 0) {
+          this.warehouse = this.WarehouseData[0];
+          this.getCatlogData(this.WarehouseData[0]);
+        }
+      }
 
     });
   }
 
-  GetCityWarehouse() {
+  async GetCityWarehouse() {
 
     this.DashboardCurrentVsNetCurrent = null;
     this.CatelogueItemTotalActiveChartData = null;
@@ -341,6 +353,7 @@ export class DashboardComponent implements OnInit {
     this.POGRIRAmountChartDataLabels = null;
     this.CatelogueItemTotalActiveChartData = null;
     this.CatelogueItemTotalActiveChartLabels = null;
+    this.LedgerList = null;
     let cityids = [];
     for (var i in this.selectedCities) {
       cityids.push(this.selectedCities[i].Cityid)
@@ -350,14 +363,14 @@ export class DashboardComponent implements OnInit {
       this.cityids = cityids;
       this.Searchcityids.cityids = cityids;
       this.blocked = true;
-      this.dashboardservice.GetWarehouseByCityids(this.Searchcityids).subscribe(x => {
-        this.blocked = false;
-        this.WarehouseData = x;
-        // this.Warehouseid = this.WarehouseData[0].WareHouseId;
-        this.cityid = this.WarehouseData[0].Cityid;
+      this.WarehouseData = await this.dashboardservice.GetWarehouseByCityids(this.Searchcityids).toPromise();
+      this.blocked = false;
 
-      });
-    } else { alert("Please city ") }
+      // this.Warehouseid = this.WarehouseData[0].WareHouseId;
+      this.cityid = this.WarehouseData[0].Cityid;
+
+    }
+    else { alert("Please city ") }
   }
 
 
@@ -392,6 +405,8 @@ export class DashboardComponent implements OnInit {
       this.POGRIRCountChartDataLabels = null;
       this.POGRIRAmountChartData = null;
       this.POGRIRAmountChartDataLabels = null;
+      this.LedgerList = null;
+
       this.isLoading = true;
 
       //GetSellerSales
@@ -405,10 +420,16 @@ export class DashboardComponent implements OnInit {
       //DashboardPoStatusCountDc
       this.isLoading = true;
       this.showPOCountValue = false;
-
+      this.IsPurchase == false;
       this.dashboardservice.GetDashboardPoStatusCount(this.SearchData).subscribe((x: any) => {
         this.isLoading = false;
+        
         this.DashboardPoStatusCount = x;
+
+        if ((x.PendingPOCount + x.PartialPOCount + x.ClosedPOCount + x.CancelPOCount) == 0) {
+          this.IsPurchase = true;
+        }
+
 
         this.DashboardPoStatusCountChartData = [
           {
@@ -492,11 +513,16 @@ export class DashboardComponent implements OnInit {
       //POGRIRCount
       this.isLoading = true;
       this.showPOGRIRAmountValue = false;
+      this.IsPurchasegrIr = false;
+
       this.dashboardservice.GetPOGRIRCount(this.SearchData).subscribe((x: any) => {
         this.isLoading = false;
 
         this.POGRIRData = x;
-
+       
+        if ((x.POCount + x.GRCount + x.IRCount) == 0) {
+          this.IsPurchasegrIr = true;
+        }
         this.POGRIRCountChartData = [
           {
             data: [x.POCount, x.GRCount, x.IRCount]
@@ -520,6 +546,12 @@ export class DashboardComponent implements OnInit {
       // });
 
 
+      if (this.WarehouseData && this.WarehouseData.length > 0) {
+    
+        this.warehouse = this.WarehouseData[0];
+        this.getCatlogData(this.WarehouseData[0]);
+      }
+    
     } else {
       alert("select city"); this.blocked = false;
     }
@@ -560,7 +592,7 @@ export class DashboardComponent implements OnInit {
   }
 
   showPOtypeChange(valuetype) {
-
+  
     this.DashboardPoStatusCountChartData = null;
     this.DashboardPoStatusCountDataLabels = null;
     this.DashboardPoStatusAmountChartData = null;
@@ -593,7 +625,7 @@ export class DashboardComponent implements OnInit {
 
 
   showPOGRIRChange(valuetype) {
-
+ 
     this.POGRIRCountChartData = null;
     this.POGRIRCountChartDataLabels = null;
     this.POGRIRAmountChartData = null;
@@ -697,15 +729,16 @@ export class DashboardComponent implements OnInit {
     for (var i in this.selectedCities) {
       cityids.push(this.selectedCities[i].Cityid)
     }
-    
+
     if (cityids.length > 0 && this.subcateid > 0) {
       this.SearchData.CityIds = cityids;
 
       this.BrandEarnData.StartDate = this.SearchData.FromDate;
       this.BrandEarnData.EndDate = this.SearchData.ToDate;
-      this.BrandEarnData.SubCatId=this.SearchData.SubCatId;
-      this.BrandEarnData.CityIds=this.SearchData.CityIds;
+      this.BrandEarnData.SubCatId = this.SearchData.SubCatId;
+      this.BrandEarnData.CityIds = this.SearchData.CityIds;
       this.blocked = true;
+      this.LedgerList = null;
       this.dashboardservice.GetBrandLedger(this.BrandEarnData).subscribe((x: any) => {
         console.log(x)
         this.blocked = false;

@@ -24,9 +24,9 @@ const routes: Routes = [
   { path: 'user-pages', loadChildren: () => import('./user-pages/user-pages.module').then(m => m.UserPagesModule) },
   { path: 'error-pages', loadChildren: () => import('./error-pages/error-pages.module').then(m => m.ErrorPagesModule) },
   { path: 'item', loadChildren: () => import('./item-master/item-master.module').then(m => m.ItemMasterModule), canActivate: [AuthGuard] },
-  { path: 'map', loadChildren: () => import('./mapmodule/mapmodule.module').then(m => m.MapmoduleModule) },
-  { path: 'growbusiness', loadChildren: () => import('./grow-business/grow-business.module').then(m => m.GrowBusinessModule) },
-  { path: 'app-home', loadChildren: () => import('./app-home/app-home.module').then(m => m.AppHomeModule) },
+  { path: 'map', loadChildren: () => import('./mapmodule/mapmodule.module').then(m => m.MapmoduleModule),canActivate: [AuthGuard] },
+  { path: 'growbusiness', loadChildren: () => import('./grow-business/grow-business.module').then(m => m.GrowBusinessModule),canActivate: [AuthGuard] },
+  { path: 'app-home', loadChildren: () => import('./app-home/app-home.module').then(m => m.AppHomeModule), canActivate: [AuthGuard] },
 
 ];
 

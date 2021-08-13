@@ -66,8 +66,7 @@
     border-radius: 5px;
     padding: 7px 5px;
     box-shadow: none;
-    border:1px solid #ccc;
-    // border: 2px solid #0bb475;
+    border: 2px solid #0bb475;
     margin-bottom: 20px;
     box-sizing: border-box;
     font-size: 14px;
@@ -98,12 +97,46 @@
   
   .pop-up-layout{
     position: absolute;
-      top: 50px;
-      background: wheat;
-      z-index: 999;
-      max-width: 269px;
-      margin: 16px;
-      border: 1px solid gray;
-      box-shadow: 3px 3px grey;
-      border-radius: 10px;
+    top: 50px;
+    background: wheat;
+    z-index: 999;
+    max-width: 269px;
+    margin: 16px;
+    border: 1px solid gray;
+    box-shadow: 3px 3px grey;
+    border-radius: 10px;
   }
+
+
+
+:host ::ng-deep .p-accordion .p-accordion-header .p-accordion-header-link{
+  min-width:  100% !important;
+  width:  100% !important; 
+} 
+
+
+:host ::ng-deep p-header{
+  min-width:  100% !important;
+  width:  100% !important; 
+}
+
+
+.deleteAccordion{
+  float: right;
+
+  padding-right: 2em;
+}
+
+
+.mrr{
+  padding: 1em 25px 1em 25px;
+}
+
+
+.fa-lg:hover{
+  color: rgb(240, 9, 9) !important;
+}
+
+.mr001{
+  margin-top: 1.5em;
+}

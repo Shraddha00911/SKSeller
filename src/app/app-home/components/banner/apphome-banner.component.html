@@ -28,88 +28,120 @@
                 <div class="rowSection" class="col-md-12" style="position: relative;">
                   <div class="panel-body card-block card-body" [ngClass]="{
                     'validOfferForm': item.SectionSubType == 'Offer' && (mainimage.BannerImage && mainimage.BannerImage != '' && mainimage.BannerImage != 'null' && mainimage.BannerName && mainimage.BannerName != 'null' && mainimage.BannerName != '' && mainimage.RedirectionID && mainimage.RedirectionID != '' && mainimage.RedirectionID != 'null' && mainimage.OfferStartTime && mainimage.OfferStartTime != 'null' && mainimage.OfferStartTime != '' && mainimage.OfferEndTime && mainimage.OfferEndTime != 'null' && mainimage.OfferEndTime != '')
-                , 'invalidOfferForm': item.SectionSubType == 'Offer' && (!mainimage.BannerImage || !mainimage.BannerName || !mainimage.RedirectionID || !mainimage.OfferStartTime || !mainimage.OfferEndTime)
-                  , 'validFlashDealForm': item.SectionSubType == 'Flash Deal' && ( mainimage.BannerImage && mainimage.BannerName && mainimage.RedirectionID && mainimage.RedirectionID && mainimage.OfferStartTime && mainimage.OfferEndTime && mainimage.MOQ && mainimage.FlashDealQtyAvaiable && mainimage.FlashDealSpecialPrice && mainimage.UnitPrice && mainimage.PurchasePrice && mainimage.FlashDealMaxQtyPersonCanTake)
-                  , 'invalidFlashDealForm': item.SectionSubType == 'Flash Deal' && ( !mainimage.BannerImage || !mainimage.BannerName || !mainimage.RedirectionID || !mainimage.RedirectionID || !mainimage.OfferStartTime || !mainimage.OfferEndTime || !mainimage.MOQ || !mainimage.FlashDealQtyAvaiable || !mainimage.FlashDealSpecialPrice || !mainimage.UnitPrice || !mainimage.PurchasePrice || !mainimage.FlashDealMaxQtyPersonCanTake)
-            ,'validItemForm': item.SectionSubType == 'Item' && (mainimage.BannerImage && mainimage.BannerName && mainimage.RedirectionID)
-            ,'invalidItemForm': item.SectionSubType == 'Item' && (!mainimage.BannerImage || mainimage.BannerImage == '' || mainimage.BannerImage == 'null' || !mainimage.BannerImage || mainimage.BannerImage == 'null' || mainimage.BannerName == '' || !mainimage.RedirectionID || mainimage.RedirectionID == 'null')
-            ,'validSliderForm': item.SectionSubType == 'Slider' && (mainimage.BannerImage)
-            ,'invalidSliderForm': item.SectionSubType == 'Slider' && (!mainimage.BannerImage)
-            ,'validBrandForm': item.SectionSubType == 'Brand' && (mainimage.BannerImage && mainimage.BannerName && mainimage.RedirectionID)
-            ,'invalidBrandForm': item.SectionSubType == 'Brand' && (!mainimage.BannerImage || mainimage.BannerImage == '' || mainimage.BannerImage == 'null' || !mainimage.BannerImage || mainimage.BannerImage == 'null' || mainimage.BannerName == '' || !mainimage.RedirectionID || mainimage.RedirectionID == 'null')
+                    ,'invalidOfferForm': item.SectionSubType == 'Offer' && (!mainimage.BannerImage || !mainimage.BannerName || !mainimage.RedirectionID || !mainimage.OfferStartTime || !mainimage.OfferEndTime)
+                    , 'validFlashDealForm': item.SectionSubType == 'Flash Deal' && ( mainimage.BannerImage && mainimage.BannerName && mainimage.RedirectionID && mainimage.RedirectionID && mainimage.OfferStartTime && mainimage.OfferEndTime && mainimage.MOQ && mainimage.FlashDealQtyAvaiable && mainimage.FlashDealSpecialPrice && mainimage.UnitPrice && mainimage.PurchasePrice && mainimage.FlashDealMaxQtyPersonCanTake)
+                    , 'invalidFlashDealForm': item.SectionSubType == 'Flash Deal' && ( !mainimage.BannerImage || !mainimage.BannerName || !mainimage.RedirectionID || !mainimage.RedirectionID || !mainimage.OfferStartTime || !mainimage.OfferEndTime || !mainimage.MOQ || !mainimage.FlashDealQtyAvaiable || !mainimage.FlashDealSpecialPrice || !mainimage.UnitPrice || !mainimage.PurchasePrice || !mainimage.FlashDealMaxQtyPersonCanTake)
+                    ,'validItemForm': item.SectionSubType == 'Item' && (mainimage.BannerImage && mainimage.BannerName && mainimage.RedirectionID)
+                    ,'invalidItemForm': item.SectionSubType == 'Item' && (!mainimage.BannerImage || mainimage.BannerImage == '' || mainimage.BannerImage == 'null' || !mainimage.BannerImage || mainimage.BannerImage == 'null' || mainimage.BannerName == '' || !mainimage.RedirectionID || mainimage.RedirectionID == 'null')
+                    ,'validSliderForm': item.SectionSubType == 'Slider' && (mainimage.BannerImage)
+                    ,'invalidSliderForm': item.SectionSubType == 'Slider' && (!mainimage.BannerImage)
+                    ,'validBrandForm': item.SectionSubType == 'Brand' && (mainimage.BannerImage && mainimage.BannerName && mainimage.RedirectionID)
+                    ,'invalidBrandForm': item.SectionSubType == 'Brand' && (!mainimage.BannerImage || mainimage.BannerImage == '' || mainimage.BannerImage == 'null' || !mainimage.BannerImage || mainimage.BannerImage == 'null' || mainimage.BannerName == '' || !mainimage.RedirectionID || mainimage.RedirectionID == 'null')
                 }">
-                    <button type="button" style="float: right;" (click)="showDialog(j)" pButton icon="pi pi-info-circle"
-                      label="Edit Item"></button>
-                    <img class="imageShow" style="height: 350px; width: 80%;" *ngIf="mainimage && mainimage.BannerImage"
-                      src="{{mainimage.BannerImage}}" alt="text">
 
-                    <div class="sectionItemContent">
-                      <div class="row">
-                        <div [ngClass]="{'col-md-6': !showMobileView, 'col-md-12' : showMobileView }">
-                          <div class="form-group">
-                            <label for="maxQuant">Redirection Type : </label>
-                            {{mainimage.RedirectionType == 'null' ? '' : mainimage.RedirectionType}}
-                          </div>
 
-                          <div class="form-group">
-                            <label for="maxQuant">Has Offer : </label>
-                            {{mainimage.HasOffer == 'true' ? 'yes' : 'no'}}
-                          </div>
-                          <div class="form-group" *ngIf="mainimage.HasOffer">
-                            <label for="maxQuant">Offer Start Time : </label>
-                            {{mainimage.OfferStartTime}}
-                          </div>
-                          <div class="form-group" *ngIf="mainimage.HasOffer">
-                            <label for="maxQuant">Offer End Time : </label>
-                            {{mainimage.OfferEndTime}}
-                          </div>
-                          <div *ngIf="item.SectionSubType == 'Flash Deal'">
-                            <h3>Flash Deal Details</h3>
-                            <div class="form-group">
-                              <label for="maxQuant">Minimum Order Quantity : </label>
-                              {{mainimage.MOQ}}
-                            </div>
-                            <div class="form-group">
-                              <label for="maxQuant">Total Quantity : </label>
-                              {{mainimage.FlashDealQtyAvaiable}}
-                            </div>
-                            <div class="form-group">
-                              <label for="maxQuant">Flash Deal Special Price : </label>
-                              {{mainimage.FlashDealSpecialPrice}}
-                            </div>
-                            <div class="form-group">
-                              <label for="maxQuant">Purchase Price : </label>
-                              {{mainimage.PurchasePrice}}
-                            </div>
-                            <div class="form-group">
-                              <label for="maxQuant">Flash Deal Max Qty : </label>
-                              {{mainimage.FlashDealMaxQtyPersonCanTake}}
-                            </div>
-                            <div class="form-group">
-                              <label for="maxQuant">Offer Start Time : </label>
-                              {{mainimage.OfferStartTime}}
-                            </div>
-                            <div class="form-group">
-                              <label for="maxQuant">Offer End Time : </label>
-                              {{mainimage.OfferEndTime}}
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+                    <table class="tbl-my">
+                      <tr>
+                        <th>
+                          Action
+                        </th>
+                        <th>
+                          <span>
+                            <a (click)="showDialog(j)">Edit</a> | <a (click)="deleteItem(j)">Delete</a>
+                          </span>
+                        </th>
+                      </tr>
+                      <tr>
+                        <td>Banner Image</td>
+                        <td>
+                          <img class="imageShow" style="width: 40%; max-height: 200px;"
+                            *ngIf="mainimage && mainimage.BannerImage" src="{{mainimage.BannerImage}}" alt="text">
+                          <code *ngIf="!mainimage || !mainimage.BannerImage">Please upload banner image</code>
+                        </td>
+                      </tr>
+                      <tr class="nfd">
+                        <td>Redirection Type </td>
+                        <td>{{mainimage.RedirectionType == 'null' ? '' : mainimage.RedirectionType}}</td>
+                      </tr>
+                      <tr class="nfd">
+                        <td>Has Offer </td>
+                        <td>{{mainimage.HasOffer == 'true' ? 'yes' : 'no'}}</td>
+                      </tr>
+                      <tr class="nfd" *ngIf="mainimage.HasOffer">
+                        <td>
+                          Offer Start Time
+                        </td>
+                        <td>
+                          {{mainimage.OfferStartTime}}
+                        </td>
+                      </tr>
+                      <tr class="nfd" *ngIf="mainimage.HasOffer">
+                        <td>
+                          Offer End Time
+                        </td>
+                        <td>
+                          {{mainimage.OfferEndTime}}
+                        </td>
+                      </tr>
+                      <tr class="fd" *ngIf="item.SectionSubType == 'Flash Deal'">
+                        <td colspan="2">
+                          Flash Deal Details
+                        </td>
 
-                    <p-footer class="deletRow">
-                      <div class="text-right">
-                        <ng-container>
-                          <div style="position: relative;">
-                            <button type="button" id="newrows" class="btn btn-outline-success active form-control"
-                              (click)="deleteItem(j)">
-                              <i aria-hidden="true" class="fa fa-trash"></i>
-                            </button>
-                          </div>
-                        </ng-container>
-                      </div>
-                    </p-footer>
+                      </tr>
+                      <tr class="fd" *ngIf="item.SectionSubType == 'Flash Deal'">
+                        <td>
+                          Minimum Order Quantity
+                        </td>
+                        <td>{{mainimage.MOQ}}</td>
+                      </tr>
+                      <tr class="fd" *ngIf="item.SectionSubType == 'Flash Deal'">
+                        <td>
+                          Total Quantity
+                        </td>
+                        <td></td>
+                      </tr>
+                      <tr class="fd" *ngIf="item.SectionSubType == 'Flash Deal'">
+                        <td>
+                          Flash Deal Special Price
+                        </td>
+                        <td>
+                          {{mainimage.FlashDealSpecialPrice}}
+                        </td>
+                      </tr>
+                      <tr class="fd" *ngIf="item.SectionSubType == 'Flash Deal'">
+                        <td>
+                          Purchase Price
+                        </td>
+                        <td>
+                          {{mainimage.PurchasePrice}}
+                        </td>
+                      </tr>
+                      <tr class="fd" *ngIf="item.SectionSubType == 'Flash Deal'">
+                        <td>
+                          Flash Deal Max Qty
+                        </td>
+                        <td>
+                          {{mainimage.FlashDealMaxQtyPersonCanTake}}
+                        </td>
+                      </tr>
+                      <tr class="fd" *ngIf="item.SectionSubType == 'Flash Deal'">
+                        <td>
+                          Offer Start Time
+                        </td>
+                        <td>
+                          {{mainimage.OfferStartTime}}
+                        </td>
+                      </tr>
+                      <tr class="fd" *ngIf="item.SectionSubType == 'Flash Deal'">
+                        <td>
+                          Offer End Time
+                        </td>
+                        <td>
+                          {{mainimage.OfferEndTime}}
+                        </td>
+                      </tr>
+                    </table>
 
                   </div>
                 </div>
@@ -133,10 +165,11 @@
 </div>
 
 <ng-container *ngIf="currentAppItem">
-  <p-dialog [header]="currentAppItem.BannerName" [resizable]="true" [(visible)]="display" appendTo="body"  [closeOnEscape]="true" [style]="{width: '90%',height: '75%', overflow: 'auto', top: '30px'}">
+  <p-dialog [blockScroll]="true" [header]="currentAppItem.BannerName" [baseZIndex]="1055"  [modal]="true" appendTo="body" [resizable]="false" [(visible)]="display"
+    [closeOnEscape]="true" [style]="{width: '90%'}">
 
     <form #itemForm="ngForm">
-      <img class="imageShow" style="height: 350px; width: 850px" *ngIf="currentAppItem && currentAppItem.BannerImage"
+      <img class="imageShow" style="ma-height: 200px; width: 100px" *ngIf="currentAppItem && currentAppItem.BannerImage"
         src="{{currentAppItem.BannerImage}}" alt="text">
       <div><input type="file" (change)="upload($event.target.files,  currentItemIndex)" />
       </div>
@@ -208,7 +241,8 @@
                   [selected]="!currentAppItem.RedirectionID || currentAppItem.RedirectionID == null || currentAppItem.RedirectionType == '' || currentAppItem.RedirectionID == undefined || currentAppItem.RedirectionID==0">
                   Select Brand</option>
                 <ng-container *ngFor="let Ssubsubcats of subsubcats">
-                  <option [value]="Ssubsubcats.SubsubCategoryid"> {{Ssubsubcats.CategoryName}} => {{Ssubsubcats.SubsubcategoryName}}
+                  <option [value]="Ssubsubcats.SubsubCategoryid"> {{Ssubsubcats.CategoryName}} =>
+                    {{Ssubsubcats.SubsubcategoryName}}
                   </option>
                 </ng-container>
               </select>
@@ -226,7 +260,8 @@
                 <option [value]="null"
                   [selected]="!currentAppItem.RedirectionID || currentAppItem.RedirectionID == null || currentAppItem.RedirectionType == '' || currentAppItem.RedirectionID == undefined || currentAppItem.RedirectionID==0">
                   Select Items</option>
-                <option [value]="Item.ItemId" *ngFor="let Item of Items"> {{Item.itemname}} => MRP: {{Item.price}}</option>
+                <option [value]="Item.ItemId" *ngFor="let Item of Items"> {{Item.itemname}} => MRP: {{Item.price}}
+                </option>
               </select>
               <div *ngIf="redrctId.invalid && (redrctId.dirty || redrctId.touched)">
                 <p *ngIf="redrctId.errors.required || !redrctId.value || redrctId.value == 'null'">
@@ -257,10 +292,10 @@
           </div>
         </div>
         <div class="col-md-4 calendarSection">
-          
+
           <div class="redirectionType" *ngIf="currentAppItem.HasOffer">
-            <p-calendar name="startInput" appendTo="body" [(ngModel)]="currentAppItem.OfferStartTime" [showTime]="true"
-              [hourFormat]="24" [showButtonBar]="true" #ofrStrDate="ngModel" [showIcon]="true"></p-calendar>
+            <p-calendar [baseZIndex]="1057" name="startInput" appendTo="body"  [(ngModel)]="currentAppItem.OfferStartTime" [showTime]="true"
+              [hourFormat]="24"  #ofrStrDate="ngModel" [showIcon]="true"></p-calendar>
             <div>
 
             </div>
@@ -268,8 +303,8 @@
         </div>
         <div class="col-md-4">
           <div class="redirectionType" *ngIf="currentAppItem.HasOffer">
-            <p-calendar name="endInput" appendTo="body" [(ngModel)]="currentAppItem.OfferEndTime" #ofrEndDate="ngModel"
-              [showTime]="true" [hourFormat]="24" [showButtonBar]="true" [showIcon]="true"></p-calendar>
+            <p-calendar [baseZIndex]="1057" name="endInput" appendTo="body" [(ngModel)]="currentAppItem.OfferEndTime" #ofrEndDate="ngModel"
+              [showTime]="true" [hourFormat]="24"  [showIcon]="true"></p-calendar>
           </div>
         </div>
       </div>

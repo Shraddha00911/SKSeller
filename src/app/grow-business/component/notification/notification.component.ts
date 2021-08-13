@@ -93,14 +93,14 @@ export class NotificationComponent implements OnInit {
  
 
   onSave(notificationForm){
-    debugger
+  
       if (notificationForm.form.status == "VALID") {
         
     this.notificationRequest.WarehouseIds = this.selectedWarehouseid;
     this.notificationRequest.SubCatId = this.subcateid;
     this.blocked = true;
     this.growbusinessService.postNotificationReq(this.notificationRequest).subscribe(res=>{
-      debugger
+      
       this.blocked = false;
       console.log(res);
       if(res.Result){
@@ -131,7 +131,7 @@ export class NotificationComponent implements OnInit {
   // imageFile:any;
  
     upload(file: File[]) {
-      debugger
+     
       const allowed_types = ['image/png', 'image/jpeg'];
       this.file = file;
       var reader = new FileReader();
@@ -158,7 +158,7 @@ export class NotificationComponent implements OnInit {
   
 
   uploadImage(){
-    debugger
+   
     if (!this.file) {
       this.messageService.add({ severity: 'error', summary: 'please choose file', detail: '' });
       return

@@ -39,8 +39,6 @@ export class LoginComponent implements OnInit {
 
     this.loginService.userAuthentication(this.Username, this.password, '1').subscribe((x: any) => {
       // alert('login successful');
-
- debugger;
       this.isLoading = false;
       this.blocked = false;
 

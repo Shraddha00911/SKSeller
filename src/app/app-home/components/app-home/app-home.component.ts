@@ -8,6 +8,7 @@ import { AppHomeService } from '../../services/app-home.service';
 import { ItemService } from '../../services/item.service';
 import { CityService } from 'src/app/shared/services/dashboard/city.service';
 import { DashboardService } from 'src/app/shared/services/dashboard/dashboard.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-app-home',
@@ -104,8 +105,9 @@ export class AppHomeComponent implements OnInit {
   cityList: any;
   wareHouseList: any;
   Searchcityids: any;
-
-  constructor(private apphomeservice: AppHomeService, private cityservice: CityService, private dashboardservice: DashboardService,
+  subcateid: any;
+  subcateName: string;
+  constructor( private router: Router,private apphomeservice: AppHomeService, private cityservice: CityService, private dashboardservice: DashboardService,
     private itemMasterService: ItemService, private _changeRef: ChangeDetectorRef) {
     this.isAppHomeEdit = true;
     // this.getBaseCategoryByRedirectionType();
@@ -115,6 +117,14 @@ export class AppHomeComponent implements OnInit {
   }
 
   ngOnInit() {
+
+    this.subcateid = parseInt(localStorage.getItem('SubCatId'));
+    this.subcateName = localStorage.getItem('subcateName');
+
+    if (!this.subcateid) {
+      this.router.navigateByUrl('/user-pages/subcatselection');
+    }
+
     this.blocked = true;
     this.cityservice.GetAllCity().subscribe(x => {
       this.cityList = x;
@@ -127,7 +137,7 @@ export class AppHomeComponent implements OnInit {
   }
 
   getAllWarehosues(cityId) {
-    // debugger
+
     let cityids = [];
     for (var i in cityId) {
       cityids.push(cityId)
@@ -139,13 +149,13 @@ export class AppHomeComponent implements OnInit {
 
     this.dashboardservice.GetWarehouseByCityids(this.Searchcityids).subscribe(x => {
       this.blocked = false;
-      // debugger;
+     
       this.wareHouseList = x;
     });
   }
 
   getSectionsByWarehouseId(WarehouseId) {
-    debugger;
+  
     if (WarehouseId == "null" || WarehouseId == null) {
       Swal.fire('Select Warehouse');
       return false;
@@ -158,7 +168,7 @@ export class AppHomeComponent implements OnInit {
       this.accordionSectionsList = result;
       this.blocked = false;
 
-      debugger;
+    
       console.log(result);
       this.accordionSectionsList.forEach(item => {
         item.itemOpen = false;
@@ -176,7 +186,7 @@ export class AppHomeComponent implements OnInit {
   }
 
   editImage(event, mainimage, itemIndex, imageIndex) {
-    debugger
+    
     this.accordionSectionsList[itemIndex].AppItemsList[imageIndex].BannerImage = event.target.result;
   }
 
@@ -198,7 +208,7 @@ export class AppHomeComponent implements OnInit {
     this.blocked = true;
 
     this.apphomeservice.getBrandByRedirectionType().subscribe(result => {
-      debugger;
+     
       this.subsubcats = result;
       this.blocked = false;
 
@@ -219,13 +229,13 @@ export class AppHomeComponent implements OnInit {
   }
 
   addSection(SectionID) {
-    debugger;
+   
     let section = this.accordionSectionsList.filter(section => SectionID == section.SectionID)[0];
     this.blocked = true;
 
     this.apphomeservice.saveSection(section).subscribe(result => {
       this.blocked = false;
-      debugger;
+    
       if (result.error) {
         Swal.fire(result.msg);
         return false;
@@ -243,7 +253,7 @@ export class AppHomeComponent implements OnInit {
   }
 
   createNewSection() {
-    debugger
+  
     if (this.data.IsTile && this.data.SectionSubType == 'Flash Deal') {
       let existingItem = this.accordionSectionsList.filter(item => item.SectionSubType == 'Flash Deal' && item.Deleted == false)[0];
       if (existingItem) {
@@ -286,7 +296,7 @@ export class AppHomeComponent implements OnInit {
             this.appHomeDeleted = false;
             this.blocked = false;
             result.AppHomeSections.itemOpen = false;
-            debugger;
+          
             this.accordionSectionsList.push(result.AppHomeSections);
             this.isAppHomeSaved = false;
             Swal.fire('section saved');
@@ -306,7 +316,7 @@ export class AppHomeComponent implements OnInit {
       this.blocked = true;
       this.data.WarehouseID = this.SectionData.WarehouseId;
       this.data.AppType = this.SectionData.AppType;
-      debugger;
+      
       this.apphomeservice.saveSection(this.data).subscribe(result => {
 
         if (result.error) {
@@ -318,7 +328,7 @@ export class AppHomeComponent implements OnInit {
           this.blocked = false;
           result.AppHomeSections.itemOpen = false;
           this.accordionSectionsList.push(result.AppHomeSections);
-          debugger
+         
           this.isAppHomeSaved = false;
           Swal.fire('section saved');
           console.log(result.AppHomeSections);
@@ -339,7 +349,7 @@ export class AppHomeComponent implements OnInit {
   }
 
   removeSection(item) {
-    debugger;
+    
     Swal.fire({
       title: 'Are you sure?',
       text: 'You won\'t be able to revert this!',
@@ -370,6 +380,7 @@ export class AppHomeComponent implements OnInit {
   }
 
   saveCompleteAppHome() {
+    
     let data = { AppType: this.SectionData.AppType, WarehouseId: this.SectionData.WarehouseId };
     this.blocked = true;
 
@@ -419,7 +430,7 @@ export class AppHomeComponent implements OnInit {
   }
 
   checkSectionValidation(action) {
-    debugger;
+     
     let invalidTiles = [];
 
     this.accordionSectionsList.forEach((item, index) => {
@@ -447,6 +458,11 @@ export class AppHomeComponent implements OnInit {
                 }
               }
               if (item.IsBanner == true) {
+                if (item.SectionSubType == 'Slider') {
+                  if (!mainimage.BannerImage) {
+                    invalidItems++;
+                  }
+                }
                 if (item.SectionSubType != 'Slider') {
                   if (!mainimage.BannerImage || !mainimage.BannerName || !mainimage.RedirectionID) {
                     invalidItems++;
@@ -552,7 +568,7 @@ export class AppHomeComponent implements OnInit {
   }
 
   closeAllMobilePopups() {
-    debugger;
+
     this.accordionSectionsList.forEach(item => {
       if (item.IsPopUp == true) {
         item.AppItemsList.forEach(item => {
@@ -567,7 +583,6 @@ export class AppHomeComponent implements OnInit {
   }
 
   resetState() {
-    debugger;
     this.accordionSectionsList.forEach(item => {
       if (item.IsPopUp == true) {
         item.AppItemsList.forEach(item => {

@@ -118,7 +118,7 @@ export class AppHomePopupComponent implements OnInit {
   }
 
   upload(file: File[],  j) {
-debugger;
+
     this.file = file;
     var reader = new FileReader();
     this.imagePath = file;
@@ -134,7 +134,7 @@ debugger;
   }
 
   onUpload(j) {
-debugger;
+
     let formData = new FormData();
     formData.append('file', this.file[0]);
     this.blocked=true;
@@ -142,7 +142,7 @@ debugger;
       this.isUploaded = true
       this.blocked=false;
 
-      debugger;
+     
 
       this.item.AppItemsList[j].BannerImage = result;
     })

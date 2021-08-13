@@ -3,10 +3,10 @@
     <a class="navbar-brand brand-logo-mini" href="index.html"><img src="assets/images/logo-mini.svg" alt="logo" /></a>
   </div>
   <div class="navbar-menu-wrapper d-flex align-items-stretch">
-    <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize"
+    <!-- <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize"
       (click)="toggleSidebar()">
       <span class="mdi mdi-menu"></span>
-    </button> 
+    </button>  -->
     <!-- //pooja -->
     <!-- <ul class="navbar-nav w-100">
       <li class="nav-item w-100">
@@ -59,11 +59,11 @@
           <p class="p-3 mb-0 text-center" translate>See all projects</p>
         </div>
       </li> -->
-      <li class="nav-item nav-settings d-none d-lg-block">
+      <!-- <li class="nav-item nav-settings d-none d-lg-block">
         <a class="nav-link">
           <i class="mdi mdi-view-grid"></i>
         </a>
-      </li>
+      </li> -->
       <!-- <li class="nav-item border-left" ngbDropdown>
         <a class="nav-link count-indicator dropdown-toggle" id="messageDropdown" ngbDropdownToggle>
           <i class="mdi mdi-email"></i>
@@ -155,14 +155,19 @@
       <li class="nav-item" ngbDropdown>
         <a class="nav-link" id="profileDropdown" ngbDropdownToggle>
           <div class="navbar-profile">
-            <img class="img-xs rounded-circle" src="assets/images/faces/face15.jpg" alt="">
+            <!-- <img class="img-xs rounded-circle" src="assets/images/faces/face15.jpg" alt=""> -->
+
+            <img class="img-xs rounded-circle logoskd" src="{{logoUrl}}" alt="{{subcateName}}">
+            <!-- <img class="sklogo" src="assets/images/Sk-logo.png"> -->
+
             <p class="mb-0 d-none d-sm-block navbar-profile-name" translate>{{UserName}}</p>
             <i class="mdi mdi-menu-down d-none d-sm-block"></i>
           </div>
         </a>
         <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" ngbDropdownMenu
           aria-labelledby="profileDropdown">
-          <h6 class="p-3 mb-0" translate>Profile</h6>
+          <h6 class="p-3 mb-0 mod" translate>Profile</h6>
+
           <!-- <div class="dropdown-divider"></div>
           <a class="dropdown-item preview-item">
             <div class="preview-thumbnail">

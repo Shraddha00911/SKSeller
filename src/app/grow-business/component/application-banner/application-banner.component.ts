@@ -100,7 +100,7 @@ export class ApplicationBannerComponent implements OnInit {
       this.appBannerRequestDC.SubCatId = this.subcateid;
       this.blocked = true;
       this.growbusinessService.postAppBannerReq(this.appBannerRequestDC).subscribe(res => {
-        debugger
+      
         this.blocked = false;
         console.log(res);
         if (res.Result) {
@@ -130,7 +130,7 @@ export class ApplicationBannerComponent implements OnInit {
 
 
   upload(file: File[]) {
-    debugger
+   
     const allowed_types = ['image/png', 'image/jpeg'];
     this.file = file;
     var reader = new FileReader();
@@ -158,7 +158,7 @@ export class ApplicationBannerComponent implements OnInit {
 
 
   uploadImage() {
-    debugger
+    
     if (!this.file) {
       this.messageService.add({ severity: 'error', summary: 'please choose file', detail: '' });
       return

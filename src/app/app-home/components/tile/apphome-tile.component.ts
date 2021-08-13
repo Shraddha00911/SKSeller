@@ -79,7 +79,7 @@ export class AppHomeTileComponent implements OnInit {
   }
 
   ngOnInit() {
-    debugger;
+  
     this.subsubcats;
   }
 
@@ -104,7 +104,7 @@ export class AppHomeTileComponent implements OnInit {
   }
 
   deleteItem(SectionItemID) {
-    debugger;
+    
     let itemIndex = this.item.AppItemsList.findIndex(appItem => appItem.SectionItemID == SectionItemID);
     this.item.AppItemsList[itemIndex].Deleted = true;
     this.item.AppItemsList[itemIndex].Active = false;
@@ -125,7 +125,7 @@ export class AppHomeTileComponent implements OnInit {
   }
 
   SaveSection(SectionID) {
-    debugger;
+  
     if (this.checkInvalidTileItem() == false) {
       this.addSection.emit(SectionID);
       let appItemInvalidArray = [];
@@ -155,7 +155,6 @@ export class AppHomeTileComponent implements OnInit {
   }
 
   upload(file: File[], imgUploadType, j: any) {
-    debugger;
     this.file = file;
     var reader = new FileReader();
     this.imagePath = file;
@@ -171,11 +170,11 @@ export class AppHomeTileComponent implements OnInit {
   }
 
   onUpload(imgUploadType, j?) {
-    debugger;
+    
     let singleItem = j;
     let formData = new FormData();
     formData.append('file', this.file[0]);
-    debugger;
+   
     this.blocked = true;
     this.itemService.uploadImage(formData).subscribe(result => {
       if (result == null) {
@@ -188,7 +187,7 @@ export class AppHomeTileComponent implements OnInit {
         this.currentAppItem.TileImage = result;
         Swal.fire('Image uploaded');
 
-        debugger;
+    
         console.log("Image Url:" + result);
 
         if (imgUploadType) {
@@ -314,7 +313,7 @@ export class AppHomeTileComponent implements OnInit {
   }
 
   setTileItemName(bannerItem) {
-    debugger;
+    
     this.disablePublish.emit(false);
     let temptilename = this.currentAppItem.TileName;
     this.currentAppItem.TileName = this[bannerItem.arrayName].filter(item => item[bannerItem.nameOfId] == bannerItem.redirectionId)[0][bannerItem.catName];
@@ -328,7 +327,7 @@ export class AppHomeTileComponent implements OnInit {
   }
 
   disableImageSelection(imgUploadType) {
-    debugger;
+   
     this.disablePublish.emit(false);
     let formData = new FormData();
     switch (imgUploadType) {
@@ -377,7 +376,7 @@ export class AppHomeTileComponent implements OnInit {
         break;
       }
       case 'tileTextColor': {
-        debugger;
+       
         // this.blocked = true;
 
         // this.apphomeservice.saveSection(this.item).subscribe(result => {
@@ -396,7 +395,7 @@ export class AppHomeTileComponent implements OnInit {
 
 
   handleClose(event) {
-    debugger;
+  
     this.disablePublish.emit(false);
     this.item.AppItemsList[event.index].Active = false;
     this.item.AppItemsList[event.index].Deleted = true;
@@ -408,7 +407,7 @@ export class AppHomeTileComponent implements OnInit {
   }
 
   saveColumnCount() {
-    debugger;
+  
     // this.disablePublish.emit(false);
     // this.blocked = true;
 
@@ -419,7 +418,7 @@ export class AppHomeTileComponent implements OnInit {
   }
 
   addNewRow() {
-    debugger;
+ 
     if (this.item.ColumnCount && this.item.ColumnCount > 0 && this.checkInvalidTileItem() == false) {
       this.item.RowCount = !this.item.RowCount || this.item.RowCount == 'null' || this.item.RowCount == 0 ? 1 : this.item.RowCount + 1;
       for (let i = 1; i <= Number(this.item.ColumnCount); i++) {
@@ -470,7 +469,7 @@ export class AppHomeTileComponent implements OnInit {
   }
 
   checkInvalidTileItem() {
-    debugger;
+  
     let invalidItems = 0;
     this.item.AppItemsList.forEach((mainimage, index) => {
       if (!mainimage.Deleted || mainimage.Deleted == false) {
@@ -509,7 +508,7 @@ export class AppHomeTileComponent implements OnInit {
   }
 
   deleteEntireGrid() {
-    debugger
+    
     Swal.fire({
       title: 'Are you sure?',
       text: 'Grid will be Deleted',
@@ -559,7 +558,7 @@ export class AppHomeTileComponent implements OnInit {
     return Array(n);
   }
   deleteRow(index) {
-    debugger;
+   
     this.disablePublish.emit(false);
     Swal.fire({
       title: 'Are you sure?',
@@ -570,7 +569,7 @@ export class AppHomeTileComponent implements OnInit {
       cancelButtonColor: '#d33',
       confirmButtonText: 'Yes, delete it!'
     }).then((result) => {
-      debugger;
+      
       if (result.value) {
         if (this.item.ColumnCount == 1) {
           this.item.AppItemsList[index].Deleted = true;
@@ -609,7 +608,6 @@ export class AppHomeTileComponent implements OnInit {
   }
 
   // saveSectionItem(currentAppItem) {
-  //   debugger;
   //   this.item.AppItemsList[this.currentItemIndex] = currentAppItem;
   //   this.currentAppItem = new SectionItem();
   //   this.currentAppItem.RedirectionID = 'null'
@@ -671,14 +669,14 @@ export class AppHomeTileComponent implements OnInit {
 
         let itmids = [];
         this.item.AppItemsList.forEach((its, index) => {
-          debugger;
+          
           if ((its.Deleted == undefined || its.Deleted==false) && its.ItemId > 0 && its.RedirectionType == "Item" && (its.IsFlashDeal == undefined || its.IsFlashDeal==true)) {
             itmids.push(its.ItemId);
           }
         }
         );
         itmids.forEach((itsk, index) => {
-          debugger;
+          
           if (itsk == currentAppItem.ItemId) {
             Swal.fire("Item Already Added in Flash Deal");
             isSaveadded = true;
@@ -702,13 +700,12 @@ export class AppHomeTileComponent implements OnInit {
 
 
   saveList(AppItemsList) {
-    debugger;
     console.log('item', this.item);
     this.blocked = true;
 
     this.apphomeservice.saveSection(this.item).subscribe(x => {
       this.blocked = false;
-      debugger;
+   
 
       if (x.error) {
         Swal.fire(x.msg);
