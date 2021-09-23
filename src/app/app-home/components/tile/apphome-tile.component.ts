@@ -96,7 +96,11 @@ export class AppHomeTileComponent implements OnInit {
     }
     this.currentRowColumnCount = this.item.ColumnCount * this.item.RowCount;
     this.tileItem.RedirectionType = this.item.SectionSubType == 'Offer' || this.item.SectionSubType == 'Flash Deal' ? 'Item' : this.item.SectionSubType;
-    this.item.RowCount = 1;
+    if(this.item.SectionSubType == "Brand" && this.item.RowCount>1){
+      this.item.RowCount = this.item.RowCount;
+    }else{
+      this.item.RowCount = 1;
+    }
     console.log(this.item);
     if (this.item.AppItemsList.length == 0) {
       this.item.ColumnCount = 0;
