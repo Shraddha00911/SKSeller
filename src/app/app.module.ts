@@ -40,6 +40,7 @@ import{ environment} from '../environments/environment';
 import {PanelMenuModule} from 'primeng/panelmenu';
 import {MenuItem} from 'primeng/api';
 
+
 // import { AgmOverlays } from "agm-overlays";
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -59,7 +60,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     TodoRtlComponent,
     ContentAnimateDirective,
     DonutChartComponent,
-    UploadcfrarticlesComponent,
+    UploadcfrarticlesComponent
   ],
   imports: [
     BrowserModule,

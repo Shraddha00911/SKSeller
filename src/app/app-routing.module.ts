@@ -27,6 +27,7 @@ const routes: Routes = [
   { path: 'map', loadChildren: () => import('./mapmodule/mapmodule.module').then(m => m.MapmoduleModule),canActivate: [AuthGuard] },
   { path: 'growbusiness', loadChildren: () => import('./grow-business/grow-business.module').then(m => m.GrowBusinessModule),canActivate: [AuthGuard] },
   { path: 'app-home', loadChildren: () => import('./app-home/app-home.module').then(m => m.AppHomeModule), canActivate: [AuthGuard] },
+  { path: 'skbrand', loadChildren: () => import('./skbrand/skbrand.module').then(m => m.SKBrandModule), canActivate: [AuthGuard] },
 
 ];
 

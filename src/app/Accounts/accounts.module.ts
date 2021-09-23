@@ -8,7 +8,6 @@ import { PaymentComponent } from './component/payment/payment/payment.component'
 const routes: Routes = [
    { path: 'ledger', component: LedgerComponent },
    { path: 'payment', component: PaymentComponent },
-
 ]
 @NgModule({
   declarations: [LedgerComponent, PaymentComponent],
