@@ -6,7 +6,7 @@ html {
 }
 
 body {
-  background: $gray-bg;
+  background: $white;
 }
 
 *:-moz-full-screen,
@@ -54,7 +54,7 @@ body {
 }
 
 .content-wrapper {
-  background: $gray-bg;
+  background: $white;
   padding: 2rem 0rem;
   width: 100%;
   @include flex-grow(1);

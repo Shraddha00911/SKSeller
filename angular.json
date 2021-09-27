@@ -34,7 +34,8 @@
               "node_modules/@mapbox/mapbox-gl-geocoder/lib/mapbox-gl-geocoder.css",
               "node_modules/primeicons/primeicons.css",
               "node_modules/primeng/resources/themes/saga-blue/theme.css",
-              "node_modules/primeng/resources/primeng.min.css"
+              "node_modules/primeng/resources/primeng.min.css",
+              "node_modules/bootstrap/dist/css/bootstrap.css"
             ],
             "scripts": [
               "node_modules/jquery/dist/jquery.min.js",
@@ -44,7 +45,8 @@
               "node_modules/summernote/dist/summernote-lite.min.js",
               "node_modules/tinymce/tinymce.min.js",
               "node_modules/datatables.net/js/jquery.dataTables.js",
-              "src/assets/js/aes256.js"
+              "src/assets/js/aes256.js",
+              "node_modules/bootstrap/dist/js/bootstrap.js"
             ]
           },
           "configurations": {

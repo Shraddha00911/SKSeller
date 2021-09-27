@@ -1,3 +1,275 @@
-<p>business-dashboard works!</p>
+<div class="card">
+  <div class="card-body">
+<div class="col-sm-7 p-0">
+  <div class="row">
+    <div class="col-sm-5">
+      <div class="row">
+        <div class="col-sm-4 col-4">
+          <div class="form-group">
+            <select class="form-control">
+              <option>All Category</option>
+              <option> Category 1</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-sm-4 col-4">
+          <div class="form-group">
+            <select class="form-control">
+              <option>All Brands</option>
+              <option> Brands 1</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-sm-4 col-4">
+          <div class="form-group">
+            <select class="form-control">
+              <option>All City</option>
+              <option> City 1</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-7">
+      <div class="row">
+        <div class="col-sm-3 col-6">
+          <div class="form-group">
+            <input type="text" class="form-control" placeholder="Today">
+          </div>
+        </div>
+        <div class="col-sm-3 col-6">
+          <div class="form-group">
+            <input type="text" class="form-control" placeholder="Last week">
+          </div>
+        </div>
+        <div class="col-sm-3 col-6">
+          <div class="form-group">
+            <input type="text" class="form-control" placeholder="Last month">
+          </div>
+        </div>
+        <div class="col-sm-3 col-6">
+          <div class="form-group">
+            <input type="date" class="form-control" placeholder="Date">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
-<h1>business-dashboard works! business-dashboard works!  business-dashboard works! business-dashboard works! business-dashboard works!  business-dashboard works!business-dashboard works! business-dashboard works!  business-dashboard works!</h1>
+<div class="row">
+  <div class="col-lg-6 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Sales</h4>
+        <div class="custom-tab">
+          <ul class="nav nav-tabs" role="tablist">
+            <li class="nav-item w-25">
+              <a class="nav-link active" data-toggle="tab" href="#tabs-1" role="tab">
+                <h6>8400304</h6>
+                <small class="text-success"><i class="fa fa-long-arrow-up"></i> 2.3%(524)</small><br>
+                Grass Merchandise Value
+              </a>
+            </li>
+            <li class="nav-item w-25">
+              <a class="nav-link" data-toggle="tab" href="#tabs-2" role="tab">
+                <h6>84006873</h6>
+                <small class="text-danger"><i class="fa fa-long-arrow-down"></i> 2.3%(524)</small><br>
+                Sale Amount
+              </a>
+            </li>
+            <li class="nav-item w-25">
+              <a class="nav-link" data-toggle="tab" href="#tabs-3" role="tab">
+                <h6>8400304</h6>
+                <small class="text-success"><i class="fa fa-long-arrow-up"></i> 2.3%(524)</small><br>
+                Average Order Value
+              </a>
+            </li>
+            <li class="nav-item w-25">
+              <a class="nav-link" data-toggle="tab" href="#tabs-4" role="tab">
+                <h6>84006873</h6>
+                <small class="text-danger"><i class="fa fa-long-arrow-down"></i> 2.3%(524)</small><br>
+                Sales Retuen
+              </a>
+            </li>
+          </ul><!-- Tab panes -->
+          <div class="tab-content">
+            <div class="tab-pane active" id="tabs-1" role="tabpanel">
+              <p>chart 1
+                <canvas baseChart [chartType]="'line'" [datasets]="areaChartData" [labels]="areaChartLabels"
+                  [options]="areaChartOptions" [colors]="areaChartColors"></canvas>
+              </p>
+            </div>
+            <div class="tab-pane" id="tabs-2" role="tabpanel">
+              <p>chart 2
+                <canvas baseChart [chartType]="'line'" [datasets]="areaChartData" [labels]="areaChartLabels"
+                  [options]="areaChartOptions" [colors]="areaChartColors"></canvas>
+              </p>
+            </div>
+            <div class="tab-pane" id="tabs-3" role="tabpanel">
+              <p>chart 3
+                <canvas baseChart [chartType]="'line'" [datasets]="areaChartData" [labels]="areaChartLabels"
+                  [options]="areaChartOptions" [colors]="areaChartColors"></canvas>
+              </p>
+            </div>
+            <div class="tab-pane" id="tabs-4" role="tabpanel">
+              <p>chart 4
+                <canvas baseChart [chartType]="'line'" [datasets]="areaChartData" [labels]="areaChartLabels"
+                  [options]="areaChartOptions" [colors]="areaChartColors"></canvas>
+              </p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-6 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Engagement</h4>
+        <div class="custom-tab">
+          <ul class="nav nav-tabs" role="tablist">
+            <li class="nav-item w-2">
+              <a class="nav-link active" data-toggle="tab" href="#tabs-1" role="tab">
+                <h6>4567</h6>
+                <small class="text-success"><i class="fa fa-long-arrow-up"></i> 2.3%(524)</small><br>
+                Billed Customer
+              </a>
+            </li>
+            <li class="nav-item w-2">
+              <a class="nav-link" data-toggle="tab" href="#tabs-2" role="tab">
+                <h6>6004</h6>
+                <small class="text-danger"><i class="fa fa-long-arrow-down"></i> 2.3%(524)</small><br>
+                Customer Reach
+              </a>
+            </li>
+            <li class="nav-item w-2">
+              <a class="nav-link" data-toggle="tab" href="#tabs-3" role="tab">
+                <h6>3</h6>
+                <small class="text-success"><i class="fa fa-long-arrow-up"></i> 2.3%(524)</small><br>
+                Average Line Item
+              </a>
+            </li>
+            <li class="nav-item w-2">
+              <a class="nav-link" data-toggle="tab" href="#tabs-4" role="tab">
+                <h6>100</h6>
+                <small class="text-danger"><i class="fa fa-long-arrow-down"></i> 2.3%(524)</small><br>
+                SKUs Active
+              </a>
+            </li>
+            <li class="nav-item w-2">
+              <a class="nav-link" data-toggle="tab" href="#tabs-4" role="tab">
+                <h6>86</h6>
+                <small class="text-danger"><i class="fa fa-long-arrow-down"></i> 2.3%(524)</small><br>
+                SKUs Sold
+              </a>
+            </li>
+          </ul><!-- Tab panes -->
+          <div class="tab-content">
+            <div class="tab-pane active" id="tabs-1" role="tabpanel">
+              <p>chart 1
+                <canvas baseChart [chartType]="'bar'" [datasets]="barChartData" [labels]="barChartLabels"
+                  [options]="barChartOptions" [colors]="barChartColors"></canvas>
+              </p>
+            </div>
+            <div class="tab-pane" id="tabs-2" role="tabpanel">
+              <p>chart 2
+                <canvas baseChart [chartType]="'bar'" [datasets]="barChartData" [labels]="barChartLabels"
+                  [options]="barChartOptions" [colors]="barChartColors"></canvas>
+              </p>
+            </div>
+            <div class="tab-pane" id="tabs-3" role="tabpanel">
+              <p>chart 3
+                <canvas baseChart [chartType]="'bar'" [datasets]="barChartData" [labels]="barChartLabels"
+                  [options]="barChartOptions" [colors]="barChartColors"></canvas>
+              </p>
+            </div>
+            <div class="tab-pane" id="tabs-4" role="tabpanel">
+              <p>chart 4
+                <canvas baseChart [chartType]="'bar'" [datasets]="barChartData" [labels]="barChartLabels"
+                  [options]="barChartOptions" [colors]="barChartColors"></canvas>
+              </p>
+            </div>
+            <div class="tab-pane" id="tabs-5" role="tabpanel">
+              <p>chart 5
+                <canvas baseChart [chartType]="'bar'" [datasets]="barChartData" [labels]="barChartLabels"
+                  [options]="barChartOptions" [colors]="barChartColors"></canvas>
+              </p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<h4 class="heading-title">Inventory</h4>
+<div class="row">
+  <div class="col-sm-6">
+    <div class="row">
+      <div class="col-sm-3 col-6">
+        <div class="inventory-box">
+          <h6>2423333</h6>
+          <span class="text-success"><i class="fa fa-long-arrow-up"></i> 2.3%(524)</span>
+          Current Stock Value
+        </div>
+      </div>
+      <div class="col-sm-3 col-6">
+        <div class="inventory-box">
+          <h6>1345</h6>
+          <span class="text-success"><i class="fa fa-long-arrow-up"></i> 2.3%(524)</span>
+          Current Stock Quality
+        </div>
+      </div>
+      <div class="col-sm-3 col-6">
+        <div class="inventory-box">
+          <h6>234</h6>
+          <span class="text-success"><i class="fa fa-long-arrow-up"></i> 2.3%(524)</span>
+          Low Stock Quantity
+        </div>
+      </div>
+      <div class="col-sm-3 col-6 ">
+        <div class="inventory-box">
+            <h6>234</h6>
+            <span class="text-success"><i class="fa fa-long-arrow-up"></i> 2.3%(524)</span>
+            Stock Out Quantity
+          </div>
+        </div>
+    </div>
+  </div>
+  <div class="col-sm-6">
+    <div class="row">
+      <div class="col-sm-3 col-6">
+        <div class="inventory-box">
+          <h6>15</h6>
+          <span class="text-success"><i class="fa fa-long-arrow-up"></i> 2.3%(524)</span>
+          Average Aging
+        </div>
+      </div>
+      <div class="col-sm-3 col-6">
+        <div class="inventory-box">
+          <h6>98.5%</h6>
+          <span class="text-success"><i class="fa fa-long-arrow-up"></i> 2.3%(524)</span>
+          Purchase Fill Rate
+        </div>
+      </div>
+      <div class="col-sm-3 col-6">
+        <div class="inventory-box">
+          <h6>24656</h6>
+          <span class="text-success"><i class="fa fa-long-arrow-up"></i> 2.3%(524)</span>
+          Near by Expiry Stocks Value
+        </div>
+      </div>
+      <div class="col-sm-3 col-6 ">
+        <div class="inventory-box">
+            <h6>1234</h6>
+            <span class="text-success"><i class="fa fa-long-arrow-up"></i> 2.3%(524)</span>
+            Damage Stocks Value
+          </div>
+        </div>
+    </div>
+  </div>
+</div>
+</div></div>

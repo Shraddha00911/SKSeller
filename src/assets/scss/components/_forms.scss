@@ -1,7 +1,7 @@
 /* Forms */
 
 .form-group {
-  margin-bottom: 1.5rem;
+  margin-bottom: 0.5rem;
 }
 
 .input-group-append,
@@ -29,17 +29,18 @@
 }
 
 .form-control {
-  border: 1px solid $border-color;
+  border: 1px solid #ccc;
   font-family: $type1;
   font-size: $input-placeholder-font-size;
   font-weight: normal;
-  padding: 0.625rem 0.6875rem;
+  padding: .2375rem .25rem;
+  height: auto!important;
   // background-color: #1B2A47;
   color: black;//white;
-  outline: 1px solid #000;
+  outline:none;
   border-radius: 2px;
   &::placeholder {
-    color: black//$white;//$text-muted; /////
+    color: $black//$white;//$text-muted; /////
   }
   &:focus {
     border: 1px solid rgba(71, 164, 71, 0.5);
@@ -50,9 +51,10 @@
 
 select {
   &.form-control {
-    padding: .4375rem .75rem;
+    padding: .2375rem .25rem;
+    height: auto!important;
     border: 0;
-    outline: 1px solid #000;
+    outline: 1px solid #ccc;
     color: $input-placeholder-color;
     &:focus {
       outline: 1px solid #2F2741;

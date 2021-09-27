@@ -5,6 +5,7 @@
   line-height: 1;
   font-family: $type1;
   margin-right: 3px;
+  border-radius: 4px!important;
   i {
     font-size: 1rem;
   }
@@ -102,4 +103,7 @@
       }
   }
   &.btn-lg{font-size:20px;padding:10px 20px;}
+}
+.btn-white{background: $white;color: $darkslategray!important;border:1px solid $gray-600;
+&:hover, &.active{color: $blue!important;border:1px solid $blue!important;}
 }

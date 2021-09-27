@@ -2,6 +2,7 @@
 
 @import "../../../styles.scss";
 .sidebar {
+  display: none;
   min-height: calc(100vh - #{$navbar-height});
   background: $sidebar-bg;
   font-family: $type1;

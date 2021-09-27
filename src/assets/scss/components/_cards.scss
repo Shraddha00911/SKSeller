@@ -17,8 +17,7 @@
     font-family: $type1;
     font-weight: $font-weight-medium;
     font-size: 1.125rem;
-    color: black;
-    text-decoration: underline
+    color: $blue;
   }
   .card-subtitle {
     @extend .text-gray;

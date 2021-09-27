@@ -3,11 +3,23 @@
 @import '../../../styles.scss';
 
 /* Navbar */
-
+.top-div{width: 100%;float: left;background: $white;padding: 5px 0px;
+  .row{width:100%;float: left;display: block;
+  .col-sm-4{width: 33.3333333333%;float: left;}
+  }
+.sk-logo{width:60px;height: 60px;border-radius: 50%;border:1px solid $gray-700;display: flex;align-items: center;justify-content: center;
+  img{max-height: 50px;max-width: 80%;}}
+.user-logo{width:60px;height: 60px;border-radius: 8px;border:1px solid $gray-700;display: flex;align-items: center;justify-content: center;margin: 0px auto;
+img{max-height: 50px;max-width: 80%;}}
+}
+.gray-bg{background: $gray-light;}
 .navbar {
+  left: 0px!important;
   font-family: $type1;
+  width: 100%;
+  float: left;
   font-weight: normal;
-  background: $navbar-bg;
+  
   left: $sidebar-width-lg;
   transition:left $action-transition-duration $action-transition-timing-function;
   -webkit-transition:left $action-transition-duration $action-transition-timing-function;

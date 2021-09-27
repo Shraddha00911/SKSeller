@@ -1,25 +1,90 @@
-<nav class="navbar default-layout-navbar p-0 fixed-top d-flex flex-row">
-  <div class="navbar-brand-wrapper d-flex d-lg-none align-items-center justify-content-center">
-    <a class="navbar-brand brand-logo-mini" href="index.html"><img src="assets/images/logo-mini.svg" alt="logo" /></a>
+<div class="top-div">
+  <div class="row">
+    <div class="col-sm-4 pl-4"><a class="sk-logo" href="index.html"> <img src="assets/images/sk-logonew.png" alt="logo"  /></a></div>
+    <div class="col-sm-4 text-center"><a class="user-logo" href="index.html"> <img src="assets/images/sk-logonew.png" alt="logo"  /></a></div>
+    <div class="col-sm-4">
+      <nav class="navbar default-layout-navbar p-0  d-flex flex-row">
+        <div class="navbar-brand-wrapper d-flex d-lg-none align-items-center justify-content-center">
+          <a class="navbar-brand brand-logo-mini" href="index.html"><img src="assets/images/sk-icon.jpg" alt="logo" /></a>
+        </div>
+      <div class="navbar-menu-wrapper">
+        
+        <!-- <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize"
+          (click)="toggleSidebar()">
+          <span class="mdi mdi-menu"></span>
+        </button> -->
+         <!-- <ul class="navbar-nav w-100">
+          <li class="nav-item w-100">
+            <form class="nav-link mt-2 mt-md-0 d-none d-lg-flex search">
+              <input type="text" class="form-control" placeholder="{{'Search' | translate }}">
+             
+            </form>
+          </li>
+        </ul>  -->
+    
+        <ul class="navbar-nav pull-right">
+          
+          <li class="nav-item" ngbDropdown>
+            <a class="nav-link" id="profileDropdown" ngbDropdownToggle>
+              <div class="navbar-profile text-black">
+                <img class="img-xs rounded-circle logoskd" src="{{logoUrl}}" alt="{{subcateName}}">
+                <p class="mb-0 d-none d-sm-block navbar-profile-name" translate>{{UserName}}</p>
+                <i class="mdi mdi-menu-down d-none d-sm-block"></i>
+              </div>
+            </a>
+            <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" ngbDropdownMenu
+              aria-labelledby="profileDropdown">
+              <h6 class="p-3 mb-0 mod" translate>Profile</h6>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item preview-item">
+                <div class="preview-thumbnail">
+                  <div class="preview-icon bg-dark rounded-circle">
+                    <i class="mdi mdi-logout text-danger"></i>
+                  </div>
+                </div>
+                <div class="preview-item-content">
+                  <p class="preview-subject mb-1" (click)="logout()" translate>Log out</p>
+                </div>
+              </a>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    </div>
   </div>
+</div>
+  <nav class="navbar default-layout-navbar p-0  d-flex flex-row gray-bg">
+    <div class="navbar-brand-wrapper d-flex d-lg-none align-items-center justify-content-center">
+      <a class="navbar-brand brand-logo-mini" href="index.html"><img src="assets/images/sk-icon.jpg" alt="logo" /></a>
+    </div>
   <div class="navbar-menu-wrapper d-flex align-items-stretch">
+    
     <!-- <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize"
       (click)="toggleSidebar()">
       <span class="mdi mdi-menu"></span>
-    </button>  -->
-    <!-- //pooja -->
-    <!-- <ul class="navbar-nav w-100">
+    </button> -->
+     <!-- <ul class="navbar-nav w-100">
       <li class="nav-item w-100">
         <form class="nav-link mt-2 mt-md-0 d-none d-lg-flex search">
           <input type="text" class="form-control" placeholder="{{'Search' | translate }}">
          
         </form>
       </li>
-    </ul> -->
+    </ul>  -->
 
-    <ul class="navbar-nav navbar-nav-right">
+    <ul class="navbar-nav ">
+      <li class="nav-item d-lg-block" ><a class="nav-link btn btn-white create-new-button">Business Dashboard</a></li>
+      <li class="nav-item d-lg-block" ><a class="nav-link btn btn-white create-new-button">Catalog</a></li>
+      <li class="nav-item d-lg-block" ><a class="nav-link btn btn-white create-new-button">Sales</a></li>
+      <li class="nav-item d-lg-block" ><a class="nav-link btn btn-white create-new-button">Inventory</a></li>
+      <li class="nav-item d-lg-block" ><a class="nav-link btn btn-white create-new-button">Order</a></li>
+      <li class="nav-item d-lg-block" ><a class="nav-link btn btn-white create-new-button">Digital Promotion</a></li>
+      <li class="nav-item d-lg-block" ><a class="nav-link btn btn-white create-new-button">Offers</a></li>
+      <li class="nav-item d-lg-block" ><a class="nav-link btn btn-white create-new-button">Payment</a></li>
+      <li class="nav-item d-lg-block" ><a class="nav-link btn btn-white create-new-button">Reports</a></li>
       <!-- <li class="nav-item d-none d-lg-block" ngbDropdown>
-        <a class="nav-link btn btn-success create-new-button" id="createbuttonDropdown" ngbDropdownToggle translate>+ Create New Project</a>
+        <a class="nav-link btn btn-white create-new-button" id="createbuttonDropdown" ngbDropdownToggle translate>+ Create New Project</a>
         <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" ngbDropdownMenu aria-labelledby="createbuttonDropdown">
           <h6 class="p-3 mb-0" translate>Projects</h6>
           <div class="dropdown-divider"></div>
@@ -58,13 +123,13 @@
           <div class="dropdown-divider"></div>
           <p class="p-3 mb-0 text-center" translate>See all projects</p>
         </div>
-      </li> -->
-      <!-- <li class="nav-item nav-settings d-none d-lg-block">
+      </li> 
+     <li class="nav-item nav-settings d-none d-lg-block">
         <a class="nav-link">
           <i class="mdi mdi-view-grid"></i>
         </a>
-      </li> -->
-      <!-- <li class="nav-item border-left" ngbDropdown>
+      </li> 
+      <li class="nav-item border-left" ngbDropdown>
         <a class="nav-link count-indicator dropdown-toggle" id="messageDropdown" ngbDropdownToggle>
           <i class="mdi mdi-email"></i>
           <span class="count-symbol bg-success"></span>
@@ -104,8 +169,8 @@
           <div class="dropdown-divider"></div>
           <p class="p-3 mb-0 text-center" translate>4 new messages</p>
         </div>
-      </li> -->
-      <!-- <li class="nav-item border-left" ngbDropdown>
+      </li> 
+      <li class="nav-item border-left" ngbDropdown>
         <a class="nav-link count-indicator dropdown-toggle" id="notificationDropdown" ngbDropdownToggle>
           <i class="mdi mdi-bell"></i>
           <span class="count-symbol bg-danger"></span>
@@ -151,15 +216,11 @@
             <div class="dropdown-divider"></div>
             <p class="p-3 mb-0 text-center" translate>See all notifications</p>
         </div>
-      </li> -->
+      </li> 
       <li class="nav-item" ngbDropdown>
         <a class="nav-link" id="profileDropdown" ngbDropdownToggle>
-          <div class="navbar-profile">
-            <!-- <img class="img-xs rounded-circle" src="assets/images/faces/face15.jpg" alt=""> -->
-
+          <div class="navbar-profile text-black">
             <img class="img-xs rounded-circle logoskd" src="{{logoUrl}}" alt="{{subcateName}}">
-            <!-- <img class="sklogo" src="assets/images/Sk-logo.png"> -->
-
             <p class="mb-0 d-none d-sm-block navbar-profile-name" translate>{{UserName}}</p>
             <i class="mdi mdi-menu-down d-none d-sm-block"></i>
           </div>
@@ -167,18 +228,6 @@
         <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" ngbDropdownMenu
           aria-labelledby="profileDropdown">
           <h6 class="p-3 mb-0 mod" translate>Profile</h6>
-
-          <!-- <div class="dropdown-divider"></div>
-          <a class="dropdown-item preview-item">
-            <div class="preview-thumbnail">
-              <div class="preview-icon bg-dark rounded-circle">
-                <i class="mdi mdi-settings text-success"></i>
-              </div>
-            </div>
-            <div class="preview-item-content">
-              <p class="preview-subject mb-1" translate>Settings</p>
-            </div>
-          </a> -->
           <div class="dropdown-divider"></div>
           <a class="dropdown-item preview-item">
             <div class="preview-thumbnail">
@@ -190,10 +239,8 @@
               <p class="preview-subject mb-1" (click)="logout()" translate>Log out</p>
             </div>
           </a>
-          <!-- <div class="dropdown-divider"></div>
-          <p class="p-3 mb-0 text-center" translate>Advanced settings</p> -->
         </div>
-      </li>
+      </li>-->
     </ul>
     <!-- <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" (click)="toggleOffcanvas()">
       <span class="mdi mdi-menu"></span>

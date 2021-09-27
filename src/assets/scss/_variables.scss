@@ -1,7 +1,7 @@
 
 ////////// COLOR SYSTEM //////////
 
-$blue:              #5E50F9; 
+$blue:              #1760D1; 
 $indigo:            #6610f2;
 $purple:            #6a008a;
 $pink:              #E91E63;
@@ -17,8 +17,10 @@ $white-smoke:       #f2f7f8;
 $violet:            #41478a;
 $darkslategray :    #2e383e;
 $dodger-blue :      #3498db;
-
-
+$gray:             #434a54;
+$gray-light:       #E8E8E8;
+$light-blue:       #F0F4FC;
+$gray-f8:        #F8F8F8;
 $colors: (
   blue:             $blue,
   indigo:           $indigo,
@@ -148,14 +150,13 @@ $icon-only-menu-bg: $sidebar-bg;
 
 ///////// NAVBAR ////////
 
-$navbar-height: 85px;
+$navbar-height: 35px;
 $navbar-bg: #1B2A47;
 $navbar-menu-color: #ffffff;
 $navbar-font-size: .9375rem;
 $navbar-icon-font-size: 1.125rem;
 
 ///////// NAVBAR ////////
-
 
 
 ///////// BUTTONS ////////
