@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { AuthGuard } from './shared/auth/auth-guard.service';
 import { SpinnerComponent } from './shared/spinner/spinner.component';
+import { CatalogComponent } from './skbrand/component/catalog/catalog.component';
 import { UploadcfrarticlesComponent } from './uploadcfr/uploadcfrarticles/uploadcfrarticles.component';
 
 const routes: Routes = [
@@ -12,6 +13,7 @@ const routes: Routes = [
     pathMatch: 'full',
   },
   { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
+   //{path :'catalog',component:CatalogComponent ,canActivate:[AuthGuard]},
   { path: 'uploadcfr', component: UploadcfrarticlesComponent, canActivate: [AuthGuard] },
   { path: 'account', loadChildren: () => import('./Accounts/accounts.module').then(m => m.AccountsModule), canActivate: [AuthGuard] },
   { path: 'offer', loadChildren: () => import('./offers/offer.module').then(m => m.OfferModule), canActivate: [AuthGuard] },

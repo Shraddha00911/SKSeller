@@ -6,35 +6,36 @@
       <div class="row">
         <div class="col-sm-4 col-4">
           <div class="form-group">
-            <select class="form-control">
-              <option>All Category</option>
-              <option> Category 1</option>
+            <select class="form-control" (change)="selectCatValue($event.target.value, 'Category')">
+              <option value="" disabled>All Category</option>
+              <option *ngFor="let list of allCatListName" [value]="list?.Id"> {{list?.SubcategoryName}}</option>
             </select>
+          
           </div>
         </div>
         <div class="col-sm-4 col-4">
           <div class="form-group">
-            <select class="form-control">
+            <select class="form-control" (change)="selectCatValue($event.target.value, 'Brand')">
               <option>All Brands</option>
-              <option> Brands 1</option>
+              <option *ngFor="let list of allBrandName" [value]="list?.SubSubCategoryId"> {{list?.SubSubCategoryName}}</option>
             </select>
           </div>
         </div>
         <div class="col-sm-4 col-4">
           <div class="form-group">
-            <select class="form-control">
-              <option>All City</option>
-              <option> City 1</option>
+            <select class="form-control" (change)="selectCatValue($event.target.value, 'City')">
+              <option value="" disabled>All City</option>
+              <option *ngFor="let list of allCityName" [value]="list?.Cityid"> {{list?.CityName}}</option>
             </select>
           </div>
         </div>
       </div>
     </div>
-    <div class="col-sm-7">
+    <div class="col-sm-7">Today
       <div class="row">
         <div class="col-sm-3 col-6">
           <div class="form-group">
-            <input type="text" class="form-control" placeholder="Today">
+            <input type="text" class="form-control" placeholder="">
           </div>
         </div>
         <div class="col-sm-3 col-6">
@@ -95,7 +96,7 @@
           </ul><!-- Tab panes -->
           <div class="tab-content">
             <div class="tab-pane active" id="tabs-1" role="tabpanel">
-              <p>chart 1
+              <p >chart 1
                 <canvas baseChart [chartType]="'line'" [datasets]="areaChartData" [labels]="areaChartLabels"
                   [options]="areaChartOptions" [colors]="areaChartColors"></canvas>
               </p>
@@ -170,11 +171,12 @@
             <div class="tab-pane active" id="tabs-1" role="tabpanel">
               <p>chart 1
                 <canvas baseChart [chartType]="'bar'" [datasets]="barChartData" [labels]="barChartLabels"
-                  [options]="barChartOptions" [colors]="barChartColors"></canvas>
+                [options]="barChartOptions" [colors]="barChartColors"></canvas>
               </p>
             </div>
             <div class="tab-pane" id="tabs-2" role="tabpanel">
               <p>chart 2
+
                 <canvas baseChart [chartType]="'bar'" [datasets]="barChartData" [labels]="barChartLabels"
                   [options]="barChartOptions" [colors]="barChartColors"></canvas>
               </p>
@@ -211,14 +213,16 @@
     <div class="row">
       <div class="col-sm-3 col-6">
         <div class="inventory-box">
-          <h6>2423333</h6>
+          <h6>{{dashboardData?.CompanyInventory?.CurrentStockValue}}
+            {{graphAllData?.Xaxis}}
+          </h6>
           <span class="text-success"><i class="fa fa-long-arrow-up"></i> 2.3%(524)</span>
           Current Stock Value
         </div>
       </div>
       <div class="col-sm-3 col-6">
         <div class="inventory-box">
-          <h6>1345</h6>
+          <h6>{{dashboardData?.CompanyInventory?.CurrentStockQuantity}}</h6>
           <span class="text-success"><i class="fa fa-long-arrow-up"></i> 2.3%(524)</span>
           Current Stock Quality
         </div>
@@ -232,7 +236,7 @@
       </div>
       <div class="col-sm-3 col-6 ">
         <div class="inventory-box">
-            <h6>234</h6>
+            <h6>{{dashboardData?.CompanyInventory?.StockOutQuantity}}</h6>
             <span class="text-success"><i class="fa fa-long-arrow-up"></i> 2.3%(524)</span>
             Stock Out Quantity
           </div>
@@ -243,7 +247,7 @@
     <div class="row">
       <div class="col-sm-3 col-6">
         <div class="inventory-box">
-          <h6>15</h6>
+          <h6>{{dashboardData?.CompanyInventory?.AvgAging}}</h6>
           <span class="text-success"><i class="fa fa-long-arrow-up"></i> 2.3%(524)</span>
           Average Aging
         </div>
@@ -257,14 +261,14 @@
       </div>
       <div class="col-sm-3 col-6">
         <div class="inventory-box">
-          <h6>24656</h6>
+          <h6>{{dashboardData?.CompanyInventory?.NearExpiryStockValue}}</h6>
           <span class="text-success"><i class="fa fa-long-arrow-up"></i> 2.3%(524)</span>
           Near by Expiry Stocks Value
         </div>
       </div>
       <div class="col-sm-3 col-6 ">
         <div class="inventory-box">
-            <h6>1234</h6>
+            <h6>{{dashboardData?.CompanyInventory?.DamageStockValue}}</h6>
             <span class="text-success"><i class="fa fa-long-arrow-up"></i> 2.3%(524)</span>
             Damage Stocks Value
           </div>

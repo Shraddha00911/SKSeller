@@ -70,7 +70,6 @@ export class ItemschemeuploaderComponent implements OnInit {
     });
 
     this.SubcatmappingService.GetAllBrand().subscribe(result => {
-
       this.BrandList = result;
 
     })

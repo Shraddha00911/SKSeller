@@ -32,7 +32,7 @@ export class AuthService {
   }
 
   isAuthenticated() {
- debugger;
+//  debugger;
     const token = this.localStorageService.getItemString('selleruserToken');
     // here you can check if user is authenticated or not through his token 
     if(token){

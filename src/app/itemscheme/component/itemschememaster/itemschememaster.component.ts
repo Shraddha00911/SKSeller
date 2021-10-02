@@ -64,7 +64,6 @@ export class ItemschememasterComponent implements OnInit {
     this.SubcatmappingService.GetAllBrand().subscribe(result => {
     
       this.BrandList = result;
-
     })
   }
   onBrandChange() {

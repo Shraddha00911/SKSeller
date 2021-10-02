@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { timingSafeEqual } from 'crypto';
+import { SkbrandService } from '../../services/skbrand.service';
+import moment from 'moment';
 
 @Component({
   selector: 'app-business-dashboard',
@@ -6,7 +9,17 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./business-dashboard.component.scss']
 })
 export class BusinessDashboardComponent implements OnInit{
-
+  allCityName:any;
+  allBrandName:any;
+  allCatListName:any;
+  selectedCat:any;
+  catSelctValue: string;
+  brandSelctValue: any = [];
+  citySelctValue: string;
+  axisSelectValue:string;
+  dashboardData: any;
+  graphAllData: any;
+  
   lineChartData = [{
     label: '# of Votes',
     data: [10, 19, 3, 5, 2, 3],
@@ -120,14 +133,7 @@ export class BusinessDashboardComponent implements OnInit{
       
   ];
 
-  areaChartData = [{
-    label: '# of Votes',
-    data: [10, 19, 3, 5, 2, 3],
-    borderWidth: 1,
-    fill: true
-  }];
 
-  areaChartLabels = ["Jan", "Feb", "Mar", "Apr", "May", "Jun"];
 
   areaChartOptions = {};
 
@@ -244,9 +250,215 @@ export class BusinessDashboardComponent implements OnInit{
     }
   ];
 
-  constructor() { }
+  constructor(
+    public _services: SkbrandService,
+  ) { }
 
-  ngOnInit() {
+  async ngOnInit() {
+  this.getAllCatList();
   }
+  
+  
+  getAllCatList() {
+    this._services.GetAllSubCatMapping().subscribe(result=>{
+      this.allCatListName = result;      
+      this.catSelctValue = this.allCatListName[0].Id
+      this.getAllWarehouseCity();
+      
+    })
+  }
+
+  getAllWarehouseCity() {
+    this._services.GetAllCity().subscribe(result=>{
+      this.allCityName = result; 
+      console.log(this.allCityName, 'this.allCityName');      
+      this.citySelctValue = this.allCityName[0].Cityid;
+      this.getAllBrandNames();
+    })
+  }
+
+  getAllBrandNames(){
+    this._services.GetAllBrand().subscribe(result=>{    
+      this.allBrandName = result; 
+      console.log("All Brand data",this.allBrandName )
+      this.getAllDashboardData();
+    })
+  }
+
+
+  selectCatValue(catValue,selectType) {
+    switch (selectType) {
+      case 'Category': {
+        this.catSelctValue =  catValue;
+        this.getAllDashboardData();
+        break
+      }
+      case 'Brand': {
+        this.brandSelctValue.push(catValue);
+        this.getAllDashboardData();
+        
+        break
+      }
+      case 'City': {
+        this.citySelctValue =  catValue;
+        this.getAllDashboardData();
+        break
+      }
+      
+    }
+    
+  }
+
+  getAllDashboardData() {    
+    const searchData = {
+      "CompanyId": this.catSelctValue,
+	"CityId": this.citySelctValue,	
+	"BrandIds": this.brandSelctValue,
+	"DateRangeType":"M",
+  "StartDate":"2021-09-01",
+	"EndDate":"2021-09-30 23:59:59",
+    }
+    this._services.GetBusinessDashboardData(searchData).subscribe(result=>{
+      this.dashboardData = result;    
+      console.log(this.dashboardData, 'this.dashboardData');
+       
+      this.dashboardGraphData();
+      
+    })
+  }
+
+
+ dashboardGraphData() {    
+    const searchData = {
+      "CompanyId": this.catSelctValue,
+      "CityId": this.citySelctValue,	
+      "BrandIds": this.brandSelctValue,
+      "DateRangeType":"M",
+      "StartDate":"2021-09-01",
+      "EndDate":"2021-09-30 23:59:59",
+    }
+    this._services.GetBusinessDashboardGraphData(searchData).subscribe(result=>{
+      this.graphAllData = result;
+      // console.log( this.graphAllData, 'this.dashboardData gra'); 
+      var areaChartLabelsArr = [];  
+      var arrarOfYAxis = [];
+      this.graphAllData.forEach(element => {
+        element['month'] = moment(element["Xaxis"]).format("MMM");
+        switch (element['month']) {
+          case "Jan":
+         // element["arrarOfYAxisJan"] = arrarOfYAxis.push(element["Yaxis"])
+          arrarOfYAxis.push(element["Yaxis"])
+          element["arrarOfYAxisJan"] = this.calculateAverage(arrarOfYAxis);
+          break; 
+
+          case "Feb":
+          arrarOfYAxis.push(element["Yaxis"])
+          element["arrarOfYAxisFeb"] = this.calculateAverage(arrarOfYAxis);
+          break;
+          
+          case "Mar":
+          arrarOfYAxis.push(element["Yaxis"])
+          element["arrarOfYAxisMar"] = this.calculateAverage(arrarOfYAxis);
+          break;
+
+          case "Apr":
+          arrarOfYAxis.push(element["Yaxis"])
+          element["arrarOfYAxisApr"] = this.calculateAverage(arrarOfYAxis);
+          break;
+
+          case "May":
+          arrarOfYAxis.push(element["Yaxis"])
+          element["arrarOfYAxisMay"] = this.calculateAverage(arrarOfYAxis);
+          break;
+
+          case "Jun":
+          arrarOfYAxis.push(element["Yaxis"])
+          element["arrarOfYAxisJun"] = this.calculateAverage(arrarOfYAxis);
+          break;
+
+          case "Jul":
+          arrarOfYAxis.push(element["Yaxis"])
+          element["arrarOfYAxisJul"] = this.calculateAverage(arrarOfYAxis);
+          break;
+
+          
+          case "Aug":
+          arrarOfYAxis.push(element["Yaxis"])
+          element["arrarOfYAxisAug"] = this.calculateAverage(arrarOfYAxis);
+          break;
+
+          case "Sep":
+          arrarOfYAxis.push(element["Yaxis"])
+          element["arrarOfYAxisSep"] = this.calculateAverage(arrarOfYAxis);
+          break;
+          
+          case "Oct":
+          arrarOfYAxis.push(element["Yaxis"])
+          element["arrarOfYAxisOct"] = this.calculateAverage(arrarOfYAxis);
+          break;
+
+          case "Nov":
+          arrarOfYAxis.push(element["Yaxis"])
+          element["arrarOfYAxisNov"] = this.calculateAverage(arrarOfYAxis);
+          break;
+
+                
+          case "Dec":
+          arrarOfYAxis.push(element["Yaxis"])
+          element["arrarOfYAxisDec"] = this.calculateAverage(arrarOfYAxis);
+          break;
+
+          default:
+            break;
+        }
+
+      });
+     
+      // console.log( this.graphAllData)
+
+      this.dataMonthYAxis = [];
+      this.graphAllData.forEach(element => {
+        this.areaChartLabels.forEach(ele => {
+            if(element['month']==ele){
+              var name  = 'arrarOfYAxis' + element['month'];
+              this.dataMonthYAxis.push(name)
+            }else{
+              this.dataMonthYAxis.push(0)
+            }
+        });
+      })
+      });
+
+      console.log(this.areaChartData)
+      this.areaChartData[0]['data'] = this.dataMonthYAxis;
+      this.areaChartData[0]['label'] = 'Grass Merchandise Value';
+      console.log(this.areaChartData)
+
+  }
+
+
+  dataMonthYAxis = []
+  areaChartData = [{
+    label: '# of Votes',
+    data: [20,18,15,16,12,13,14,10,7,9,0,5],
+    borderWidth: 1,
+    fill: true
+  }];
+
+  // areaChartLabels = ["Jan", "Feb", "Mar", "Apr", "May"];
+  areaChartLabels = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul","Aug", "Sep", "Oct", "Nov", "Dec"];
+
+  arry = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
+
+calculateAverage(array) {
+    var total = 0;
+    var count = 0;
+
+    array.forEach(function(item, index) {
+        total += item;
+        count++;
+    });
+    return total / count;
+}
 
 }
