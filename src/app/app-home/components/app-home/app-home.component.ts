@@ -169,7 +169,7 @@ export class AppHomeComponent implements OnInit {
       this.blocked = false;
 
     
-      console.log(result);
+      // console.log(result);
       this.accordionSectionsList.forEach(item => {
         item.itemOpen = false;
         if (item.IsPopUp == true) {
@@ -242,7 +242,7 @@ export class AppHomeComponent implements OnInit {
       }
       else {
         Swal.fire('section saved');
-        console.log(result);
+        // console.log(result);
 
       }
     });

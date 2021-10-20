@@ -1,11 +1,11 @@
 <div class="top-div">
   <div class="row">
-    <div class="col-sm-4 pl-4"><a class="sk-logo" href="index.html"> <img src="assets/images/sk-logonew.png" alt="logo"  /></a></div>
-    <div class="col-sm-4 text-center"><a class="user-logo" href="index.html"> <img src="assets/images/sk-logonew.png" alt="logo"  /></a></div>
+    <div class="col-sm-4 pl-4"><a class="sk-logo" href="javascript:void(0);" (click)="redirectSubcatSelection()"> <img src="assets/images/Shopkirana-Logo.png" alt="logo"  /></a></div>
+    <div class="col-sm-4 text-center"><a class="user-logo" href="javascript:void(0);" (click)="redirectSubcatSelection()"> <img src="assets/images/Shopkirana-Logo.png" alt="logo"  /></a></div>
     <div class="col-sm-4">
       <nav class="navbar default-layout-navbar p-0  d-flex flex-row">
         <div class="navbar-brand-wrapper d-flex d-lg-none align-items-center justify-content-center">
-          <a class="navbar-brand brand-logo-mini" href="index.html"><img src="assets/images/sk-icon.jpg" alt="logo" /></a>
+          <a class="navbar-brand brand-logo-mini" href="javascript:void(0);" (click)="redirectSubcatSelection()"><img src="assets/images/Shopkirana-Logo.png" alt="logo" /></a>
         </div>
       <div class="navbar-menu-wrapper">
         
@@ -36,6 +36,16 @@
               aria-labelledby="profileDropdown">
               <h6 class="p-3 mb-0 mod" translate>Profile</h6>
               <div class="dropdown-divider"></div>
+              <a class="dropdown-item preview-item" routerLink="/user-pages/subcatselection">
+                <div class="preview-thumbnail">
+                  <div class="preview-icon bg-dark rounded-circle">
+                    <i class="mdi mdi-rotate-left text-danger"></i>
+                  </div>
+                </div>
+                <div class="preview-item-content">
+                  <p class="preview-subject mb-1" translate>Change Company</p>
+                </div>
+              </a>
               <a class="dropdown-item preview-item">
                 <div class="preview-thumbnail">
                   <div class="preview-icon bg-dark rounded-circle">
@@ -56,7 +66,7 @@
 </div>
   <nav class="navbar default-layout-navbar p-0  d-flex flex-row gray-bg">
     <div class="navbar-brand-wrapper d-flex d-lg-none align-items-center justify-content-center">
-      <a class="navbar-brand brand-logo-mini" href="index.html"><img src="assets/images/sk-icon.jpg" alt="logo" /></a>
+      <a class="navbar-brand brand-logo-mini" href="javascript:void(0);" (click)="redirectSubcatSelection()"><img src="assets/images/Shopkirana-Logo.png" alt="logo" /></a>
     </div>
   <div class="navbar-menu-wrapper d-flex align-items-stretch">
     
@@ -74,10 +84,10 @@
     </ul>  -->
 
     <ul class="navbar-nav ">
-      <li class="nav-item d-lg-block" ><a class="nav-link btn btn-white create-new-button">Business Dashboard</a></li>
-      <li class="nav-item d-lg-block" ><a class="nav-link btn btn-white create-new-button">Catalog</a></li>
-      <li class="nav-item d-lg-block" ><a class="nav-link btn btn-white create-new-button">Sales</a></li>
-      <li class="nav-item d-lg-block" ><a class="nav-link btn btn-white create-new-button">Inventory</a></li>
+      <li class="nav-item d-lg-block" ><a class="nav-link btn btn-white create-new-button" routerLink="/skbrand/businessdashboard">Business Dashboard</a></li>
+      <li class="nav-item d-lg-block" ><a class="nav-link btn btn-white create-new-button" routerLink="/skbrand/catalog">Catalog</a></li>
+      <li class="nav-item d-lg-block" ><a class="nav-link btn btn-white create-new-button" routerLink="/skbrand/sales">Sales</a></li>
+      <li class="nav-item d-lg-block" ><a class="nav-link btn btn-white create-new-button" routerLink="/skbrand/inventory">Inventory</a></li>
       <li class="nav-item d-lg-block" ><a class="nav-link btn btn-white create-new-button">Order</a></li>
       <li class="nav-item d-lg-block" ><a class="nav-link btn btn-white create-new-button">Digital Promotion</a></li>
       <li class="nav-item d-lg-block" ><a class="nav-link btn btn-white create-new-button">Offers</a></li>

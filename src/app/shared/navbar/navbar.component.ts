@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbDropdownConfig } from '@ng-bootstrap/ng-bootstrap';
+import { DashboardService } from '../services/dashboard/dashboard.service';
 import { GlobalSettingService } from '../services/global-setting.service';
 
 @Component({
@@ -13,16 +14,29 @@ export class NavbarComponent implements OnInit {
   public iconOnlyToggled = false;
   public sidebarToggled = false;
   UserName: string;
-  logoUrl: string;
+  logoUrl: string = "assets/images/default_Logo.png";
   subcateName:string;
-  constructor(config: NgbDropdownConfig, private router: Router, private globalSettingService: GlobalSettingService) {
+  constructor(config: NgbDropdownConfig, 
+    private router: Router, 
+    private globalSettingService: GlobalSettingService,
+    private _dashBoardService : DashboardService
+    ) {
     config.placement = 'bottom-right';
+
+    this._dashBoardService.refreshNavigationPage.subscribe(refresh =>{
+      if(refresh){
+        this.ngOnInit()
+      }
+    })
   }
 
   ngOnInit() {
     this.UserName = localStorage.getItem('userName');
-    this.logoUrl = localStorage.getItem('SublogoUrl');
     this.subcateName = localStorage.getItem('subcateName');
+    this.logoUrl = "assets/images/default_Logo.png";
+    if(localStorage.getItem('SublogoUrl')){
+    this.logoUrl = localStorage.getItem('SublogoUrl');
+    }
 
     this.toggleSidebar();
 
@@ -33,15 +47,19 @@ export class NavbarComponent implements OnInit {
 
     })
   }
+
   logout() {
     localStorage.clear();
-    localStorage.removeItem('selleruserToken');
-    localStorage.removeItem('sellertokenData');
-    localStorage.removeItem('userid');
-    localStorage.removeItem('userName');
-    localStorage.removeItem('SubCatId');
-    
+    // localStorage.removeItem('selleruserToken');
+    // localStorage.removeItem('sellertokenData');
+    // localStorage.removeItem('userid');
+    // localStorage.removeItem('userName');
+    // localStorage.removeItem('SubCatId');
     this.router.navigateByUrl('user-pages/login');
+  }
+
+  redirectSubcatSelection(){
+    location.reload()
   }
 
   // toggle sidebar in small devices

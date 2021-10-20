@@ -39,7 +39,7 @@ import { AgmCoreModule } from '@agm/core';
 import{ environment} from '../environments/environment';
 import {PanelMenuModule} from 'primeng/panelmenu';
 import {MenuItem} from 'primeng/api';
-
+import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown';
 
 
 
@@ -84,6 +84,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     DialogModule,
     MultiSelectModule,
     PanelMenuModule,
+    AngularMultiSelectModule,
     // MenuItem,
     TranslateModule.forRoot({
       loader: {

@@ -1,11 +1,29 @@
 <div class="card">
   <div class="card-body">
+    <div class="row justify-content-start">
+      <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+         <div class="p-0">
+           <div class="text-primary">
+                <h4>Catelog</h4>
+           </div>
+         </div>
+      </div>
+   </div>
     <div class="col-sm-7 p-0">
       <div class="row">
+        <!-- <div class="col-sm-2 col-4">
+          <div class="form-group">
+            <select class="form-control" [(ngModel)]="setSubcateId" (change)="selectCatValue($event.target.value, 'Category')">
+              <option value="" disabled>All Category</option>
+              <option *ngFor="let list of allCatListName" [value]="list?.SubCategoryId"> {{list?.SubcategoryName}}</option>
+            </select>
+          </div>
+        </div> -->
         <div class="col-sm-2 col-4">
           <div class="form-group">
             <select class="form-control"  (change)="selectCity($event.target.value)">
-              <option *ngFor="let cityObj of allCityArr" value="{{cityObj['Cityid']}}"  >{{cityObj['CityName']}}</option>
+              <option value="0">All City</option>
+              <option *ngFor="let cityObj of allCityArr" value="{{cityObj['Cityid']}}" >{{cityObj['CityName']}}</option>
             </select>
           </div>
         </div>
@@ -13,7 +31,7 @@
           <div class="row">
             <div class="col-sm-3 col-6">
               <div class="form-group">
-                <input type="text" class="form-control" placeholder="Search">
+                <a href="javascript:void(0);" (click)="searchResult()" class="btn btn-sm btn-info">Search</a>
               </div>
             </div>
             <!-- <div class="col-sm-3 col-6">
@@ -36,7 +54,7 @@
       </div>
     </div>
     <div class="clearfix"></div>
-    <div class="custom-tab">
+    <div class="custom-tab"  *ngIf="!intialLoader && !noRecordFound">
       <ul class="nav nav-tabs" role="tablist">
         <li class="nav-item w-25"> 
           <a [class]="nav-link" [ngClass]="categorType=='TotalItem'? 'nav-link active': 'nav-link'" data-toggle="tab" href="javascript:void(0)" (click)="selectCategoryTab('TotalItem')" role="tab">
@@ -74,20 +92,20 @@
       </ul><!-- Tab panes -->
       <div class="tab-content">
         <div class="tab-pane active" id="tabs-1" role="tabpanel">
-          <div class="table-responsive">
+          <div class="table-responsive" *ngIf="catelogBrandArr.length>0">
             <table class="table table-striped ">
               <thead>
                 <tr>
                   <th>Category</th>
-                  <th colspan="5">Brands</th>
-                  <th class="text-right">Total Items</th>
+                  <th >Brands</th>
+                  <!-- <th class="text-right">Total Items</th> -->
                 </tr>
               </thead>
               <tbody *ngIf="catelogBrandArr.length>0">
                 <tr *ngFor="let brand of catelogBrandArr" >
                   <td>{{brand['CategoryName']}}</td>
                   <td>
-                  <a href="javascript:void(0)" (click)="selectBrandName(brand['BrandId'])">
+                  <a  *ngIf="brand && !brand['categorySameArray']" href="javascript:void(0)" (click)="selectBrandName(brand['BrandId'])">
                     {{brand['BrandName']}}({{brand['ItemCount']}})
                   </a>
                   </td>
@@ -97,7 +115,7 @@
                       {{item['BrandName']}}({{item['ItemCount']}})
                     </a>
                   </td></ng-container>
-                  
+                  <td colspan="2" ><span class="text-dark">{{brand['TotalItem']}}</span></td>
                   <!-- <td></td>
                   <td></td>
                   <td></td>
@@ -152,8 +170,32 @@
               </tbody>
             </table>
           </div>
+              <!-- Start Loader and Intails Data set(D) -->
+          <div class="row" *ngIf="!intialLoader && catelogBrandArr.length==0">
+            <div class="col-12 col-md-12 col-sm-12 ">
+              <div class="card">
+                  <div class="card-body text-center">
+                    <h6>No Record Found!</h6>
+                  </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row" *ngIf="intialLoader && catelogBrandArr.length==0" >
+            <div class="col-12 col-md-12 col-sm-12">
+              <div class="card">
+                <div class="card-body text-center">
+                  <div class="spinner-border text-info" role="status">
+                    <span class="sr-only">Loading...</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
           <p>&nbsp;</p>
-          <div class="table-responsive">
+          <div class="table-responsive" *ngIf="catelogBrandItemArr.length>0">
             <table class="table table-striped">
               <thead>
                 <tr>
@@ -186,43 +228,36 @@
                   <!-- <td>{{catelogBrand['ItemName']}}</td> -->
                   <!-- <td>2314</td> -->
                 </tr>
-                <tr>
-                  <td>
-                    <div class="item-icon">
-                      <img src="../../../../assets/images/1.jpg">
-                    </div>
-                  </td>
-                  <td>Dabur Amla Hair Oil 138 MRP
-                    <div class="weight"> 275 Ml</div>
-                  </td>
-                  <td>12/06/2021 </td>
-                  <td>138</td>
-                  <td>130</td>
-                  <td>240</td>
-                  <td>2314</td>
-                  <td>2314</td>
-                </tr>
               </tbody>
             </table>
           </div>
         </div>
-        <div class="tab-pane" id="tabs-2" role="tabpanel">
-          <p>chart 2
+      </div>
+    </div>
 
-          </p>
-        </div>
-        <div class="tab-pane" id="tabs-3" role="tabpanel">
-          <p>chart 3
-
-          </p>
-        </div>
-        <div class="tab-pane" id="tabs-4" role="tabpanel">
-          <p>chart 4
-
-          </p>
+    <!-- Start Loader and Intails Data set(D) -->
+    <div class="row" *ngIf="!intialLoader && noRecordFound">
+      <div class="col-12 col-md-12 col-sm-12 ">
+        <div class="card">
+            <div class="card-body text-center">
+              <h6>No Record Found!</h6>
+            </div>
         </div>
       </div>
     </div>
+
+    <div class="row" *ngIf="intialLoader && !noRecordFound" >
+      <div class="col-12 col-md-12 col-sm-12">
+        <div class="card">
+          <div class="card-body text-center">
+            <div class="spinner-border text-info" role="status">
+              <span class="sr-only">Loading...</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- End Loader and Intails Data set(D) -->
 
   </div>
 </div>

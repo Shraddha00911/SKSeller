@@ -37,6 +37,7 @@ export class AuthInterceptor implements HttpInterceptor {
                             if (day.length == 1) {
                                 day = '0' + day;
                             }
+                            debugger;
                             var passphras = "201907221201";
                             passphras = today.getFullYear() + "" + month + "" + day + "1201";
 
@@ -113,7 +114,6 @@ export class AuthInterceptor implements HttpInterceptor {
                             }
                             var passphras = "201907221201";
                             passphras = today.getFullYear() + "" + month + "" + day + "1201";
-
 
                             var data = JSON.parse(AES256.decrypt(event.body.Data, passphras));
                             event.body.Data = data;

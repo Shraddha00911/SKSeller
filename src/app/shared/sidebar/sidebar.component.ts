@@ -78,7 +78,7 @@ export class SidebarComponent implements OnInit {
 
 
     this.cityservice.getAllPagePermission().subscribe(result => {
-      console.log('getAllPagePermission: ', result);
+      // console.log('getAllPagePermission: ', result);
       this.menuItems = [];
       // if (result && result.length > 0) {
       //   result.forEach(item => {
@@ -200,7 +200,7 @@ export class SidebarComponent implements OnInit {
               icon: '',
               items: this.data,
               command: (event) => {
-                console.log('event: ', event);
+                // console.log('event: ', event);
                 this.menu.forEach(x => {
                   
                   // if (x == event.item) {
@@ -213,12 +213,12 @@ export class SidebarComponent implements OnInit {
               }
             };
             this.menu.push(this.items);
-            console.log('items', this.menu);
+            // console.log('items', this.menu);
 
           }
         })
       }
-      console.log('menuitems', this.menu);
+      // console.log('menuitems', this.menu);
 
 
       //this.menuItems = ROUTES;

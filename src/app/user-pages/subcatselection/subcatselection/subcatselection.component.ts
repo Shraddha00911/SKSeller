@@ -4,6 +4,7 @@ import { LocalStogareService } from 'src/app/shared/services/local-stogare.servi
 import { NgForm } from '@angular/forms';
 import { SubcatmappingService } from '../../services/subcatmapping.service';
 import { GlobalSettingService } from 'src/app/shared/services/global-setting.service';
+import { DashboardService } from 'src/app/shared/services/dashboard/dashboard.service';
 
 @Component({
   selector: 'app-subcatselection',
@@ -15,13 +16,31 @@ export class SubcatselectionComponent implements OnInit {
   subcategoryobj: any = null;
   MappingsubcatList: any;
   userid: any;
-  constructor(private SubCatMappingService: SubcatmappingService, private localStorageService: LocalStogareService, private router: Router, private globalSettingService: GlobalSettingService) { }
+  
+  constructor(private SubCatMappingService: SubcatmappingService, 
+    private localStorageService: LocalStogareService, 
+    private router: Router, 
+    private globalSettingService: GlobalSettingService,
+    private _dashBoardService : DashboardService
+    ) { }
   ngOnInit(): void {
     this.userid = localStorage.getItem('userid');
     this.subcateid = parseInt(localStorage.getItem('SubCatId'));
     if (this.userid > 0) {
       this.SubCatMappingService.GetAllSubCatMapping().subscribe(result => {
         this.MappingsubcatList = result;
+        if(this.MappingsubcatList.length>0){
+        this.MappingsubcatList = result;
+        }else{
+          this.subcategoryobj = this.MappingsubcatList[0]
+          this.subcateid = this.subcategoryobj.SubCategoryId;
+          localStorage.setItem('SubCatId', this.subcateid);
+          localStorage.setItem('subcateName', this.subcategoryobj.SubcategoryName);
+          localStorage.setItem('SublogoUrl', this.subcategoryobj.LogoUrl);
+          this._dashBoardService.refreshNavigationPageFun("Refresh");
+          this.globalSettingService.changeSubCategory();
+          this.router.navigateByUrl('/skbrand/businessdashboard');
+        }
         // console.log("BrandMapping", this.MappingsubcatList);
       })
     } else {
@@ -29,6 +48,7 @@ export class SubcatselectionComponent implements OnInit {
 
     }
   }
+
   SetSubcateId(subcatform: NgForm) {
 
     if (subcatform.valid) {
@@ -36,10 +56,10 @@ export class SubcatselectionComponent implements OnInit {
       localStorage.setItem('SubCatId', this.subcateid);
       localStorage.setItem('subcateName', this.subcategoryobj.SubcategoryName);
       localStorage.setItem('SublogoUrl', this.subcategoryobj.LogoUrl);
-
+      this._dashBoardService.refreshNavigationPageFun("Refresh");
       this.globalSettingService.changeSubCategory();
 
-      this.router.navigateByUrl('/dashboard');
+      this.router.navigateByUrl('/skbrand/businessdashboard');
     }
     // else {
     //   alert("Please select subcategory");

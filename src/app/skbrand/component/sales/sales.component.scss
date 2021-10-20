@@ -1,0 +1,168 @@
+.myclassBorder {
+    border :1px solid lightgray;
+}
+
+.myclass .pure-checkbox label ::before {
+    border :1px solid lightgray !important;
+}
+
+.myclass .pure-checkbox input[type="checkbox"]:checked+label::before {
+    border :1px solid black !important;
+}
+
+.time_filter {
+    font-size: 12px;
+    columns: black !important;
+}
+
+.ngb-dp-month { 
+    background-color: white !important;
+}
+
+.dropdown-menu div div .ngb-dp-months {
+    background-color: white !important;
+}
+
+.ngb-dp-header {
+    background-color: wheat;
+}
+
+.form-group.hidden {
+    width: 0;
+    margin: 0;
+    border: none;
+    padding: 0;
+  }
+  .custom-day {
+    text-align: center;
+    padding: 0.185rem 0.25rem;
+    display: inline-block;
+    height: 2rem;
+    width: 2rem;
+  }
+  .custom-day.focused {
+    background-color: #e6e6e6;
+  }
+  .custom-day.range, .custom-day:hover {
+    background-color: rgb(2, 117, 216);
+    color: white;
+  }
+  .custom-day.faded {
+    background-color: rgba(2, 117, 216, 0.5);
+  }
+
+  .date_picker{
+      width: 225px !important;
+  }
+
+  @media only screen and (max-width: 600px) {
+    .mobile_padding {
+        padding-top: 0.5rem;
+    }
+
+    .nav-tabs {
+    display: table;
+    width: 100%;
+    }
+
+    .nav-tabs li {
+    width: 100% !important;
+    display: table !important;
+    height: 50px;
+    }
+
+    .nav-tabs-progress {
+        display: table;
+        width: 100%;
+    }
+  
+    .nav-item-progres li {
+        width: 100% !important;
+        display: table !important;
+        height: 50px;
+    }
+
+    .container-nav {
+        padding: 0.5rem;
+        border: 1px solid lightgray;
+        box-shadow: 1px 3px 8px #bdbaba;
+        height: 120px;
+        width: 100% !important;
+        margin-top: 0.5rem;
+    }
+}
+
+    .nav-tabs {
+    display: table;
+    width: 100%;
+    }
+
+    .nav-tabs li {
+    display: table-cell;
+    height:50px;
+    width: 14.28% 
+    }
+
+   
+
+.tab-content {
+    margin:0.5rem;
+    padding: 1rem;
+    border: 1px solid lightgray;
+    box-shadow: 1px 3px 10px #bdbaba;
+}
+
+.tab-margin{
+    margin-top: 1rem;
+}
+
+.container-nav {
+    padding: 0.5rem;
+    border: 1px solid lightgray;
+    box-shadow: 1px 3px 8px #bdbaba;
+    height: 120px;
+    width: 25%;
+    margin-top: 0.5rem;
+}
+
+.fs-18 {
+    font-size: 18px;
+    font-weight: normal;
+}
+
+.fs-12 {
+    font-size: 12px;
+    font-weight:normal;
+}
+
+.progress-bar-width{
+  height: 25px;
+  border-radius: solid 30px;
+}
+
+.nav-tabs-progress {
+    display: table;
+    width: 100%;
+  }
+  
+.nav-item-progres li {
+    display: table-cell;
+    height:100px;
+    width: 25%
+}
+
+.progress {
+    border-radius: 30px !important;
+    height: 25px !important;
+}
+
+.map-container{
+    padding: 1rem;
+    border: 1px solid lightgray;
+    box-shadow: 1px 3px 10px #bdbaba;
+    height: 400px;
+}
+
+.barHeight {
+    height: 600px;
+}

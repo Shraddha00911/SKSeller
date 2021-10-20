@@ -1,56 +1,125 @@
 <div class="card">
   <div class="card-body">
-<div class="col-sm-7 p-0">
-  <div class="row">
-    <div class="col-sm-5">
-      <div class="row">
-        <div class="col-sm-4 col-4">
-          <div class="form-group">
-            <select class="form-control" (change)="selectCatValue($event.target.value, 'Category')">
-              <option value="" disabled>All Category</option>
-              <option *ngFor="let list of allCatListName" [value]="list?.Id"> {{list?.SubcategoryName}}</option>
-            </select>
-          
+<div class="col-sm-12 col-md-12 col-12 p-0">
+  <div class="row justify-content-start">
+     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+        <div class="py-1">
+          <div class="text-primary">
+               <h4>Business DashBorad</h4>
           </div>
         </div>
-        <div class="col-sm-4 col-4">
+     </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-5 col-md-5 col-5">
+      <div class="row">
+        <!-- <div class="col-sm-4 col-md-4 col-4">
           <div class="form-group">
-            <select class="form-control" (change)="selectCatValue($event.target.value, 'Brand')">
+            <select class="form-control" [(ngModel)]="setSubcateId" (change)="selectCatValue($event.target.value, 'Category')">
+              <option value="" disabled>All Category</option>
+              <option *ngFor="let list of allCatListName" [value]="list?.SubCategoryId"> {{list?.SubcategoryName}}</option>
+            </select>
+          </div>
+        </div> -->
+        <div class="col-sm-4 col-md-4 col-4">
+            <!-- <select class="form-control" (change)="selectCatValue($event.target.value, 'Brand')">
               <option>All Brands</option>
               <option *ngFor="let list of allBrandName" [value]="list?.SubSubCategoryId"> {{list?.SubSubCategoryName}}</option>
-            </select>
-          </div>
+            </select> -->
+            <div class="form-group myclassBorder">
+              <angular2-multiselect [data]="allBrandName" [(ngModel)]="selectedItems" 
+              [settings]="dropdownSettings" 
+              (onSelect)="onItemSelect($event)" 
+              (onDeSelect)="OnItemDeSelect($event)"
+              (onSelectAll)="onSelectAll($event)"
+              (onDeSelectAll)="onDeSelectAll($event)"></angular2-multiselect>
+            </div>
         </div>
-        <div class="col-sm-4 col-4">
+        <div class="col-sm-4 col-md-4 col-4">
           <div class="form-group">
             <select class="form-control" (change)="selectCatValue($event.target.value, 'City')">
-              <option value="" disabled>All City</option>
+              <option value="0" >All City</option>
               <option *ngFor="let list of allCityName" [value]="list?.Cityid"> {{list?.CityName}}</option>
             </select>
           </div>
         </div>
       </div>
     </div>
-    <div class="col-sm-7">Today
+    <div class="col-sm-7 col-md-7 col-7">
       <div class="row">
-        <div class="col-sm-3 col-6">
-          <div class="form-group">
-            <input type="text" class="form-control" placeholder="">
+        <div class="col-sm-9 col-md-9 col-9">
+          <div class="d-flex float-left">
+            <!-- <input type="text" (click)="selectDateType('T')"  class="form-control" placeholder="Today Date"> -->
+            <a [ngClass]="dateType=='T'? 'btn btn-sm btn-primary': 'btn btn-sm btn-outline-primary'"   href="javascript:void(0)" 
+            (click)="selectDateType('T')"><span class="time_filter">Today Date</span></a>
+
+            <a [ngClass]="dateType=='W'? 'btn btn-sm btn-primary': 'btn btn-sm btn-outline-primary'" href="javascript:void(0)" 
+            (click)="selectDateType('W')"><span class="time_filter">Last week</span></a>
+
+            <a [ngClass]="dateType=='M'? 'btn btn-sm btn-primary': 'btn btn-sm btn-outline-primary'" href="javascript:void(0)" 
+            (click)="selectDateType('M')"><span class="time_filter">Last month</span></a>
+
+            <!-- <angular2-date-picker  (onDateSelect)="onDateSelect($event)"  [(ngModel)]="date" [settings]="settings"></angular2-date-picker> -->
+            <form class="form-inline">
+              <div class="form-group">
+                <div class="input-group">
+                  <input name="datepicker"
+                  class="form-control"
+                  ngbDatepicker
+                  #datepicker="ngbDatepicker"
+                  [autoClose]="'outside'"
+                  (dateSelect)="onDateSelection($event)"
+                  [displayMonths]="2"
+                  [dayTemplate]="t"
+                  outsideDays="hidden"
+                  [startDate]="rangeDate!"
+                  tabindex="-1"
+                  placeholder="YYYY-MM-DD To YYYY-MM-DD"
+                  >
+                  <ng-template #t let-date let-focused="focused">
+                    <span class="custom-day"
+                          [class.focused]="focused"
+                          [class.range]="isRange(date)"
+                          [class.faded]="isHovered(date) || isInside(date)"
+                          (mouseenter)="hoveredDate = date"
+                          (mouseleave)="hoveredDate = null">
+                      {{ date.day }}
+                    </span>
+                  </ng-template>
+                  <div class="input-group-append">
+                    <button class="btn btn-outline-secondary calendar" (click)="datepicker.toggle();datepickerOpen()" type="button"><i class="fa fa-calendar" aria-hidden="true"></i></button>
+                  </div>
+                  <!-- <button class="btn btn-outline-secondary calendar" (click)="datepicker.toggle()" type="button"></button> -->
+                </div>
+              </div>
+            </form>
           </div>
         </div>
-        <div class="col-sm-3 col-6">
+        <!-- <div class="col-sm-3 col-md-3 col-3">
           <div class="form-group">
-            <input type="text" class="form-control" placeholder="Last week">
+            <input type="text" (click)="selectDateType('W')" class="form-control" placeholder="Last week">
+            <a [ngClass]="dateType=='W'? 'btn btn-sm btn-primary': 'btn btn-sm btn-outline-primary'" href="javascript:void(0)" 
+            (click)="selectDateType('W')"><span class="time_filter">Last week</span></a>
           </div>
         </div>
-        <div class="col-sm-3 col-6">
+        <div class="col-sm-3 col-md-3 col-3">
           <div class="form-group">
-            <input type="text" class="form-control" placeholder="Last month">
+            <input type="text" (click)="selectDateType('M')" class="form-control" placeholder="Last month">
+            <a [ngClass]="dateType=='M'? 'btn btn-sm btn-primary': 'btn btn-sm btn-outline-primary'" href="javascript:void(0)" 
+            (click)="selectDateType('M')"><span class="time_filter">Last month</span></a>
           </div>
-        </div>
-        <div class="col-sm-3 col-6">
+        </div> -->
+        <div class="col-sm-3 col-md-3 col-3">
+          <!-- <div class="form-group"> -->
+            <!-- <input type="date" (click)="selectDateType('C')" class="form-control" placeholder="Date"> -->
+            <!-- <a [ngClass]="dateType=='C'? 'btn btn-sm btn-primary': 'btn btn-sm btn-outline-primary'" href="javascript:void(0)" 
+            (click)="selectDateType('C')"><span class="time_filter">Date</span></a> -->
+          <!-- </div> -->
           <div class="form-group">
-            <input type="date" class="form-control" placeholder="Date">
+            <a class="btn btn-sm btn-info" href="javascript:void(0)" 
+            (click)="getAllDashboardData()">Search</a>
+            <a class="btn btn-sm btn-danger" href="javascript:void(0)" 
+            (click)="ngOnInit()">Clear</a>
           </div>
         </div>
       </div>
@@ -58,7 +127,7 @@
   </div>
 </div>
 
-<div class="row">
+<div *ngIf="!intialLoader && dashboardData.length>0" class="row">
   <div class="col-lg-6 grid-margin stretch-card">
     <div class="card">
       <div class="card-body">
@@ -66,58 +135,66 @@
         <div class="custom-tab">
           <ul class="nav nav-tabs" role="tablist">
             <li class="nav-item w-25">
-              <a class="nav-link active" data-toggle="tab" href="#tabs-1" role="tab">
-                <h6>8400304</h6>
-                <small class="text-success"><i class="fa fa-long-arrow-up"></i> 2.3%(524)</small><br>
-                Grass Merchandise Value
+              <!-- <a class="nav-link active" data-toggle="tab" href="#tabs-1" role="tab"> -->
+                <a [ngClass]="categorType=='Sale'? 'nav-link active': 'nav-link'" data-toggle="tab" href="javascript:void(0)" 
+                (click)="selectCategoryTab('Sale')" role="tab">
+                <h6 *ngIf="CurrentCompanySale" class="text-dark">{{CurrentCompanySale.TotalSale}}</h6>
+                <h6 *ngIf="!CurrentCompanySale" class="text-dark">0</h6>
+                <small *ngIf="CurrentCompanySale && CurrentCompanySale['TotalSalePercant'] && CurrentCompanySale['TotalSalePercant']>0" class="text-success">
+                  <i class="fa fa-long-arrow-up"></i></small> 
+                <small *ngIf="CurrentCompanySale && CurrentCompanySale['TotalSalePercant'] && CurrentCompanySale['TotalSalePercant']<0" class="text-danger">
+                  <i class="fa fa-long-arrow-down"></i></small>
+                  <span *ngIf="CurrentCompanySale">{{CurrentCompanySale.TotalSalePercant | number : '1.2-2' }}%</span>
+                   <br>
+                <span class="fs-11">Gross Merchandise Value</span>
               </a>
             </li>
             <li class="nav-item w-25">
-              <a class="nav-link" data-toggle="tab" href="#tabs-2" role="tab">
-                <h6>84006873</h6>
-                <small class="text-danger"><i class="fa fa-long-arrow-down"></i> 2.3%(524)</small><br>
-                Sale Amount
+              <a  [ngClass]="categorType=='Dispatch'? 'nav-link active': 'nav-link'" data-toggle="tab" href="javascript:void(0)" 
+              (click)="selectCategoryTab('Dispatch')" role="tab">
+                <h6 *ngIf="CurrentCompanySale">{{CurrentCompanySale.TotalPOCAmt}}</h6>
+                <h6 *ngIf="!CurrentCompanySale" class="text-dark">0</h6>
+                <small *ngIf="CurrentCompanySale && CurrentCompanySale['TotalPOCAmtPercant'] && CurrentCompanySale['TotalPOCAmtPercant']>0" class="text-success">
+                  <i class="fa fa-long-arrow-up"></i></small> 
+                <small *ngIf="CurrentCompanySale && CurrentCompanySale['TotalPOCAmtPercant'] && CurrentCompanySale['TotalPOCAmtPercant']<0" class="text-danger">
+                  <i class="fa fa-long-arrow-down"></i></small>
+                  <span *ngIf="CurrentCompanySale">{{CurrentCompanySale.TotalPOCAmtPercant | number : '1.2-2'}}%</span><br>
+                
+                <span class="fs-11">Sale Amount</span>
               </a>
             </li>
             <li class="nav-item w-25">
-              <a class="nav-link" data-toggle="tab" href="#tabs-3" role="tab">
-                <h6>8400304</h6>
-                <small class="text-success"><i class="fa fa-long-arrow-up"></i> 2.3%(524)</small><br>
-                Average Order Value
+              <a  [ngClass]="categorType=='AOV'? 'nav-link active': 'nav-link'" data-toggle="tab" href="javascript:void(0)" 
+              (click)="selectCategoryTab('AOV')" role="tab">
+                <h6 *ngIf="CurrentCompanySale">{{CurrentCompanySale.AverageOrderValue}}</h6>
+                <h6 *ngIf="!CurrentCompanySale" class="text-dark">0</h6>
+                <small *ngIf="CurrentCompanySale && CurrentCompanySale['AverageOrderValuePercant'] && CurrentCompanySale['AverageOrderValuePercant']>0" class="text-success">
+                  <i class="fa fa-long-arrow-up"></i></small> 
+                <small *ngIf="CurrentCompanySale && CurrentCompanySale['AverageOrderValuePercant'] && CurrentCompanySale['AverageOrderValuePercant']<0" class="text-danger">
+                  <i class="fa fa-long-arrow-down"></i></small>
+                  <span *ngIf="CurrentCompanySale">{{CurrentCompanySale.AverageOrderValuePercant | number : '1.2-2'}}%</span>  <br>
+                <span class="fs-11">Average Order Valuet</span>
               </a>
             </li>
             <li class="nav-item w-25">
-              <a class="nav-link" data-toggle="tab" href="#tabs-4" role="tab">
-                <h6>84006873</h6>
-                <small class="text-danger"><i class="fa fa-long-arrow-down"></i> 2.3%(524)</small><br>
-                Sales Retuen
+              <a  [ngClass]="categorType=='POC'? 'nav-link active': 'nav-link'" data-toggle="tab" href="javascript:void(0)" 
+              (click)="selectCategoryTab('POC')" role="tab">
+                <h6 *ngIf="CurrentCompanySale">{{CurrentCompanySale.TotalDispatchAmt}}</h6>
+                <h6 *ngIf="!CurrentCompanySale" class="text-dark">0</h6>
+                <small *ngIf="CurrentCompanySale && CurrentCompanySale['TotalDispatchAmtPercant'] && CurrentCompanySale['TotalDispatchAmtPercant']>0" class="text-success">
+                  <i class="fa fa-long-arrow-up"></i></small> 
+                <small *ngIf="CurrentCompanySale && CurrentCompanySale['TotalDispatchAmtPercant'] && CurrentCompanySale['TotalDispatchAmtPercant']<0" class="text-danger">
+                  <i class="fa fa-long-arrow-down"></i></small>
+                  <span *ngIf="CurrentCompanySale">{{CurrentCompanySale.TotalDispatchAmtPercant | number : '1.2-2' }}%</span>  <br>
+                
+                <span class="fs-11">Sales Return</span>
               </a>
             </li>
           </ul><!-- Tab panes -->
-          <div class="tab-content">
+          <div class="tab-content  mt-3">
             <div class="tab-pane active" id="tabs-1" role="tabpanel">
-              <p >chart 1
                 <canvas baseChart [chartType]="'line'" [datasets]="areaChartData" [labels]="areaChartLabels"
                   [options]="areaChartOptions" [colors]="areaChartColors"></canvas>
-              </p>
-            </div>
-            <div class="tab-pane" id="tabs-2" role="tabpanel">
-              <p>chart 2
-                <canvas baseChart [chartType]="'line'" [datasets]="areaChartData" [labels]="areaChartLabels"
-                  [options]="areaChartOptions" [colors]="areaChartColors"></canvas>
-              </p>
-            </div>
-            <div class="tab-pane" id="tabs-3" role="tabpanel">
-              <p>chart 3
-                <canvas baseChart [chartType]="'line'" [datasets]="areaChartData" [labels]="areaChartLabels"
-                  [options]="areaChartOptions" [colors]="areaChartColors"></canvas>
-              </p>
-            </div>
-            <div class="tab-pane" id="tabs-4" role="tabpanel">
-              <p>chart 4
-                <canvas baseChart [chartType]="'line'" [datasets]="areaChartData" [labels]="areaChartLabels"
-                  [options]="areaChartOptions" [colors]="areaChartColors"></canvas>
-              </p>
             </div>
           </div>
         </div>
@@ -131,73 +208,72 @@
         <h4 class="card-title">Engagement</h4>
         <div class="custom-tab">
           <ul class="nav nav-tabs" role="tablist">
-            <li class="nav-item w-2">
-              <a class="nav-link active" data-toggle="tab" href="#tabs-1" role="tab">
-                <h6>4567</h6>
-                <small class="text-success"><i class="fa fa-long-arrow-up"></i> 2.3%(524)</small><br>
-                Billed Customer
+            <li class="nav-item w-25">
+              <a [ngClass]="categorType=='BillCustomer'? 'nav-link active': 'nav-link'" data-toggle="tab"
+              (click)="selectCategoryTab('BillCustomer')" role="tab">
+                <h6 *ngIf="CurrentCompanySale">{{CurrentCompanySale?.BilledCustomer}}</h6>
+                <h6 *ngIf="!CurrentCompanySale" class="text-dark">0</h6>
+                <small *ngIf="CurrentCompanySale && CurrentCompanySale['BilledCustomerPercant'] && CurrentCompanySale['BilledCustomerPercant']>0" class="text-success">
+                  <i class="fa fa-long-arrow-up"></i></small> 
+                <small *ngIf="CurrentCompanySale && CurrentCompanySale['BilledCustomerPercant'] && CurrentCompanySale['BilledCustomerPercant']<0" class="text-danger">
+                  <i class="fa fa-long-arrow-down"></i></small>
+                  <span *ngIf="CurrentCompanySale">{{CurrentCompanySale.BilledCustomerPercant | number : '1.2-2' }}%</span><br>
+                <span class="fs-11">Billed Customer</span>
               </a>
             </li>
-            <li class="nav-item w-2">
-              <a class="nav-link" data-toggle="tab" href="#tabs-2" role="tab">
-                <h6>6004</h6>
-                <small class="text-danger"><i class="fa fa-long-arrow-down"></i> 2.3%(524)</small><br>
-                Customer Reach
+            <li class="nav-item w-25">
+              <a [ngClass]="categorType=='CustomerReach'? 'nav-link active': 'nav-link'" data-toggle="tab" 
+              (click)="selectCategoryTab('CustomerReach')" role="tab">
+                <h6 *ngIf="CurrentCompanySale">{{CurrentCompanySale.CustomerReach}}</h6>
+                <h6 *ngIf="!CurrentCompanySale" class="text-dark">0</h6>
+                <small *ngIf="CurrentCompanySale && CurrentCompanySale['CustomerReachPercant'] && CurrentCompanySale['CustomerReachPercant']>0" class="text-success">
+                  <i class="fa fa-long-arrow-up"></i></small> 
+                <small *ngIf="CurrentCompanySale && CurrentCompanySale['CustomerReachPercant'] && CurrentCompanySale['CustomerReachPercant']<0" class="text-danger">
+                  <i class="fa fa-long-arrow-down"></i></small>
+                  <span *ngIf="CurrentCompanySale">{{CurrentCompanySale.CustomerReachPercant | number : '1.2-2' }}%</span><br>
+                <span class="fs-11">Customer Reach</span>
               </a>
             </li>
-            <li class="nav-item w-2">
-              <a class="nav-link" data-toggle="tab" href="#tabs-3" role="tab">
-                <h6>3</h6>
-                <small class="text-success"><i class="fa fa-long-arrow-up"></i> 2.3%(524)</small><br>
-                Average Line Item
+            <li class="nav-item w-25">
+              <a [ngClass]="categorType=='ALI'? 'nav-link active': 'nav-link'" data-toggle="tab" 
+              (click)="selectCategoryTab('ALI')" role="tab">
+                <h6 *ngIf="CurrentCompanySale">{{CurrentCompanySale.AvgLineItem}}</h6>
+                <h6 *ngIf="!CurrentCompanySale" class="text-dark">0</h6>
+                <small *ngIf="CurrentCompanySale && CurrentCompanySale['AvgLineItemPercant'] && CurrentCompanySale['AvgLineItemPercant']>0" class="text-success">
+                  <i class="fa fa-long-arrow-up"></i></small> 
+                <small *ngIf="CurrentCompanySale && CurrentCompanySale['AvgLineItemPercant'] && CurrentCompanySale['AvgLineItemPercant']<0" class="text-danger">
+                  <i class="fa fa-long-arrow-down"></i></small>
+                  <span *ngIf="CurrentCompanySale">{{CurrentCompanySale.AvgLineItemPercant | number : '1.2-2' }}%</span><br>
+                <span class="fs-11">Average Line Item</span>
               </a>
             </li>
-            <li class="nav-item w-2">
-              <a class="nav-link" data-toggle="tab" href="#tabs-4" role="tab">
-                <h6>100</h6>
-                <small class="text-danger"><i class="fa fa-long-arrow-down"></i> 2.3%(524)</small><br>
+            <!-- <li class="nav-item w-2">
+              <a [ngClass]="categorType=='SKUSold'? 'nav-link active': 'nav-link'" data-toggle="tab" 
+              (click)="selectCategoryTab('SKUSold')" role="tab">
+                <h6>{{CurrentCompanySale?.LiveCFRSKU}}</h6>
+                <small class="text-danger"><i class="fa fa-long-arrow-down"></i> {{CurrentCompanySale?.LiveCFRSKUPercant | number : '1.2-2' }}%</small><br>
                 SKUs Active
               </a>
-            </li>
-            <li class="nav-item w-2">
-              <a class="nav-link" data-toggle="tab" href="#tabs-4" role="tab">
-                <h6>86</h6>
-                <small class="text-danger"><i class="fa fa-long-arrow-down"></i> 2.3%(524)</small><br>
-                SKUs Sold
+            </li> -->
+            <li class="nav-item w-25">
+              <a [ngClass]="categorType=='SKUSold'? 'nav-link active': 'nav-link'" data-toggle="tab" 
+              (click)="selectCategoryTab('SKUSold')" role="tab">
+                <h6 *ngIf="CurrentCompanySale">{{CurrentCompanySale.SkuSold}}</h6>
+                <h6 *ngIf="!CurrentCompanySale" class="text-dark">0</h6>
+                <small *ngIf="CurrentCompanySale && CurrentCompanySale['SkuSoldPercant'] && CurrentCompanySale['SkuSoldPercant']>0" class="text-success">
+                  <i class="fa fa-long-arrow-up"></i></small> 
+                <small *ngIf="CurrentCompanySale && CurrentCompanySale['SkuSoldPercant'] && CurrentCompanySale['SkuSoldPercant']<0" class="text-danger">
+                  <i class="fa fa-long-arrow-down"></i></small>
+                  <span *ngIf="CurrentCompanySale">{{CurrentCompanySale.SkuSoldPercant | number : '1.2-2' }}%</span>
+                  <br>
+                <span class="fs-11">SKUs Sold</span>
               </a>
             </li>
           </ul><!-- Tab panes -->
-          <div class="tab-content">
+          <div class="tab-content mt-3">
             <div class="tab-pane active" id="tabs-1" role="tabpanel">
-              <p>chart 1
                 <canvas baseChart [chartType]="'bar'" [datasets]="barChartData" [labels]="barChartLabels"
                 [options]="barChartOptions" [colors]="barChartColors"></canvas>
-              </p>
-            </div>
-            <div class="tab-pane" id="tabs-2" role="tabpanel">
-              <p>chart 2
-
-                <canvas baseChart [chartType]="'bar'" [datasets]="barChartData" [labels]="barChartLabels"
-                  [options]="barChartOptions" [colors]="barChartColors"></canvas>
-              </p>
-            </div>
-            <div class="tab-pane" id="tabs-3" role="tabpanel">
-              <p>chart 3
-                <canvas baseChart [chartType]="'bar'" [datasets]="barChartData" [labels]="barChartLabels"
-                  [options]="barChartOptions" [colors]="barChartColors"></canvas>
-              </p>
-            </div>
-            <div class="tab-pane" id="tabs-4" role="tabpanel">
-              <p>chart 4
-                <canvas baseChart [chartType]="'bar'" [datasets]="barChartData" [labels]="barChartLabels"
-                  [options]="barChartOptions" [colors]="barChartColors"></canvas>
-              </p>
-            </div>
-            <div class="tab-pane" id="tabs-5" role="tabpanel">
-              <p>chart 5
-                <canvas baseChart [chartType]="'bar'" [datasets]="barChartData" [labels]="barChartLabels"
-                  [options]="barChartOptions" [colors]="barChartColors"></canvas>
-              </p>
             </div>
           </div>
         </div>
@@ -207,73 +283,137 @@
   </div>
 </div>
 
-<h4 class="heading-title">Inventory</h4>
-<div class="row">
-  <div class="col-sm-6">
-    <div class="row">
-      <div class="col-sm-3 col-6">
-        <div class="inventory-box">
-          <h6>{{dashboardData?.CompanyInventory?.CurrentStockValue}}
-            {{graphAllData?.Xaxis}}
-          </h6>
-          <span class="text-success"><i class="fa fa-long-arrow-up"></i> 2.3%(524)</span>
-          Current Stock Value
-        </div>
-      </div>
-      <div class="col-sm-3 col-6">
-        <div class="inventory-box">
-          <h6>{{dashboardData?.CompanyInventory?.CurrentStockQuantity}}</h6>
-          <span class="text-success"><i class="fa fa-long-arrow-up"></i> 2.3%(524)</span>
-          Current Stock Quality
-        </div>
-      </div>
-      <div class="col-sm-3 col-6">
-        <div class="inventory-box">
-          <h6>234</h6>
-          <span class="text-success"><i class="fa fa-long-arrow-up"></i> 2.3%(524)</span>
-          Low Stock Quantity
-        </div>
-      </div>
-      <div class="col-sm-3 col-6 ">
-        <div class="inventory-box">
-            <h6>{{dashboardData?.CompanyInventory?.StockOutQuantity}}</h6>
-            <span class="text-success"><i class="fa fa-long-arrow-up"></i> 2.3%(524)</span>
-            Stock Out Quantity
+<div *ngIf="!intialLoader && dashboardData.length>0">
+  <h4 class="heading-title">Inventory</h4>
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="row">
+        <div class="col-sm-3 col-6">
+          <div class="inventory-box">
+            <h6 *ngIf="CompanyInventory">{{CompanyInventory.CurrentStockValue}}
+            </h6>
+            <h6 *ngIf="!CompanyInventory" class="text-dark">0</h6>
+            <!-- <small *ngIf="CompanyInventory && CompanyInventory['TotalSalePercant'] && CompanyInventory['TotalSalePercant']>0" class="text-success">
+              <i class="fa fa-long-arrow-up"></i></small> 
+            <small *ngIf="CompanyInventory && CompanyInventory['TotalSalePercant'] && CompanyInventory['TotalSalePercant']<0" class="text-danger">
+              <i class="fa fa-long-arrow-down"></i></small>
+              {{CompanyInventory?.TotalSalePercant | number : '1.2-2' }}% -->
+            Current Stock Value
           </div>
         </div>
+        <div class="col-sm-3 col-6">
+          <div class="inventory-box">
+            <h6 *ngIf="CompanyInventory">{{CompanyInventory?.CurrentStockQuantity}}</h6>
+            <h6 *ngIf="!CompanyInventory" class="text-dark">0</h6>
+            <!-- <small *ngIf="CompanyInventory && CompanyInventory['TotalSalePercant'] && CompanyInventory['TotalSalePercant']>0" class="text-success">
+              <i class="fa fa-long-arrow-up"></i></small> 
+            <small *ngIf="CompanyInventory && CompanyInventory['TotalSalePercant'] && CompanyInventory['TotalSalePercant']<0" class="text-danger">
+              <i class="fa fa-long-arrow-down"></i></small> 
+              {{CompanyInventory?.TotalSalePercant | number : '1.2-2' }}% -->
+            Current Stock Quality
+          </div>
+        </div>
+        <div class="col-sm-3 col-6">
+          <div class="inventory-box">
+            <h6 *ngIf="CompanyInventory">{{CompanyInventory?.CurrentStockQuantity}}</h6>
+            <h6 *ngIf="!CompanyInventory" class="text-dark">0</h6>
+            <!-- <small *ngIf="CompanyInventory && CompanyInventory['TotalSalePercant'] && CompanyInventory['TotalSalePercant']>0" class="text-success">
+              <i class="fa fa-long-arrow-up"></i></small> 
+            <small *ngIf="CompanyInventory && CompanyInventory['TotalSalePercant'] && CompanyInventory['TotalSalePercant']<0" class="text-danger">
+              <i class="fa fa-long-arrow-down"></i></small>
+              {{CompanyInventory.TotalSalePercant | number : '1.2-2' }}% -->
+            Low Stock Quantity
+          </div>
+        </div>
+        <div class="col-sm-3 col-6 ">
+          <div class="inventory-box">
+              <h6 *ngIf="CompanyInventory">{{CompanyInventory.StockOutQuantity}}</h6>
+              <h6 *ngIf="!CompanyInventory" class="text-dark">0</h6>
+              <!-- <small *ngIf="CompanyInventory && CompanyInventory['TotalSalePercant'] && CompanyInventory['TotalSalePercant']>0" class="text-success">
+                <i class="fa fa-long-arrow-up"></i></small> 
+              <small *ngIf="CompanyInventory && CompanyInventory['TotalSalePercant'] && CompanyInventory['TotalSalePercant']<0" class="text-danger">
+                <i class="fa fa-long-arrow-down"></i></small>
+                {{CompanyInventory?.TotalSalePercant | number : '1.2-2' }}% -->
+              Stock Out Quantity
+            </div>
+          </div>
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <div class="row">
+        <div class="col-sm-3 col-6">
+          <div class="inventory-box">
+            <h6 *ngIf="CompanyInventory">{{CompanyInventory.AvgAging}}</h6>
+            <h6 *ngIf="!CompanyInventory" class="text-success">0</h6>
+            <!-- <small *ngIf="CompanyInventory && CompanyInventory['AvgAging'] && CompanyInventory['AvgAging']>0" class="text-success">
+              <i class="fa fa-long-arrow-up"></i></small> 
+            <small *ngIf="CompanyInventory && CompanyInventory['AvgAging'] && CompanyInventory['AvgAging']<0" class="text-danger">
+              <i class="fa fa-long-arrow-down"></i></small> -->
+            Average Aging
+          </div>
+        </div>
+        <div class="col-sm-3 col-6">
+          <div class="inventory-box">
+            <h6 *ngIf="CompanyInventory">{{CompanyInventory.AvgAging}}</h6>
+            <h6 *ngIf="!CompanyInventory" class="text-success">0</h6>
+            <!-- <small *ngIf="CompanyInventory && CompanyInventory['TotalSalePercant'] && CompanyInventory['TotalSalePercant']>0" class="text-success">
+              <i class="fa fa-long-arrow-up"></i></small> 
+            <small *ngIf="CompanyInventory && CompanyInventory['TotalSalePercant'] && CompanyInventory['TotalSalePercant']<0" class="text-danger">
+              <i class="fa fa-long-arrow-down"></i></small> -->
+            Purchase Fill Rate
+          </div>
+        </div>
+        <div class="col-sm-3 col-6">
+          <div class="inventory-box">
+            <h6 *ngIf="CompanyInventory">{{CompanyInventory.NearExpiryStockValue}}</h6>
+            <h6 *ngIf="!CompanyInventory" class="text-success">0</h6>
+            <!-- <small *ngIf="CompanyInventory && CompanyInventory['TotalSalePercant'] && CompanyInventory['TotalSalePercant']>0" class="text-success">
+              <i class="fa fa-long-arrow-up"></i></small> 
+            <small *ngIf="CompanyInventory && CompanyInventory['TotalSalePercant'] && CompanyInventory['TotalSalePercant']<0" class="text-danger">
+              <i class="fa fa-long-arrow-down"></i></small>  -->
+            Near by Expiry Stocks Value
+          </div>
+        </div>
+        <div class="col-sm-3 col-6 ">
+          <div class="inventory-box">
+              <h6 *ngIf="CompanyInventory">{{CompanyInventory.DamageStockValue}}</h6>
+              <h6 *ngIf="!CompanyInventory" class="text-success">0</h6>
+              <!-- <small *ngIf="CompanyInventory && CompanyInventory['TotalSalePercant'] && CompanyInventory['TotalSalePercant']>0" class="text-success">
+                <i class="fa fa-long-arrow-up"></i></small> 
+              <small *ngIf="CompanyInventory && CompanyInventory['TotalSalePercant'] && CompanyInventory['TotalSalePercant']<0" class="text-danger">
+                <i class="fa fa-long-arrow-down"></i></small> -->
+              Damage Stocks Value
+            </div>
+          </div>
+      </div>
     </div>
   </div>
-  <div class="col-sm-6">
-    <div class="row">
-      <div class="col-sm-3 col-6">
-        <div class="inventory-box">
-          <h6>{{dashboardData?.CompanyInventory?.AvgAging}}</h6>
-          <span class="text-success"><i class="fa fa-long-arrow-up"></i> 2.3%(524)</span>
-          Average Aging
-        </div>
-      </div>
-      <div class="col-sm-3 col-6">
-        <div class="inventory-box">
-          <h6>98.5%</h6>
-          <span class="text-success"><i class="fa fa-long-arrow-up"></i> 2.3%(524)</span>
-          Purchase Fill Rate
-        </div>
-      </div>
-      <div class="col-sm-3 col-6">
-        <div class="inventory-box">
-          <h6>{{dashboardData?.CompanyInventory?.NearExpiryStockValue}}</h6>
-          <span class="text-success"><i class="fa fa-long-arrow-up"></i> 2.3%(524)</span>
-          Near by Expiry Stocks Value
-        </div>
-      </div>
-      <div class="col-sm-3 col-6 ">
-        <div class="inventory-box">
-            <h6>{{dashboardData?.CompanyInventory?.DamageStockValue}}</h6>
-            <span class="text-success"><i class="fa fa-long-arrow-up"></i> 2.3%(524)</span>
-            Damage Stocks Value
-          </div>
+</div>
+
+<!-- Start Loader and Intails Data set(D) -->
+<div class="row" *ngIf="!intialLoader && dashboardData.length==0">
+  <div class="col-12 col-md-12 col-sm-12 ">
+    <div class="card">
+        <div class="card-body text-center">
+           <h6>No Record Found!</h6>
         </div>
     </div>
   </div>
 </div>
-</div></div>
+
+<div class="row" *ngIf="intialLoader && dashboardData.length==0" >
+  <div class="col-12 col-md-12 col-sm-12">
+    <div class="card">
+      <div class="card-body text-center">
+        <div class="spinner-border text-info" role="status">
+          <span class="sr-only">Loading...</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End Loader and Intails Data set(D) -->
+
+
+
+

@@ -14,12 +14,9 @@ export class SkbrandService {
   }
 
   GetAllBrand(): Observable<any[]> {
-
     return this.http.get<any[]>(this.rootUrl + '/api/Seller/Brand');
   }
-
   
-
   GetAllCity(): Observable<any[]> {
     return this.http.get<any[]>(this.rootUrl + '/api/Warehouse/GetActiveWarehouseCity');
   }
@@ -27,10 +24,48 @@ export class SkbrandService {
   GetBusinessDashboardData(object) { 
     return this.http.post<any>(this.rootUrl + '/api/Seller/GetCompanyDashBoard', object);
   }
+
   GetBusinessDashboardGraphData(object) { 
     return this.http.post<any>(this.rootUrl + '/api/Seller/GetCompanyDashboardGraphData', object);
   }
 
+  //All start for cataglog module(D)
+  GetCompanyCatelog(object) { 
+    return this.http.post<any>(this.rootUrl + '/api/Seller/GetCompanyCatelog', object);
+  }
 
+  GetCompanyCatelogBrand(object) { 
+    return this.http.post<any>(this.rootUrl + '/api/Seller/GetCompanyCatelogBrand', object);
+  }
 
+  GetCompanyCatelogBrandItem(object) { 
+    return this.http.post<any>(this.rootUrl + '/api/Seller/GetCompanyCatelogBrandItem', object);
+  }
+  //All End for cataglog module(D)
+
+  //All Start Sales API call(D)
+  GetCompanySale(object) { 
+    return this.http.post<any>(this.rootUrl + '/api/Seller/GetCompanySale', object);
+  }
+
+  GetCompanySaleGraph(object) { 
+    return this.http.post<any>(this.rootUrl + '/api/Seller/GetCompanySaleGraph', object);
+  }
+
+  GetCompanyHeatMapData(object) { 
+    return this.http.post<any>(this.rootUrl + '/api/Seller/GetCompanyHeatMapData', object);
+  }
+
+  GetBrandHeatMapData(object) { 
+    return this.http.post<any>(this.rootUrl + '/api/Seller/GetBrandHeatMapData', object);
+  }
+
+  //All start Inventory API D
+  GetCompanyInventoryGraph(object) { 
+    return this.http.post<any>(this.rootUrl + '/api/Seller/GetCompanyInventoryGraph', object);
+  }
+
+  GetCompanyInventory(object) { 
+    return this.http.post<any>(this.rootUrl + '/api/Seller/GetCompanyInventory', object);
+  }
 }

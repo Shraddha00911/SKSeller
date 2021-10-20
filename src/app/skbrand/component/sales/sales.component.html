@@ -1,0 +1,339 @@
+<div class="my-container">
+    <div class="card">
+        <div class="card-body">
+            <div class="row justify-content-start">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                   <div class="py-1">
+                     <div class="text-primary">
+                          <h4>Sales</h4>
+                     </div>
+                   </div>
+                </div>
+             </div>
+            <div class="row justity-content-start">
+                <!-- <div class="col-lg-2 col-xl-2 col-md-3 col-sm-12 col-xs-12">
+                    <div class="form-group">
+                        <select class="form-control" [(ngModel)]="setSubcateId"
+                            (change)="selectCatValue($event.target.value, 'Category')">
+                            <option value="" disabled>All Category</option>
+                            <option *ngFor="let list of allCatListName" [value]="list?.SubCategoryId">
+                                {{list?.SubcategoryName}}</option>
+                        </select>
+                    </div>
+                </div> -->
+                <div class="col-lg-2 col-xl-2 col-md-3 col-sm-12 col-xs-12">
+                    <div class="form-group">
+                        <select class="form-control" (change)="selectCatValue($event.target.value, 'City')">
+                            <option value="0" >All City</option>
+                            <option *ngFor="let list of allCityName" [value]="list?.Cityid"> {{list?.CityName}}</option>
+                          </select>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-xl-3 col-md-3 col-sm-12 col-xs-12">
+                    <div class="d-flex float-left">
+                        <!-- <input type="text" (click)="selectDateType('T')"  class="form-control" placeholder="Today Date"> -->
+                        <a [ngClass]="dateType=='T'? 'btn btn-sm btn-primary': 'btn btn-sm btn-outline-primary'"
+                            href="javascript:void(0)" (click)="selectDateType('T')"><span class="time_filter">Today
+                                Date</span></a>
+
+                        <a [ngClass]="dateType=='W'? 'btn btn-sm btn-primary': 'btn btn-sm btn-outline-primary'"
+                            href="javascript:void(0)" (click)="selectDateType('W')"><span class="time_filter">Last
+                                week</span></a>
+
+                        <a [ngClass]="dateType=='M'? 'btn btn-sm btn-primary': 'btn btn-sm btn-outline-primary'"
+                            href="javascript:void(0)" (click)="selectDateType('M')"><span class="time_filter">Last
+                                month</span></a>
+
+                        <!-- <angular2-date-picker  (onDateSelect)="onDateSelect($event)"  [(ngModel)]="date" [settings]="settings"></angular2-date-picker> -->
+                    </div>
+                </div>
+                <div class="col-lg-3 col-xl-3 col-md-3 col-sm-12 col-xs-12">
+                    <div class="d-flex float-left mobile_padding">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <input name="datepicker" class="form-control date_picker date_picker" ngbDatepicker
+                                    #datepicker="ngbDatepicker" [autoClose]="'outside'"
+                                    (dateSelect)="onDateSelection($event)" [displayMonths]="2" [dayTemplate]="t"
+                                    outsideDays="hidden" [startDate]="rangeDate!" tabindex="-1"
+                                    placeholder="YYYY-MM-DD To YYYY-MM-DD">
+                                <ng-template #t let-date let-focused="focused">
+                                    <span class="custom-day" [class.focused]="focused" [class.range]="isRange(date)"
+                                        [class.faded]="isHovered(date) || isInside(date)"
+                                        (mouseenter)="hoveredDate = date" (mouseleave)="hoveredDate = null">
+                                        {{ date.day }}
+                                    </span>
+                                </ng-template>
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-secondary calendar"
+                                        (click)="datepicker.toggle();datepickerOpen()" type="button"><i
+                                            class="fa fa-calendar" aria-hidden="true"></i></button>
+                                </div>
+                                <!-- <button class="btn btn-outline-secondary calendar" (click)="datepicker.toggle()" type="button"></button> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-xl-2 col-md-2 col-sm-12 col-xs-12">
+                    <div class="d-flex float-left mobile_padding">
+                        <div class="form-group">
+                            <a class="btn btn-sm btn-info" href="javascript:void(0)"
+                                (click)="getAllDashboardData()">Search</a>
+                            <a class="btn btn-sm btn-danger" href="javascript:void(0)" (click)="ngOnInit()">Clear</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row justity-content-start">
+                <div class="col-sm-12">
+                    <div class="form-group">
+                        <h6>{{subCateName}} Sale</h6>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row"  *ngIf="!intialLoader && CurrentCompanySale">
+                <div class="col-12">
+                    <div class="custom-tab">
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li class="nav-item ">
+                                <!-- <a class="nav-link active" data-toggle="tab" href="#tabs-1" role="tab"> -->
+                                <a [ngClass]="categorType=='Sale'? 'nav-link active': 'nav-link'" data-toggle="tab"
+                                    href="javascript:void(0)" (click)="selectCategoryTab('Sale','Gross Merchandise Value', CurrentCompanySale.TotalSale)" role="tab">
+                                    <h6 *ngIf="CurrentCompanySale" class="text-dark">{{CurrentCompanySale.TotalSale}}
+                                    </h6>
+                                    <h6 *ngIf="!CurrentCompanySale" class="text-dark">0</h6>
+                                    <small
+                                        *ngIf="CurrentCompanySale && CurrentCompanySale['TotalSalePercant'] && CurrentCompanySale['TotalSalePercant']>0"
+                                        class="text-success">
+                                        <i class="fa fa-long-arrow-up"></i></small>
+                                    <small
+                                        *ngIf="CurrentCompanySale && CurrentCompanySale['TotalSalePercant'] && CurrentCompanySale['TotalSalePercant']<0"
+                                        class="text-danger">
+                                        <i class="fa fa-long-arrow-down"></i></small>
+                                    <span *ngIf="CurrentCompanySale && CurrentCompanySale.TotalSalePercant">{{CurrentCompanySale.TotalSalePercant | number :
+                                        '1.2-2' }}%</span>
+                                    <br>
+                                    Gross Merchandise Value
+                                </a>
+                            </li>
+                            <li class="nav-item ">
+                                <a [ngClass]="categorType=='Dispatch'? 'nav-link active': 'nav-link'" data-toggle="tab"
+                                    href="javascript:void(0)" (click)="selectCategoryTab('Dispatch','Sale Amount',CurrentCompanySale.TotalPOCAmt)" role="tab">
+                                    <h6 *ngIf="CurrentCompanySale">{{CurrentCompanySale.TotalPOCAmt}}</h6>
+                                    <h6 *ngIf="!CurrentCompanySale" class="text-dark">0</h6>
+                                    <small
+                                        *ngIf="CurrentCompanySale && CurrentCompanySale['TotalPOCAmtPercant'] && CurrentCompanySale['TotalPOCAmtPercant']>0"
+                                        class="text-success">
+                                        <i class="fa fa-long-arrow-up"></i></small>
+                                    <small
+                                        *ngIf="CurrentCompanySale && CurrentCompanySale['TotalPOCAmtPercant'] && CurrentCompanySale['TotalPOCAmtPercant']<0"
+                                        class="text-danger">
+                                        <i class="fa fa-long-arrow-down"></i></small>
+                                    <span *ngIf="CurrentCompanySale && CurrentCompanySale.TotalPOCAmtPercant ">{{CurrentCompanySale.TotalPOCAmtPercant | number :
+                                        '1.2-2'}}%</span><br>
+                                    Sale Amount
+                                </a>
+                            </li>
+                            <li class="nav-item ">
+                                <a [ngClass]="categorType=='AOV'? 'nav-link active': 'nav-link'" data-toggle="tab"
+                                    href="javascript:void(0)" (click)="selectCategoryTab('AOV','Average Order Value',CurrentCompanySale.AverageOrderValue)" role="tab">
+                                    <h6 *ngIf="CurrentCompanySale">{{CurrentCompanySale.AverageOrderValue}}</h6>
+                                    <h6 *ngIf="!CurrentCompanySale" class="text-dark">0</h6>
+                                    <small
+                                        *ngIf="CurrentCompanySale && CurrentCompanySale['AverageOrderValuePercant'] && CurrentCompanySale['AverageOrderValuePercant']>0"
+                                        class="text-success">
+                                        <i class="fa fa-long-arrow-up"></i></small>
+                                    <small
+                                        *ngIf="CurrentCompanySale && CurrentCompanySale['AverageOrderValuePercant'] && CurrentCompanySale['AverageOrderValuePercant']<0"
+                                        class="text-danger">
+                                        <i class="fa fa-long-arrow-down"></i></small>
+                                    <span *ngIf="CurrentCompanySale &&  CurrentCompanySale.AverageOrderValuePercant">{{CurrentCompanySale.AverageOrderValuePercant |
+                                        number : '1.2-2'}}%</span> <br>
+                                    Average Order Value
+                                </a>
+                            </li>
+                            <li class="nav-item ">
+                                <a [ngClass]="categorType=='POC'? 'nav-link active': 'nav-link'" data-toggle="tab"
+                                    href="javascript:void(0)" (click)="selectCategoryTab('POC','Sales Return',CurrentCompanySale.TotalDispatchAmt)" role="tab">
+                                    <h6 *ngIf="CurrentCompanySale">{{CurrentCompanySale.TotalDispatchAmt}}</h6>
+                                    <h6 *ngIf="!CurrentCompanySale" class="text-dark">0</h6>
+                                    <small
+                                        *ngIf="CurrentCompanySale && CurrentCompanySale['TotalDispatchAmtPercant'] && CurrentCompanySale['TotalDispatchAmtPercant']>0"
+                                        class="text-success">
+                                        <i class="fa fa-long-arrow-up"></i></small>
+                                    <small
+                                        *ngIf="CurrentCompanySale && CurrentCompanySale['TotalDispatchAmtPercant'] && CurrentCompanySale['TotalDispatchAmtPercant']<0"
+                                        class="text-danger">
+                                        <i class="fa fa-long-arrow-down"></i></small>
+                                    <span *ngIf="CurrentCompanySale && CurrentCompanySale.TotalDispatchAmtPercant">{{CurrentCompanySale.TotalDispatchAmtPercant |
+                                        number : '1.2-2' }}%</span> <br>
+                                    Sales Return
+                                </a>
+                            </li>
+                            <li class="nav-item ">
+                                <a [ngClass]="categorType=='ALI'? 'nav-link active': 'nav-link'" data-toggle="tab"
+                                    (click)="selectCategoryTab('ALI','Average Line Item',CurrentCompanySale.AvgLineItem)" role="tab">
+                                    <h6 *ngIf="CurrentCompanySale">{{CurrentCompanySale.AvgLineItem}}</h6>
+                                    <h6 *ngIf="!CurrentCompanySale" class="text-dark">0</h6>
+                                    <small
+                                        *ngIf="CurrentCompanySale && CurrentCompanySale['AvgLineItemPercant'] && CurrentCompanySale['AvgLineItemPercant']>0"
+                                        class="text-success">
+                                        <i class="fa fa-long-arrow-up"></i></small>
+                                    <small
+                                        *ngIf="CurrentCompanySale && CurrentCompanySale['AvgLineItemPercant'] && CurrentCompanySale['AvgLineItemPercant']<0"
+                                        class="text-danger">
+                                        <i class="fa fa-long-arrow-down"></i></small>
+                                    <span *ngIf="CurrentCompanySale && CurrentCompanySale.AvgLineItemPercant">{{CurrentCompanySale.AvgLineItemPercant | number : '1.2-2'
+                                        }}%</span><br>
+                                    Average Line Item
+                                </a>
+                            </li>
+                        </ul><!-- Tab panes -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="row" >
+                <div class="col-lg-6 col-md-6 col-sm-12 tab-margin" *ngIf="!intialLoader && itemSaleAmountbarChartData.length>0">
+                    <div class="card-title">
+                        <h6>Brand Sale Amount</h6>
+                    </div>
+                    <div class="tab-content"  >
+                        <div class="tab-pane active" id="tabs-1" role="tabpanel">
+                                <canvas baseChart [chartType]="'horizontalBar'" [datasets]="brandSaleChartData"
+                                    [labels]="brandSaleAmountbarChartLabels" [options]="brandSalebarChartOptions"
+                                    [colors]="barChartColors" (chartClick)="chartClicked($event)"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-12 tab-margin" *ngIf="!intialLoader && itemSaleAmountbarChartData.length>0">
+                    <div class="card-title">
+                        <h6>Item Sale Amount</h6>
+                    </div>
+                    <div class="tab-content" >
+                        <div class="tab-pane active" id="tabs-1" role="tabpanel">
+                                <canvas baseChart [chartType]="'bar'" [datasets]="itemSaleChartData"
+                                    [labels]="itemSaleAmountbarChartLabels" [options]="itemSalebarChartOptions"
+                                    [colors]="barChartColors" ></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row" *ngIf="!intialLoader && soldQuantityAmountbarChartData.length>0">
+                <div class="col-lg-6 col-md-6 col-sm-12 tab-margin">
+                    <div class="card-title">
+                        <h6>Sold Quantity</h6>
+                    </div>
+                    <div class="tab-content" >
+                        <div class="tab-pane active" id="tabs-1" role="tabpanel">
+                                <canvas baseChart [chartType]="'horizontalBar'" [datasets]="soldQuantityChartData"
+                                    [labels]="soldQuantitybarChartLabels" [options]="soldQuantitybarChartOptions"
+                                    [colors]="barChartColors"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-12 tab-margin" *ngIf="!intialLoader && soldItemsbarChartData.length>0">
+                    <div class="card-title">
+                        <h6>Sold Items</h6>
+                    </div>
+                    <div class="tab-content" >
+                        <div class="tab-pane active" id="tabs-1" role="tabpanel">
+                                <canvas baseChart [chartType]="'doughnut'" [datasets]="soldItemChartData"
+                                    [labels]="soldItembarChartLabels" [options]="soldItembarChartOptions"
+                                    [colors]="barChartColors"></canvas>
+                                <!-- <canvas id="doughnut" class="chart chart-doughnut"
+                                chart-data="data" chart-labels="labels">
+                              </canvas>  -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <hr>
+
+            <div *ngIf="brandSaleObj && brandSaleObj['label'] && brandSaleObj['label'] != ''" class="row justity-content-start" >
+                <div class="col-sm-12">
+                    <div class="form-group">
+                        <h6>{{brandSaleObj['label']}}</h6>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row" *ngIf="!intialLoader && CurrentCompanySale">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="custom-tab">
+                        <ul class="nav nav-tabs-progres" role="tablist">
+                            <li class="container-nav" *ngIf="brandSaleObj && brandSaleObj['TotalSale']">
+                                <div class="">
+                                    <div class="text-left float-left fs-12">
+                                       {{tabObj['name']}}
+                                    </div>
+                                    <div *ngIf="brandSaleObj && brandSaleObj['TotalSale'] && brandSaleObj['progressAmount'] != ''" class="float-right text-dark mr-auto fs-18">
+                                        {{tabObj['value']}}
+                                    </div>
+                                </div>
+                                <div  *ngIf="brandSaleObj && brandSaleObj['TotalSale'] && brandSaleObj['TotalSale']['progressPercentage'] != ''" class="w-100 progress"> 
+                                    <div  class="progress-bar progress-bar-width" [style.width]="brandSaleObj['TotalSale']['progressClass']"  role="progressbar" aria-valuenow=""
+                                        aria-valuemin="0" aria-valuemax="100">{{brandSaleObj['TotalSale']['progressPercentage'] }}%</div>
+                                </div>
+                                <div class="text-center py-2">
+                                    <span *ngIf="CurrentCompanySale && CurrentCompanySale['TotalSalePercant'] && CurrentCompanySale['TotalSalePercant']>0" class="mr-1 text-success">
+                                        <i class="fa fa-long-arrow-up"></i></span> 
+                                      <span *ngIf="CurrentCompanySale && CurrentCompanySale['TotalSalePercant'] && CurrentCompanySale['TotalSalePercant']<0" class="mr-1 text-danger">
+                                        <i class="fa fa-long-arrow-down"></i></span>
+                                        <span *ngIf="CurrentCompanySale && CurrentCompanySale['TotalSalePercant'] && CurrentCompanySale['TotalSalePercant']">{{brandSaleObj['TotalSale']['totalSalePer'] }}%</span>
+                                </div>
+                            </li>
+                        </ul><!-- Tab panes -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="row" *ngIf="!intialLoader && !CurrentCompanySale">
+                <div class="col-12 col-md-12 col-sm-12 ">
+                  <div class="card">
+                      <div class="card-body text-center">
+                         <h6>No Record Found!</h6>
+                      </div>
+                  </div>
+                </div>
+              </div>
+              
+              
+              <div class="row" *ngIf="intialLoader && !CurrentCompanySale">
+                <div class="col-12 col-md-12 col-sm-12">
+                  <div class="card">
+                    <div class="card-body text-center">
+                      <div class="spinner-border text-info" role="status">
+                        <span class="sr-only">Loading...</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            <hr>
+
+            <div class="row" >
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                    <div class="form-group">
+                        <h6>Geographical Company Sale and Quantity</h6>
+                    </div>
+                    <div class="map-container">
+                        <div #mapContainer id="map_canvas1" style="width:100%; height:100%"></div>
+                    </div>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                    <div class="form-group">
+                        <h6>Geographical Brand Sale and Quantity</h6>
+                    </div>
+                    <div class="map-container">
+                        <div #mapContainer1 id="map_canvas2" style="width:100%; height:100%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

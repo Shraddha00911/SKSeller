@@ -25,7 +25,7 @@ export class LoginComponent implements OnInit {
     if (this.localStorageService.getItemString(this.localStorageService.tokenKey)) {
 
       if (parseInt(localStorage.getItem('SubCatId'))) {
-        this.router.navigateByUrl('/dashboard');
+        this.router.navigateByUrl('/skbrand/businessdashboard');
       }
       else {
         this.router.navigateByUrl('/user-pages/subcatselection');

@@ -2,6 +2,10 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 
+import { Subject, BehaviorSubject } from 'rxjs';
+
+
+
 @Injectable({
   providedIn: 'root'
 })
@@ -11,6 +15,12 @@ export class DashboardService {
     this.apiURL = environment.apiBaseUrl;
 
   }
+
+  refreshNavigationPage = new BehaviorSubject("");
+  refreshNavigationPageFun(status){
+    this.refreshNavigationPage.next(status);
+  }
+
   GetCatelogueItemWithCFR(cityid, WarehouseId) {
     return this.http.get<any>(this.apiURL + '/api/Seller/GetCatelogueItemWithCFR/' + cityid + '/' + WarehouseId);
   }
